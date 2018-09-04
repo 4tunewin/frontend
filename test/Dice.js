@@ -236,10 +236,13 @@ contract('Dice', accounts => {
         const s = '0x' + commitSignature.substr(66, 64);
         const v = parseInt(commitSignature.substr(130, 2)) + 27;
 
+        // Send some ether to the contract
+        await diceInstance.send(web3.toWei(3, 'ether'), { from: owner });
+
         await diceInstance
-            .placeBet(1, 2, commitLastBlock, commit, v, r, s, {
+            .placeBet(1, 6, commitLastBlock, commit, v, r, s, {
                 from: gambler,
-                value: web3.toWei(1, 'ether'),
+                value: web3.toWei(0.1, 'ether'),
             })
             .then(receipt => {
                 assert.equal(receipt.logs.length, 1, 'triggers one event');
@@ -255,7 +258,7 @@ contract('Dice', accounts => {
                 );
                 assert.equal(
                     receipt.logs[0].args.amount.toNumber(),
-                    web3.toWei(1),
+                    web3.toWei(0.1),
                     'logs the amount placed on the bet',
                 );
                 assert.equal(
@@ -265,7 +268,7 @@ contract('Dice', accounts => {
                 );
                 assert.equal(
                     receipt.logs[0].args.modulo.toNumber(),
-                    2,
+                    6,
                     'logs the modulo',
                 );
             });
@@ -283,21 +286,13 @@ contract('Dice', accounts => {
             assert.equal(
                 receipt.logs[0].args.beneficiary,
                 gambler,
-                'logs the beneficiary address the win in transfered to',
-            );
-            assert.equal(
-                receipt.logs[0].args.amount.toNumber(),
-                web3.toWei(1.978, 'ether'),
-                'logs the win amount',
+                'logs the beneficiary address the payment is transfered to',
             );
         });
     });
 
     // it('refund bet', () => {});
     // it('clear storage', () => {});
-    // it('clear processed bet', () => {});
-    // it('get win amount', () => {});
-    // it('send funds', () => {});
 
     it('kill contract', async () => {
         await diceInstance
