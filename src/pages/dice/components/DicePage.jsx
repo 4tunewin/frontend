@@ -1,11 +1,21 @@
 import React from 'react';
-import { Container } from 'semantic-ui-react';
+import { Container, Grid } from 'semantic-ui-react';
 
-import DiceList from './DiceList';
+import BetForm from './BetForm';
 
 const DicePage = () => (
     <Container>
-        <DiceList />
+        <Grid columns={3}>
+            <Grid.Column>
+                <BetForm />
+            </Grid.Column>
+            <Grid.Column>
+                [INFO]
+            </Grid.Column>
+            <Grid.Column>
+                [RESULTS]
+            </Grid.Column>
+        </Grid>
     </Container>
 );
 

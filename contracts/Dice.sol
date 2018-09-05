@@ -448,6 +448,7 @@ contract Dice {
 
     // This are some constants making O(1) population count in placeBet possible.
     // See whitepaper for intuition and proofs behind it.
+    // https://en.wikipedia.org/wiki/Hamming_weight
     uint constant POPCNT_MULT = 0x0000000000002000000000100000000008000000000400000000020000000001;
     uint constant POPCNT_MASK = 0x0001041041041041041041041041041041041041041041041041041041041041;
     uint constant POPCNT_MODULO = 0x3F;
