@@ -3,14 +3,30 @@ import { map } from 'lodash';
 import { Button, Input, Grid } from 'semantic-ui-react';
 
 // List of possible bet options
-const betOptions = [0.05, 0.10, 0.15, 'max'];
+const options = [0.05, 0.1, 0.15, 'max'];
 
-const BetAmountOptions = ({ value, onChange }) => (
+const BetAmountOption = ({ option, active, onClick }) => (
+    <Button
+        type="button"
+        color={active ? 'green' : 'violet'}
+        onClick={() => {
+            onClick(option);
+        }}
+    >
+        {option}
+    </Button>
+);
+
+const BetAmount = ({ input: { value, onChange } }) => (
     <Grid>
         <Grid.Row columns={4}>
-            {map(betOptions, option => (
-                <Grid.Column>
-                    <Button color="violet" onClick={() => onChange(option)}>{option}</Button>
+            {map(options, (option, idx) => (
+                <Grid.Column key={idx}>
+                    <BetAmountOption
+                        option={option}
+                        active={value === option}
+                        onClick={onChange}
+                    />
                 </Grid.Column>
             ))}
         </Grid.Row>
@@ -22,4 +38,4 @@ const BetAmountOptions = ({ value, onChange }) => (
     </Grid>
 );
 
-export default BetAmountOptions;
+export default BetAmount;

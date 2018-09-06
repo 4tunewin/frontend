@@ -1,8 +1,10 @@
 import React from 'react';
-import {Button} from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 
-const BetButton = () => (
-    <Button size="huge" primary fluid>Place a Bet!</Button>
+const BetButton = ({ onClick }) => (
+    <Button onClick={onClick} size="huge" primary fluid>
+        Place a Bet!
+    </Button>
 );
 
 export default BetButton;
