@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
 
-import { ReduxProvider } from '../../providers';
 import { DicePage } from '../../pages';
 import Navigation from './Navigation';
 
@@ -13,14 +12,12 @@ const StyledContainer = styled(Container)`
 `;
 
 const Layout = () => (
-    <ReduxProvider>
-        <StyledContainer>
-            <Navigation />
-            <Router>
-                <Route path="/" component={DicePage} />
-            </Router>
-        </StyledContainer>
-    </ReduxProvider>
+    <StyledContainer>
+        <Navigation />
+        <div>
+            <Route path="/" component={DicePage} />
+        </div>
+    </StyledContainer>
 );
 
 export default Layout;

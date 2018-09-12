@@ -13,7 +13,7 @@ const BetForm = ({ handleSubmit }) => (
                 <Field name="dices" component={DiceSelect} />
             </Grid.Column>
             <Grid.Column>
-                <Field name="bet" component={BetAmount} />
+                <Field name="amount" component={BetAmount} />
             </Grid.Column>
             <Grid.Column>
                 <BetButton onClick={handleSubmit} />
