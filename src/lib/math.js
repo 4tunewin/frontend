@@ -11,6 +11,13 @@ import {
     MIN_JACKPOT_BET,
 } from '../config/const';
 
+/**
+ * Get dice win amount for specified bet and modulo
+ *
+ * @param {Number} amount    - Wager amount
+ * @param {Number} modulo    - Modulo of a game
+ * @param {Number} rollUnder - Number of winning outcomes
+ */
 export const getDiceWinAmount = (amount, modulo, rollUnder) => {
     if (rollUnder <= 0 || rollUnder > modulo) {
         return -1;

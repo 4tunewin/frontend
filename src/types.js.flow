@@ -1,0 +1,11 @@
+// @flow
+
+export type DiceBet = {
+    betMask: number,
+    modulo: number,
+    commitLastBlock: number,
+    commit: number,
+    v: number,
+    r: string,
+    s: string,
+};

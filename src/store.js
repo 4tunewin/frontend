@@ -1,18 +1,28 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { reducer as formReducer } from 'redux-form';
-import thunk from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
 
-import * as appReducers from './reducers';
+import * as reducers from './reducers';
+import sagas from './sagas';
 
-const reducers = combineReducers({
+const combinedReducers = combineReducers({
     form: formReducer,
-    ...appReducers,
+    ...reducers,
 });
 
+// Init saga middleware for async callbacks
+// https://redux-saga.js.org
+const sagaMiddleware = createSagaMiddleware();
+
+// Redux DevTools extension
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+// Create redux store
 const store = createStore(
-    reducers,
-    applyMiddleware(thunk),
-    window.devToolsExtension ? window.devToolsExtension() : f => f,
+    combinedReducers,
+    composeEnhancers(applyMiddleware(sagaMiddleware)),
 );
+
+sagaMiddleware.run(sagas);
 
 export default store;
