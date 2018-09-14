@@ -3,6 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
+        "bluebird": "^3.5.2",
         "immutable": "^3.8.2",
         "react": "^16.4.2",
         "react-dom": "^16.4.2",
@@ -15,7 +16,8 @@
         "semantic-ui-css": "^2.3.3",
         "semantic-ui-react": "^0.82.3",
         "styled-components": "^3.4.5",
-        "truffle-contract": "^3.0.6"
+        "truffle-contract": "^3.0.6",
+        "web3-eth-abi": "^1.0.0-beta.36"
     },
     "devDependencies": {
         "enzyme": "^3.6.0",

@@ -1,6 +1,4 @@
 const Dice = artifacts.require('./Dice.sol');
-
-const web3 = require('web3');
 const lodash = require('lodash');
 
 contract('Dice', accounts => {
@@ -222,16 +220,11 @@ contract('Dice', accounts => {
             encoding: 'hex',
         });
 
-        const packed = web3.eth.abi.encodeParameters(
-            ['uint40', 'uint256'],
-            commitLastBlock.toString(16),
-            commit,
-        );
-        // const packed = [
-        //     '0x',
-        //     lodash.padStart(commitLastBlock.toString(16), 10, 0),
-        //     commit.substr(2),
-        // ].join('');
+        const packed = [
+            '0x',
+            lodash.padStart(commitLastBlock.toString(16), 10, 0),
+            commit.substr(2),
+        ].join('');
 
         const hash = web3.sha3(packed, {
             encoding: 'hex',
