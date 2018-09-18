@@ -9,6 +9,9 @@ import { placeBet } from '../../../actions/dice';
 // Init form for dice game
 const withForm = reduxForm({
     form: 'dice',
+    initialValues: {
+        dices: [1],
+    },
 });
 
 // Handle form submission

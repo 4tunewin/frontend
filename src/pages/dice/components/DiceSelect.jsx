@@ -3,7 +3,8 @@ import { compose, withHandlers } from 'recompose';
 import { range, map, indexOf, without, slice } from 'lodash';
 import { Grid, Button } from 'semantic-ui-react';
 
-// Limit number of selected options to specified number
+// Limit number of selected options to specified numbers
+const MIN_SELECTED_OPTIONS = 1;
 const MAX_SELECTED_OPTIONS = 5;
 
 // List of possible dice options
@@ -40,13 +41,15 @@ const DiceSelect = ({ input: { value }, onChange }) => (
  * If the option is already selected, it will be removed from the list
  * OR will be added if is not in the list.
  *
- * Max number of selected options is limited to MAX_SELECTED_OPTIONS
+ * Number of selected options should be between MIN_SELECTED_OPTIONS and MAX_SELECTED_OPTIONS
  */
 const withOnChange = withHandlers({
     onChange: ({ input: { value, onChange } }) => option => {
         const inArray = indexOf(value, option) !== -1;
         if (inArray) {
-            onChange(without(value, option));
+            if (value.length > MIN_SELECTED_OPTIONS) {
+                onChange(without(value, option));
+            }
         } else {
             onChange(slice([...value, option], 0, MAX_SELECTED_OPTIONS));
         }
