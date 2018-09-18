@@ -10,6 +10,7 @@ const withForm = reduxForm({
     form: 'dice',
     initialValues: {
         dices: [1],
+        amount: 0.05,
     },
 });
 
