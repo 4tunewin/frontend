@@ -1,16 +1,14 @@
-import { takeEvery, call } from 'redux-saga/effects';
+import { takeEvery, call, put } from 'redux-saga/effects';
 import gql from 'graphql-tag';
-import { padStart } from 'lodash';
-import { promisify } from 'bluebird';
 
 import { client } from '../providers/ApolloProvider';
 import { DiceContract } from '../contracts';
-import config from '../config';
+import { placeBetFailed, placeBetSucceeded } from '../actions/dice';
 
-// Maximal blocks offset where "commit" is still considered valid
-const COMMIT_BLOCK_OFFSET = 200;
-
-export function* placeBidAsync({ type, payload }) {
+/**
+ * Send a new bet to smart contract
+ */
+export function* placeBetAsync({ type, payload }) {
     const { web3 } = window;
 
     // Get signature for a new bet
@@ -29,47 +27,38 @@ export function* placeBidAsync({ type, payload }) {
         }
     `;
 
-    const signature = yield call(client.mutate, {
+    const { data } = yield call(client.mutate, {
         mutation,
         variables: {
             input: { address: web3.eth.accounts[0], network: 1 },
         },
     });
-    console.log(signature);
 
-    console.log(
-        1,
-        6,
-        signature.data.signBet.commitLastBlock,
-        signature.data.signBet.commit,
-        signature.data.signBet.signature.v,
-        signature.data.signBet.signature.r,
-        signature.data.signBet.signature.s,
-    );
+    const { commit, commitLastBlock, signature } = data.signBet;
 
     const diceInstance = yield call(DiceContract.deployed);
-    yield diceInstance.placeBet(
-        1,
-        6,
-        signature.data.signBet.commitLastBlock,
-        signature.data.signBet.commit,
-        signature.data.signBet.signature.v,
-        signature.data.signBet.signature.r,
-        signature.data.signBet.signature.s,
-        {
-            from: web3.eth.accounts[0],
-            value: web3.toWei(0.1, 'ether'),
-        },
-    );
 
-    // yield DiceContract.deployed().then(instance => {
-    //     return instance.placeBet(1, 6, commitLastBlock, commit, v, r, s, {
-    //         from: web3.eth.accounts[0],
-    //         value: web3.toWei(0.1, 'ether'),
-    //     });
-    // });
+    try {
+        yield diceInstance.placeBet(
+            1,
+            payload.modulo,
+            commitLastBlock,
+            commit,
+            signature.v,
+            signature.r,
+            signature.s,
+            {
+                from: web3.eth.accounts[0],
+                value: web3.toWei(payload.amount, 'ether'),
+            },
+        );
+
+        yield put(placeBetSucceeded());
+    } catch (e) {
+        yield put(placeBetFailed(e.message));
+    }
 }
 
-export function* watchPlaceBidAsync() {
-    yield takeEvery('DICE.PLACE_BID_ASYNC', placeBidAsync);
+export function* watchPlaceBetAsync() {
+    yield takeEvery('DICE.PLACE_BET_ASYNC', placeBetAsync);
 }

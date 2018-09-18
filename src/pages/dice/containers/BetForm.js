@@ -3,7 +3,6 @@ import { compose, withHandlers } from 'recompose';
 import { connect } from 'react-redux';
 
 import BetForm from '../components/BetForm';
-import { DiceContract } from '../../../contracts';
 import { placeBet } from '../../../actions/dice';
 
 // Init form for dice game
@@ -17,7 +16,7 @@ const withForm = reduxForm({
 // Handle form submission
 const withSubmit = withHandlers({
     onSubmit: ownProps => form => {
-        ownProps.placeBet(form);
+        ownProps.placeBet({ modulo: 6, ...form });
     },
 });
 

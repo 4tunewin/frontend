@@ -5,7 +5,7 @@ import React from 'react';
 import { Grid } from 'semantic-ui-react';
 
 import WinningChance from '../containers/WinningChance';
-import BetReturns from './BetReturns';
+import BetReturns from '../containers/BetReturns';
 
 const GameReturns = () => (
     <Grid columns={1}>

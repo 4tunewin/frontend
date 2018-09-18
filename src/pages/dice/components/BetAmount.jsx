@@ -3,7 +3,7 @@ import { map } from 'lodash';
 import { Button, Input, Grid } from 'semantic-ui-react';
 
 // List of possible bet options
-const options = [0.05, 0.1, 0.15, 'max'];
+const options = [0.05, 0.1, 0.15, 0.4];
 
 const BetAmountOption = ({ option, active, onClick }) => (
     <Button

@@ -1,5 +1,5 @@
 /**
- * Games math helpers
+ * Dice game helpers
  */
 
 import { floor } from 'lodash';
@@ -18,7 +18,7 @@ import {
  * @param {Number} modulo    - Modulo of a game
  * @param {Number} rollUnder - Number of winning outcomes
  */
-export const getDiceWinAmount = (amount, modulo, rollUnder) => {
+export const getWinAmount = (amount, modulo, rollUnder) => {
     if (rollUnder <= 0 || rollUnder > modulo) {
         return -1;
     }
