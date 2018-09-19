@@ -4,4 +4,4 @@ node_modules
 yarn-error.log
 
 # Ignore build files of contracts
-src/contracts/.json
+src/contracts/*.json
