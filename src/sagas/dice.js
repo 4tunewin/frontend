@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 
 import { client } from '../providers/ApolloProvider';
 import { DiceContract } from '../contracts';
-import { placeBetFailed, placeBetSucceeded } from '../actions/dice';
+import { placeBetSucceeded } from '../actions/dice';
 
 /**
  * Send a new bet to smart contract
