@@ -1,4 +1,4 @@
-import { reduxForm } from 'redux-form';
+import { reduxForm, SubmissionError } from 'redux-form';
 import { compose, withHandlers } from 'recompose';
 import { connect } from 'react-redux';
 
@@ -16,8 +16,12 @@ const withForm = reduxForm({
 
 // Handle form submission
 const withSubmit = withHandlers({
-    onSubmit: ownProps => form => {
-        ownProps.placeBet({ modulo: 6, ...form });
+    onSubmit: ({ placeBet }) => form => {
+        return new Promise((resolve, reject) => {
+            placeBet(resolve, reject, { modulo: 6, ...form });
+        }).catch(error => {
+            throw new SubmissionError(error);
+        });
     },
 });
 

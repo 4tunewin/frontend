@@ -8,7 +8,7 @@ import { placeBetFailed, placeBetSucceeded } from '../actions/dice';
 /**
  * Send a new bet to smart contract
  */
-export function* placeBetAsync({ type, payload }) {
+export function* placeBetAsync({ type, payload, resolve, reject }) {
     const { web3 } = window;
 
     // Get signature for a new bet
@@ -54,8 +54,9 @@ export function* placeBetAsync({ type, payload }) {
         );
 
         yield put(placeBetSucceeded());
+        yield call(resolve);
     } catch (e) {
-        yield put(placeBetFailed(e.message));
+        yield call(reject, { _error: "Can't place the bet" });
     }
 }
 

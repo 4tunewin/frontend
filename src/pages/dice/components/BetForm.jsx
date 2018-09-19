@@ -1,13 +1,14 @@
 import React from 'react';
 import { Field } from 'redux-form';
-import { Grid, Form } from 'semantic-ui-react';
+import { Grid, Form, Message } from 'semantic-ui-react';
 
 import DiceSelect from './DiceSelect';
 import BetAmount from './BetAmount';
 import BetButton from './BetButton';
-import BetFailed from '../containers/BetFailed';
 
-const BetForm = ({ handleSubmit }) => (
+const ErrorMessage = ({ error }) => <Message negative>{error}</Message>;
+
+const BetForm = ({ handleSubmit, error }) => (
     <Form onSubmit={handleSubmit}>
         <Grid columns={1}>
             <Grid.Column>
@@ -18,7 +19,7 @@ const BetForm = ({ handleSubmit }) => (
             </Grid.Column>
             <Grid.Column>
                 <BetButton onClick={handleSubmit} />
-                <BetFailed />
+                {error && <ErrorMessage error={error} />}
             </Grid.Column>
         </Grid>
     </Form>
