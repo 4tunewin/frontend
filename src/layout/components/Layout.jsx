@@ -7,13 +7,13 @@ import { DicePage } from '../../pages';
 import Navigation from './Navigation';
 
 const StyledContainer = styled(Container)`
-    padding-top: 20px;
+    padding-top: 100px;
     padding-bottom: 20px;
 `;
 
 const Layout = () => (
     <StyledContainer>
-        <Navigation />
+        {/* <Navigation /> */}
         <div>
             <Route path="/" component={DicePage} />
         </div>
