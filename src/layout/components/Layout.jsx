@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
 
 import { DicePage } from '../../pages';
-import Navigation from './Navigation';
+// import Navigation from './Navigation';
 
 const StyledContainer = styled(Container)`
     padding-top: 100px;
