@@ -2,7 +2,7 @@
  * Dice game helpers
  */
 
-import { floor } from 'lodash';
+import { floor, reduce } from 'lodash';
 
 import {
     HOUSE_EDGE_MINIMUM_AMOUNT,
@@ -36,4 +36,19 @@ export const getWinAmount = (amount, modulo, rollUnder) => {
     }
 
     return floor(((amount - houseEdge - jackpotFee) * modulo) / rollUnder, 3);
+};
+
+/**
+ * Conver array of bets into binary bet mask
+ *
+ * @param {Array} bets - List of bets
+ */
+export const getBetMask = bets => {
+    return reduce(
+        bets,
+        (result, bet) => {
+            return result ^ (1 << (bet - 1));
+        },
+        0,
+    );
 };

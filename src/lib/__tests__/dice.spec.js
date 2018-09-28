@@ -1,4 +1,4 @@
-import { getWinAmount } from '../math';
+import { getWinAmount, getBetMask } from '../dice';
 
 describe('math', () => {
     describe('getWinAmount', () => {
@@ -29,23 +29,19 @@ describe('math', () => {
             expect(getWinAmount(0.05, 36, 6)).toEqual(0.297);
         });
     });
+
+    describe('getBetMask', () => {
+        it('should return single turned on bit for single bet', () => {
+            expect(getBetMask([1])).toEqual(0b1);
+            expect(getBetMask([2])).toEqual(0b10);
+            expect(getBetMask([3])).toEqual(0b100);
+            expect(getBetMask([4])).toEqual(0b1000);
+        });
+
+        it('should return multiple turned on bits for complex bet', () => {
+            expect(getBetMask([1, 2])).toEqual(0b11);
+            expect(getBetMask([1, 2, 3])).toEqual(0b111);
+            expect(getBetMask([1, 2, 3, 4])).toEqual(0b1111);
+        });
+    });
 });
-
-// 2  - 1;1
-// 3  - 1;2
-// 4  - 1;3 2;2
-// 6  - 1;5 2;4 3;3
-// 7  - 1;6 2;5 3;4
-// 8  - 2;6 3;5 4;4
-// 9  - 3;6 4;5
-// 10 - 6;4 5;5
-
-// 01 000011 - 2,3
-
-// 6      5      4      3      2      1
-// 000001 000010 000100 001000 010000 100000 - 7
-// 001001 010010 100100 001000 010000 100001 - 2,7,10
-// 000011 000111 001110 011100 111000 110000 - 6,7,8
-//                                  10000000
-
-// 001111 011111 111110 111101 111010 110100 - 4,6,7,8,9,10
