@@ -1,8 +1,21 @@
 import React from 'react';
 import { compose, branch, renderComponent } from 'recompose';
-import { Table, Loader } from 'semantic-ui-react';
+import { isEmpty } from 'lodash';
+import { Table, Loader, Message } from 'semantic-ui-react';
 
 import GameHistoryItem from './GameHistoryItem';
+
+/**
+ * Spinner component to show while loading history of games
+ */
+const Spinner = () => <Loader size="large" active />;
+
+/**
+ * Message to show if list of games is empty
+ */
+const EmptyMessage = () => (
+    <Message info>There are no games yet, be the first!</Message>
+);
 
 const GameHistory = ({ history }) => (
     <Table basic="very" celled>
@@ -24,6 +37,15 @@ const GameHistory = ({ history }) => (
 );
 
 // Show spinner while loading game history
-const withSpinner = branch(({ loading }) => loading, renderComponent(Loader));
+const withSpinner = branch(({ loading }) => loading, renderComponent(Spinner));
 
-export default compose(withSpinner)(GameHistory);
+// Show message if list of games is empty
+const withEmptyMessage = branch(
+    ({ history }) => isEmpty(history),
+    renderComponent(EmptyMessage),
+);
+
+export default compose(
+    withSpinner,
+    withEmptyMessage,
+)(GameHistory);
