@@ -88,9 +88,19 @@ const computeDiceOutcome = ({ betMask, betBlockHash, reveal }) => {
  * @param {String} betBlockHash - A hash of block when bet was placed
  * @param {String} reveal       - A secret number revelaed by croupier
  */
-export const computeOutcome = ({ modulo, betMask, betBlockHash, reveal }) => {
+export const computeOutcome = ({
+    modulo,
+    betMask,
+    betBlockHash,
+    reveal,
+}: {
+    modulo: number,
+    betMask: string,
+    betBlockHash: string,
+    reveal: string,
+}) => {
     const games = {
-        6: computeDiceOutcome,
+        '6': computeDiceOutcome,
     };
 
     return games[modulo]({ betMask, betBlockHash, reveal });
@@ -101,7 +111,7 @@ export const computeOutcome = ({ modulo, betMask, betBlockHash, reveal }) => {
  *
  * @param {Array} indexes - List of indexes
  */
-export const setBitsForIndexes = indexes => {
+export const setBitsForIndexes = (indexes: Array<number>) => {
     return reduce(
         indexes,
         (result, index) => {
@@ -116,8 +126,8 @@ export const setBitsForIndexes = indexes => {
  *
  * @param {Number} - The number to extract indexes of set bits
  */
-export const indexesOfSetBits = number => {
-    let indexes = [],
+export const indexesOfSetBits = (number: number) => {
+    let indexes: Array<number> = [],
         index = 0;
 
     while (number) {
@@ -134,7 +144,7 @@ export const indexesOfSetBits = number => {
  *
  * @param {Array} arr - An array of hashes to pack and encode
  */
-export const encodePacked = arr => {
+export const encodePacked = (arr: Array<string>) => {
     const packed = arr.map(item => item.replace('0x', '')).join('');
 
     const blocks = [];
