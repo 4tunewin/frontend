@@ -34,3 +34,13 @@ export const placeBetFailed = (message: string) => ({
     type: 'DICE.PLACE_BET_FAILED',
     message,
 });
+
+/**
+ * Filter history of games
+ *
+ * @param {Object} filters - Set of filters
+ */
+export const filterHistory = (filters: { gambler: string }) => ({
+    type: 'DICE.FILTER_HISTORY',
+    filters,
+});

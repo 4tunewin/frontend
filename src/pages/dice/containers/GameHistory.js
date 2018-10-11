@@ -1,6 +1,8 @@
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
-import { compose, lifecycle } from 'recompose';
+import { connect } from 'react-redux';
+import { compose, lifecycle, withProps } from 'recompose';
+import { filter, matches } from 'lodash';
 
 import GameHistory from '../components/GameHistory';
 
@@ -66,11 +68,34 @@ const subscribeToGames = (subscribeToMore, variables) =>
         },
     });
 
+/**
+ * Subscribe to new games on component mount
+ */
 const componentDidMount = function() {
     subscribeToGames(this.props.subscribeToMore);
+};
+
+/**
+ * Filter game history on provided filters
+ */
+const withFilters = withProps(({ loading, history, filters }) => {
+    if (loading || !filters) return { history };
+
+    const filteredHistory = filter(history, item => {
+        return matches(filters)(item.bet);
+    });
+
+    return { history: filteredHistory };
+});
+
+const mapStateToProps = ({ dice }) => {
+    const filters = dice.get('filters');
+    return { filters: filters ? filters.toJS() : {} };
 };
 
 export default compose(
     withData,
     lifecycle({ componentDidMount }),
+    connect(mapStateToProps),
+    withFilters,
 )(GameHistory);
