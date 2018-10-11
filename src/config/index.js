@@ -5,7 +5,7 @@
  */
 import development from './config.dev';
 import production from './config.prod';
-import test from './config.test';
+import test from './config.jest';
 
 const env = process.env.REACT_APP_ENV || process.env.NODE_ENV || 'development';
 

@@ -3,6 +3,7 @@ import { Container, Grid } from 'semantic-ui-react';
 
 import BetForm from '../containers/BetForm';
 import GameReturns from './GameReturns';
+import GameHistory from '../containers/GameHistory';
 
 const DicePage = () => (
     <Container>
@@ -13,7 +14,9 @@ const DicePage = () => (
             <Grid.Column>
                 <GameReturns />
             </Grid.Column>
-            <Grid.Column>[RESULTS]</Grid.Column>
+            <Grid.Column>
+                <GameHistory />
+            </Grid.Column>
         </Grid>
     </Container>
 );

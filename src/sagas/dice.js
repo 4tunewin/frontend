@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import { client } from '../providers/ApolloProvider';
 import { DiceContract } from '../contracts';
 import { placeBetSucceeded } from '../actions/dice';
-import { getBetMask } from '../lib/dice';
+import { setBitsForIndexes } from '../lib/dice';
 
 /**
  * Send a new bet to smart contract
@@ -41,7 +41,7 @@ export function* placeBetAsync({ type, payload, resolve, reject }) {
 
     try {
         yield diceInstance.placeBet(
-            getBetMask(payload.dices),
+            setBitsForIndexes(payload.dices),
             payload.modulo,
             commitLastBlock,
             commit,

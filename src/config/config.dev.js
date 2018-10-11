@@ -2,6 +2,6 @@
 export default {
     network: '*', // match all networks id
     graphql: {
-        uri: 'http://localhost:8080',
+        uri: 'localhost:8080',
     },
 };

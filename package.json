@@ -3,11 +3,17 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
-        "apollo-boost": "^0.1.16",
+        "apollo-cache-inmemory": "^1.2.10",
+        "apollo-client": "^2.4.2",
+        "apollo-link-http": "^1.5.5",
+        "apollo-link-ws": "^1.0.9",
+        "bignumber.js": "^7.2.1",
         "bluebird": "^3.5.2",
         "graphql": "^14.0.2",
         "graphql-tag": "^2.9.2",
+        "identicon.js": "^2.3.3",
         "immutable": "^3.8.2",
+        "js-sha3": "^0.8.0",
         "react": "^16.4.2",
         "react-apollo": "^2.1.11",
         "react-dom": "^16.4.2",
@@ -20,6 +26,7 @@
         "semantic-ui-css": "^2.3.3",
         "semantic-ui-react": "^0.82.3",
         "styled-components": "^3.4.5",
+        "subscriptions-transport-ws": "^0.9.15",
         "truffle-contract": "^3.0.6",
         "web3-eth-abi": "^1.0.0-beta.36"
     },
@@ -27,7 +34,8 @@
         "enzyme": "^3.6.0",
         "enzyme-adapter-react-16": "^1.5.0",
         "flow-bin": "^0.80.0",
-        "react-scripts": "1.1.5"
+        "react-scripts": "1.1.5",
+        "web3": "0.20.6"
     },
     "scripts": {
         "start": "react-scripts start",

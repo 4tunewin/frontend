@@ -1,8 +1,12 @@
 /**
  * Dice game helpers
+ *
+ * @flow
  */
 
 import { floor, reduce } from 'lodash';
+import { keccak256 } from 'js-sha3';
+import BigNumber from 'bignumber.js';
 
 import {
     HOUSE_EDGE_MINIMUM_AMOUNT,
@@ -18,7 +22,11 @@ import {
  * @param {Number} modulo    - Modulo of a game
  * @param {Number} rollUnder - Number of winning outcomes
  */
-export const getWinAmount = (amount, modulo, rollUnder) => {
+export const getWinAmount = (
+    amount: number,
+    modulo: number,
+    rollUnder: number,
+) => {
     if (rollUnder <= 0 || rollUnder > modulo) {
         return -1;
     }
@@ -38,17 +46,101 @@ export const getWinAmount = (amount, modulo, rollUnder) => {
     return floor(((amount - houseEdge - jackpotFee) * modulo) / rollUnder, 3);
 };
 
+export const eligebleForJackpot = (amount: string) => {
+    const { web3 } = window;
+    return new BigNumber(amount).gte(web3.toWei(MIN_JACKPOT_BET, 'ether'));
+};
+
 /**
- * Conver array of bets into binary bet mask
+ * Get outcome for game with modulo 6 (basic dice)
  *
- * @param {Array} bets - List of bets
+ * @param {String} betMask      - A binary mask of placed bet
+ * @param {String} betBlockHash - A hash of block when bet was placed
+ * @param {String} reveal       - A secret number revelaed by croupier
  */
-export const getBetMask = bets => {
-    return reduce(
+const computeDiceOutcome = ({ betMask, betBlockHash, reveal }) => {
+    const options = ['1', '2', '3', '4', '5', '6'];
+    const bets = indexesOfSetBits(betMask).map(index => options[index]);
+    const entropy = encodePacked([reveal, betBlockHash]);
+    const win = options[new BigNumber(entropy, 16).mod(6)];
+    const jackpot =
+        ((new BigNumber(entropy, 16)
+            .idiv(6)
+            .mod(1e3)
+            .toNumber() +
+            887) %
+            1e3) +
+        1;
+
+    return {
         bets,
-        (result, bet) => {
-            return result ^ (1 << (bet - 1));
+        win,
+        entropy,
+        jackpot,
+    };
+};
+
+/**
+ * Compute outcome for game with specified modulo
+ *
+ * @param {Number} modulo       - A game modulo (e.g. 2, 6, 12)
+ * @param {String} betMask      - A binary mask of placed bet
+ * @param {String} betBlockHash - A hash of block when bet was placed
+ * @param {String} reveal       - A secret number revelaed by croupier
+ */
+export const computeOutcome = ({ modulo, betMask, betBlockHash, reveal }) => {
+    const games = {
+        6: computeDiceOutcome,
+    };
+
+    return games[modulo]({ betMask, betBlockHash, reveal });
+};
+
+/**
+ * Create a mask with set bits at provided indexes
+ *
+ * @param {Array} indexes - List of indexes
+ */
+export const setBitsForIndexes = indexes => {
+    return reduce(
+        indexes,
+        (result, index) => {
+            return result ^ (1 << (index - 1));
         },
         0,
     );
+};
+
+/**
+ * Return array with positions of set bits for given number
+ *
+ * @param {Number} - The number to extract indexes of set bits
+ */
+export const indexesOfSetBits = number => {
+    let indexes = [],
+        index = 0;
+
+    while (number) {
+        if (number & 1) indexes.push(index);
+        number = number >> 1;
+        index++;
+    }
+
+    return indexes;
+};
+
+/**
+ * Pack and encode to keccak256 array of hash values
+ *
+ * @param {Array} arr - An array of hashes to pack and encode
+ */
+export const encodePacked = arr => {
+    const packed = arr.map(item => item.replace('0x', '')).join('');
+
+    const blocks = [];
+    for (let i = packed.length, j = 0; j < i; j += 2) {
+        blocks.push(parseInt(packed.substr(j, 2), 16));
+    }
+
+    return keccak256(new Uint8Array(blocks));
 };

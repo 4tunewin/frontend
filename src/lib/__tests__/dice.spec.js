@@ -1,4 +1,10 @@
-import { getWinAmount, getBetMask } from '../dice';
+import Web3 from 'web3';
+import {
+    getWinAmount,
+    setBitsForIndexes,
+    maskToBet,
+    computeOutcome,
+} from '../dice';
 
 describe('math', () => {
     describe('getWinAmount', () => {
@@ -30,18 +36,55 @@ describe('math', () => {
         });
     });
 
-    describe('getBetMask', () => {
-        it('should return single turned on bit for single bet', () => {
-            expect(getBetMask([1])).toEqual(0b1);
-            expect(getBetMask([2])).toEqual(0b10);
-            expect(getBetMask([3])).toEqual(0b100);
-            expect(getBetMask([4])).toEqual(0b1000);
+    describe('setBitsForIndexes', () => {
+        it('should return single turned on bit for single index', () => {
+            expect(setBitsForIndexes([1])).toEqual(0b1);
+            expect(setBitsForIndexes([2])).toEqual(0b10);
+            expect(setBitsForIndexes([3])).toEqual(0b100);
+            expect(setBitsForIndexes([4])).toEqual(0b1000);
         });
 
-        it('should return multiple turned on bits for complex bet', () => {
-            expect(getBetMask([1, 2])).toEqual(0b11);
-            expect(getBetMask([1, 2, 3])).toEqual(0b111);
-            expect(getBetMask([1, 2, 3, 4])).toEqual(0b1111);
+        it('should return multiple turned on bits for multiple indexes', () => {
+            expect(setBitsForIndexes([1, 2])).toEqual(0b11);
+            expect(setBitsForIndexes([1, 2, 3])).toEqual(0b111);
+            expect(setBitsForIndexes([1, 2, 3, 4])).toEqual(0b1111);
+        });
+    });
+
+    describe('maskToBet', () => {
+        it('should return array with one bet', () => {
+            expect(maskToBet('10')).toEqual([2]);
+        });
+
+        it('should return array with multiple bets', () => {
+            expect(maskToBet('101010')).toEqual([6, 4, 2]);
+        });
+    });
+
+    describe('computeOutcome', () => {
+        it('should return correct outcome for game with modulo 6 for provided arguments', () => {
+            const betMask = 21;
+            const betBlockHash =
+                '0x43f440fe1e28bc30eea8f10d65d4b5e2f774e8d4e1682c898f8ceda68c4274a3';
+            const reveal =
+                '0x1be8be1546ca11aa79df6770b63594b8d4c6ee02d77bfb4a65c2de962ee8b5c2';
+
+            const expectedResult = {
+                bets: ['1', '3', '5'],
+                win: '6',
+                entropy:
+                    'ba4c548267f02af267da07ce7b26fab9e659eec16a7d58982468483535f514a5',
+                jackpot: 80,
+            };
+
+            expect(
+                computeOutcome({
+                    modulo: 6,
+                    betMask,
+                    betBlockHash,
+                    reveal,
+                }),
+            ).toEqual(expectedResult);
         });
     });
 });
