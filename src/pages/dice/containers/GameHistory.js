@@ -2,9 +2,12 @@ import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { connect } from 'react-redux';
 import { compose, lifecycle, withProps } from 'recompose';
-import { filter, matches } from 'lodash';
+import { filter, matches, slice } from 'lodash';
 
 import GameHistory from '../components/GameHistory';
+
+// Limit number if results to specified number
+const MAX_HISTORY_RESULTS = 10;
 
 // Game entitiy fragment
 const GAME_FRAGMENT = gql`
@@ -76,6 +79,14 @@ const componentDidMount = function() {
 };
 
 /**
+ * Provide filters defined for game history
+ */
+const mapStateToProps = ({ dice }) => {
+    const filters = dice.get('filters');
+    return { filters: filters ? filters.toJS() : {} };
+};
+
+/**
  * Filter game history on provided filters
  */
 const withFilters = withProps(({ loading, history, filters }) => {
@@ -88,14 +99,17 @@ const withFilters = withProps(({ loading, history, filters }) => {
     return { history: filteredHistory };
 });
 
-const mapStateToProps = ({ dice }) => {
-    const filters = dice.get('filters');
-    return { filters: filters ? filters.toJS() : {} };
-};
+/**
+ * Limit number of history results
+ */
+const withLimit = withProps(({ history }) => ({
+    history: slice(history, 0, MAX_HISTORY_RESULTS),
+}));
 
 export default compose(
     withData,
     lifecycle({ componentDidMount }),
     connect(mapStateToProps),
     withFilters,
+    withLimit,
 )(GameHistory);
