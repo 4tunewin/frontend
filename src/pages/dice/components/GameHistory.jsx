@@ -1,6 +1,6 @@
 import React from 'react';
 import { isEmpty } from 'lodash';
-import { Table, Message, Segment, Header, Button } from 'semantic-ui-react';
+import { Table, Message, Segment, Header } from 'semantic-ui-react';
 
 import GameHistoryItem from './GameHistoryItem';
 import FilterHistoryButton from '../containers/FilterHistoryButton';
