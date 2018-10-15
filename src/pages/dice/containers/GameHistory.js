@@ -1,3 +1,7 @@
+/**
+ * @flow
+ */
+
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { connect } from 'react-redux';
@@ -5,6 +9,11 @@ import { compose, lifecycle, withProps } from 'recompose';
 import { filter, matches, slice } from 'lodash';
 
 import GameHistory from '../components/GameHistory';
+
+import type { OperationComponent, QueryProps } from 'react-apollo';
+import type { GetHistory } from '../../../types/graphql.js.flow';
+
+type WithDataProps = GetHistory & QueryProps;
 
 // Limit number if results to specified number
 const MAX_HISTORY_RESULTS = 10;
@@ -30,7 +39,7 @@ const GAME_FRAGMENT = gql`
 
 // Query game history results
 const GAME_HISTORY_QUERY = gql`
-    query getHistory {
+    query GetHistory {
         history {
             ...Game
         }
@@ -41,7 +50,7 @@ const GAME_HISTORY_QUERY = gql`
 
 // Subscription to a new games
 const GAME_SUBSCRIPTION = gql`
-    subscription game {
+    subscription Game {
         game {
             ...Game
         }
@@ -50,13 +59,16 @@ const GAME_SUBSCRIPTION = gql`
     ${GAME_FRAGMENT}
 `;
 
-const withData = graphql(GAME_HISTORY_QUERY, {
-    props: ({ data: { history, loading, subscribeToMore } }) => ({
-        loading,
-        history,
-        subscribeToMore,
-    }),
-});
+const withData: OperationComponent<GetHistory, {}, WithDataProps> = graphql(
+    GAME_HISTORY_QUERY,
+    {
+        props: ({ data: { history, loading, subscribeToMore } }) => ({
+            loading,
+            history,
+            subscribeToMore,
+        }),
+    },
+);
 
 const subscribeToGames = (subscribeToMore, variables) =>
     subscribeToMore({
