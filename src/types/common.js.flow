@@ -9,7 +9,3 @@ export type DiceBet = {
     r: string,
     s: string,
 };
-
-export type GameHistoryProps = {
-    
-}

@@ -1,0 +1,271 @@
+/* @flow */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GetHistory
+// ====================================================
+
+export type GetHistory_history_bet = {
+    __typename: 'Bet',
+    /**
+     * Gambler address
+     */
+    gambler: string,
+    /**
+     * Bet placed amount in wei
+     */
+    amount: string,
+    /**
+     * Bet mask
+     */
+    mask: number,
+    /**
+     * Game modulo
+     */
+    modulo: number,
+    /**
+     * The block hash of the placed bet
+     */
+    blockHash: string,
+};
+
+export type GetHistory_history_reveal = {
+    __typename: 'Reveal',
+    /**
+     * Secret number issues by croupier for the game
+     */
+    reveal: string,
+};
+
+export type GetHistory_history = {
+    __typename: 'Game',
+    /**
+     * Unique ID of the game
+     */
+    id: string,
+    /**
+     * Placed bet for the game
+     */
+    bet: GetHistory_history_bet,
+    /**
+     * Game reveal result
+     */
+    reveal: GetHistory_history_reveal,
+    /**
+     * Payment issued to gambler
+     */
+    payment: string,
+    /**
+     * Jackpot issued to gambler
+     */
+    jackpotPayment: ?string,
+};
+
+export type GetHistory = {
+    /**
+     * Return list of played games with specified modulo
+     */
+    history: Array<?GetHistory_history>,
+};
+
+/* @flow */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL subscription operation: Game
+// ====================================================
+
+export type Game_game_bet = {
+    __typename: 'Bet',
+    /**
+     * Gambler address
+     */
+    gambler: string,
+    /**
+     * Bet placed amount in wei
+     */
+    amount: string,
+    /**
+     * Bet mask
+     */
+    mask: number,
+    /**
+     * Game modulo
+     */
+    modulo: number,
+    /**
+     * The block hash of the placed bet
+     */
+    blockHash: string,
+};
+
+export type Game_game_reveal = {
+    __typename: 'Reveal',
+    /**
+     * Secret number issues by croupier for the game
+     */
+    reveal: string,
+};
+
+export type Game_game = {
+    __typename: 'Game',
+    /**
+     * Unique ID of the game
+     */
+    id: string,
+    /**
+     * Placed bet for the game
+     */
+    bet: Game_game_bet,
+    /**
+     * Game reveal result
+     */
+    reveal: Game_game_reveal,
+    /**
+     * Payment issued to gambler
+     */
+    payment: string,
+    /**
+     * Jackpot issued to gambler
+     */
+    jackpotPayment: ?string,
+};
+
+export type Game = {
+    /**
+     * Played game
+     */
+    game: ?Game_game,
+};
+
+/* @flow */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: signBet
+// ====================================================
+
+export type signBet_signBet_signature = {
+    __typename: 'Signature',
+    r: string,
+    s: string,
+    v: string,
+};
+
+export type signBet_signBet = {
+    __typename: 'SignBetPayload',
+    /**
+     * Keccak256 hash of some secret "reveal" random number
+     */
+    commit: string,
+    /**
+     * The block where "commit" is still considered valid
+     */
+    commitLastBlock: number,
+    /**
+     * ECDSA signature of (commitLastBlock, commit)
+     */
+    signature: signBet_signBet_signature,
+    /**
+     * Current gas price in wei
+     */
+    gasPrice: string,
+};
+
+export type signBet = {
+    /**
+     * Sign a game bet
+     */
+    signBet: ?signBet_signBet,
+};
+
+export type signBetVariables = {
+    input: SignBetInput,
+};
+
+/* @flow */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: Game
+// ====================================================
+
+export type Game_bet = {
+    __typename: 'Bet',
+    /**
+     * Gambler address
+     */
+    gambler: string,
+    /**
+     * Bet placed amount in wei
+     */
+    amount: string,
+    /**
+     * Bet mask
+     */
+    mask: number,
+    /**
+     * Game modulo
+     */
+    modulo: number,
+    /**
+     * The block hash of the placed bet
+     */
+    blockHash: string,
+};
+
+export type Game_reveal = {
+    __typename: 'Reveal',
+    /**
+     * Secret number issues by croupier for the game
+     */
+    reveal: string,
+};
+
+export type Game = {
+    __typename: 'Game',
+    /**
+     * Unique ID of the game
+     */
+    id: string,
+    /**
+     * Placed bet for the game
+     */
+    bet: Game_bet,
+    /**
+     * Game reveal result
+     */
+    reveal: Game_reveal,
+    /**
+     * Payment issued to gambler
+     */
+    payment: string,
+    /**
+     * Jackpot issued to gambler
+     */
+    jackpotPayment: ?string,
+};
+
+/* @flow */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+//==============================================================
+// START Enums and Input Objects
+//==============================================================
+
+export type SignBetInput = {|
+    address?: ?string,
+    network: number,
+|};
+/**
+ *  An input for game signature
+ */
+
+//==============================================================
+// END Enums and Input Objects
+//==============================================================
