@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
-import { compose, withHandlers } from 'recompose';
+import { compose, withHandlers, mapProps } from 'recompose';
+import { omit } from 'lodash';
 
 import { filterHistory } from '../../../actions/dice';
 import FilterHistoryButton from '../components/FilterHistoryButton';
@@ -21,10 +22,14 @@ const handlers = {
     },
 };
 
+// Omit specified props from passing them to component
+const withOmitProps = props => omit(props, ['filterHistory']);
+
 export default compose(
     connect(
         mapStateToProps,
         { filterHistory },
     ),
     withHandlers(handlers),
+    mapProps(withOmitProps),
 )(FilterHistoryButton);

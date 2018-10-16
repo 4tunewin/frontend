@@ -6,7 +6,7 @@ import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { connect } from 'react-redux';
 import { compose, lifecycle, withProps } from 'recompose';
-import { filter, matches, slice, reverse } from 'lodash';
+import { filter, matches, slice } from 'lodash';
 
 import GameHistory from '../components/GameHistory';
 
