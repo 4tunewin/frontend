@@ -1,5 +1,5 @@
 {
-    "layout.LanguageSelect.en": "English",
-    "layout.LanguageSelect.ru": "Русский",
+    "layout.Language.en": "English",
+    "layout.Language.ru": "Русский",
     "pages.dice.DiceHistory.header.player": "Игрок"
 }
