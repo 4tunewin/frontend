@@ -6,7 +6,7 @@ import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { connect } from 'react-redux';
 import { compose, lifecycle, withProps } from 'recompose';
-import { filter, matches, slice } from 'lodash';
+import { filter, matches, slice, reverse } from 'lodash';
 
 import GameHistory from '../components/GameHistory';
 
@@ -16,7 +16,7 @@ import type { GetHistory } from '../../../types/graphql.js.flow';
 type WithDataProps = GetHistory & QueryProps;
 
 // Limit number if results to specified number
-const MAX_HISTORY_RESULTS = 10;
+const MAX_HISTORY_RESULTS = 20;
 
 // Game entitiy fragment
 const GAME_FRAGMENT = gql`
