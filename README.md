@@ -9,3 +9,4 @@
 -   Register domain name
 -   Setup deployment process
 -   Add localization (1/2 done)
+-   Add analytics
