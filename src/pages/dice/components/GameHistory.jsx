@@ -1,15 +1,22 @@
 import React from 'react';
+import styled from 'styled-components';
 import { isEmpty } from 'lodash';
 import { Table, Message, Segment, Header } from 'semantic-ui-react';
 
 import GameHistoryItem from './GameHistoryItem';
 import FilterHistoryButton from '../containers/FilterHistoryButton';
 
+const StyledEmptyMessage = styled(Message)`
+    clear: both;
+`;
+
 /**
  * Message to show if list of games is empty
  */
 const EmptyMessage = () => (
-    <Message info>There are no games yet, be the first!</Message>
+    <StyledEmptyMessage info>
+        There are no games yet, be the first!
+    </StyledEmptyMessage>
 );
 
 const GameHistoryTable = ({ history }) => (
