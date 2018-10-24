@@ -1,6 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { ReduxProvider, Web3Provider, ApolloProvider } from './providers';
+import {
+    ReduxProvider,
+    Web3Provider,
+    ApolloProvider,
+    IntlProvider,
+} from './providers';
 
 import Layout from './layout';
 
@@ -10,7 +15,9 @@ const Providers = ({ children }) => (
     <ApolloProvider>
         <ReduxProvider>
             <Web3Provider>
-                <Router>{children}</Router>
+                <IntlProvider>
+                    <Router>{children}</Router>
+                </IntlProvider>
             </Web3Provider>
         </ReduxProvider>
     </ApolloProvider>

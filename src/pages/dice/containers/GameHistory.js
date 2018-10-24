@@ -1,10 +1,22 @@
+/**
+ * @flow
+ */
+
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { connect } from 'react-redux';
 import { compose, lifecycle, withProps } from 'recompose';
-import { filter, matches } from 'lodash';
+import { filter, matches, slice } from 'lodash';
 
 import GameHistory from '../components/GameHistory';
+
+import type { OperationComponent, QueryProps } from 'react-apollo';
+import type { GetHistory } from '../../../types/graphql.js.flow';
+
+type WithDataProps = GetHistory & QueryProps;
+
+// Limit number if results to specified number
+const MAX_HISTORY_RESULTS = 20;
 
 // Game entitiy fragment
 const GAME_FRAGMENT = gql`
@@ -27,7 +39,7 @@ const GAME_FRAGMENT = gql`
 
 // Query game history results
 const GAME_HISTORY_QUERY = gql`
-    query getHistory {
+    query GetHistory {
         history {
             ...Game
         }
@@ -38,7 +50,7 @@ const GAME_HISTORY_QUERY = gql`
 
 // Subscription to a new games
 const GAME_SUBSCRIPTION = gql`
-    subscription game {
+    subscription Game {
         game {
             ...Game
         }
@@ -47,13 +59,16 @@ const GAME_SUBSCRIPTION = gql`
     ${GAME_FRAGMENT}
 `;
 
-const withData = graphql(GAME_HISTORY_QUERY, {
-    props: ({ data: { history, loading, subscribeToMore } }) => ({
-        loading,
-        history,
-        subscribeToMore,
-    }),
-});
+const withData: OperationComponent<GetHistory, {}, WithDataProps> = graphql(
+    GAME_HISTORY_QUERY,
+    {
+        props: ({ data: { history, loading, subscribeToMore } }) => ({
+            loading,
+            history,
+            subscribeToMore,
+        }),
+    },
+);
 
 const subscribeToGames = (subscribeToMore, variables) =>
     subscribeToMore({
@@ -76,6 +91,14 @@ const componentDidMount = function() {
 };
 
 /**
+ * Provide filters defined for game history
+ */
+const mapStateToProps = ({ dice }) => {
+    const filters = dice.get('filters');
+    return { filters: filters ? filters.toJS() : {} };
+};
+
+/**
  * Filter game history on provided filters
  */
 const withFilters = withProps(({ loading, history, filters }) => {
@@ -88,14 +111,17 @@ const withFilters = withProps(({ loading, history, filters }) => {
     return { history: filteredHistory };
 });
 
-const mapStateToProps = ({ dice }) => {
-    const filters = dice.get('filters');
-    return { filters: filters ? filters.toJS() : {} };
-};
+/**
+ * Limit number of history results
+ */
+const withLimit = withProps(({ history }) => ({
+    history: slice(history, 0, MAX_HISTORY_RESULTS),
+}));
 
 export default compose(
     withData,
     lifecycle({ componentDidMount }),
     connect(mapStateToProps),
     withFilters,
+    withLimit,
 )(GameHistory);

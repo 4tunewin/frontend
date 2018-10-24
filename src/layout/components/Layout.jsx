@@ -4,16 +4,16 @@ import { Route } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
 
 import { DicePage } from '../../pages';
-// import Navigation from './Navigation';
+import Navigation from './Navigation';
 
 const StyledContainer = styled(Container)`
-    padding-top: 100px;
+    padding-top: 20px;
     padding-bottom: 20px;
 `;
 
 const Layout = () => (
     <StyledContainer>
-        {/* <Navigation /> */}
+        <Navigation />
         <div>
             <Route path="/" component={DicePage} />
         </div>

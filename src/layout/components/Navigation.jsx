@@ -1,12 +1,19 @@
 import React from 'react';
 import { Menu } from 'semantic-ui-react';
 
+import Balance from '../containers/Balance';
+import Language from '../containers/Language';
+
 const Navigation = () => (
     <Menu>
-        <Menu.Item>Coin flip</Menu.Item>
-        <Menu.Item>Roll a dice</Menu.Item>
-        <Menu.Item>Two dice</Menu.Item>
-        <Menu.Item>Etheroll</Menu.Item>
+        <Menu.Menu position="right">
+            <Menu.Item>
+                <Balance />
+            </Menu.Item>
+            <Menu.Item>
+                <Language />
+            </Menu.Item>
+        </Menu.Menu>
     </Menu>
 );
 
