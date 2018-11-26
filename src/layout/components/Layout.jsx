@@ -1,22 +1,31 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import { Route } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
 
 import { DicePage } from '../../pages';
-import Navigation from './Navigation';
+import Header from './Header';
+import Footer from './Footer';
+
+const Background = createGlobalStyle`
+    body {
+    }
+`;
 
 const StyledContainer = styled(Container)`
     padding-top: 20px;
     padding-bottom: 20px;
+    background: #182038 !important;
 `;
 
 const Layout = () => (
     <StyledContainer>
-        <Navigation />
+        <Background />
+        <Header />
         <div>
             <Route path="/" component={DicePage} />
         </div>
+        <Footer />
     </StyledContainer>
 );
 
