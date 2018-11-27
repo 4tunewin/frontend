@@ -9,7 +9,7 @@ import BetReturns from '../../containers/returns/BetReturns';
 import JackpotAmount from '../../containers/returns/JackpotAmount';
 
 const GameReturns = () => (
-    <Grid columns={1}>
+    <Grid columns={3}>
         <Grid.Column textAlign="center">
             <WinningChance />
         </Grid.Column>

@@ -1,7 +1,10 @@
 import React from 'react';
+import styled from 'styled-components';
 import { compose, withHandlers } from 'recompose';
 import { range, map, indexOf, without, slice } from 'lodash';
 import { Grid, Button } from 'semantic-ui-react';
+
+import Dice from './Dice';
 
 // Limit number of selected options to specified numbers
 const MIN_SELECTED_OPTIONS = 1;
@@ -10,21 +13,26 @@ const MAX_SELECTED_OPTIONS = 5;
 // List of possible dice options
 const options = range(1, 7);
 
+const Wrapper = styled.div`
+    width: 300px;
+`;
+
+const StyledDice = styled(Dice)`
+    margin: 0px 10px 10px 10px;
+`;
+
 const DiceOption = ({ value, active, onClick }) => (
-    <Grid.Column>
-        <Button
-            onClick={() => onClick(value)}
-            active={active}
-            type="button"
-            color={active ? 'green' : 'teal'}
-        >
-            {value}
-        </Button>
-    </Grid.Column>
+    <StyledDice
+        option={value}
+        onClick={() => onClick(value)}
+        active={active}
+        size={60}
+        radius="15%"
+    />
 );
 
 const DiceSelect = ({ input: { value }, onChange }) => (
-    <Grid columns={3} textAlign="center">
+    <Wrapper>
         {map(options, (option, idx) => (
             <DiceOption
                 key={idx}
@@ -33,7 +41,7 @@ const DiceSelect = ({ input: { value }, onChange }) => (
                 onClick={onChange}
             />
         ))}
-    </Grid>
+    </Wrapper>
 );
 
 /**

@@ -3,10 +3,10 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
 import { Map } from 'immutable';
-import { ReduxProvider, CenteredContent } from '../../../../storybook';
+import { ReduxProvider, CenteredContent } from '../../../../../storybook';
 import BetButton from '../BetButton';
 
-storiesOf('dice/BetButton', module)
+storiesOf('dice/bet/BetButton', module)
     .addDecorator(story => (
         <ReduxProvider
             store={{ user: () => new Map({ accounts: [1] }) }}

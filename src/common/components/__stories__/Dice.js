@@ -10,12 +10,12 @@ storiesOf('common/Dice', module)
     .addDecorator(story => <CenteredContent story={story()} />)
     .add('all options', () => (
         <div>
-            <Dice option="one" size={200} />
-            <Dice option="two" size={200} />
-            <Dice option="three" size={200} />
-            <Dice option="four" size={200} />
-            <Dice option="five" size={200} />
-            <Dice option="six" size={200} />
+            <Dice option="one" size={150} />
+            <Dice option="two" size={150} />
+            <Dice option="three" size={150} />
+            <Dice option="four" size={150} />
+            <Dice option="five" size={150} />
+            <Dice option="six" size={150} />
         </div>
     ))
     .add('one', () => <Dice option="one" size={400} />)
@@ -24,7 +24,7 @@ storiesOf('common/Dice', module)
     .add('four', () => <Dice option="four" size={400} />)
     .add('five', () => <Dice option="five" size={400} />)
     .add('six', () => <Dice option="six" size={400} />)
-    .add('custom size', () => (
+    .add('different size', () => (
         <div>
             <Dice option="one" size={16} />
             <Dice option="two" size={24} />

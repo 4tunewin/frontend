@@ -4,11 +4,12 @@ import { isEmpty } from 'lodash';
 import { Table, Message, Segment, Header } from 'semantic-ui-react';
 import { FormattedMessage } from 'react-intl';
 
+import GameHistoryTab from './GameHistoryTab';
 import GameHistoryItem from './GameHistoryItem';
-import FilterHistoryButton from '../../containers/FilterHistoryButton';
 
 const Container = styled(Segment)`
     background: #27304d !important;
+    border-radius: 12px !important;
 `;
 
 const StyledTable = styled(Table)`
@@ -38,9 +39,13 @@ const TableHeaderCell = styled(Table.HeaderCell)`
     border-bottom: 1px solid #3d455f !important;
 `;
 
-const StyledMessage = styled(Message)`
+const StyledMessage = styled.div`
     clear: both;
     text-align: center;
+    line-height: 40px;
+    font-size: 14px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.5);
 `;
 
 /**
@@ -72,10 +77,12 @@ const GameHistoryTable = ({ history }) => (
     </StyledTable>
 );
 
+const TabItem = styled.a``;
+
 const GameHistory = ({ loading, history }) => (
     <Container loading={loading}>
-        <Header floated="left">Games history</Header>
-        <FilterHistoryButton floated="right" />
+        <GameHistoryTab />
+
         {isEmpty(history) ? (
             <EmptyMessage />
         ) : (
