@@ -1,18 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { compose, withProps } from 'recompose';
-import { truncate } from 'lodash';
-import { Table } from 'semantic-ui-react';
+import { truncate, indexOf } from 'lodash';
 
 import { computeOutcome, eligebleForJackpot } from '../../../../lib/dice';
 
+import Table from './HistoryTable';
 import DiceOption from './DiceOption';
 import { HashAvatar } from '../../../../common';
-
-const TableRow = styled(Table.Row)`
-    color: #ffffff;
-    font-size: 12px;
-`;
 
 const StyledAvatar = styled(HashAvatar)`
     margin-right: 5px;
@@ -37,11 +32,12 @@ const formatAmount = value => {
 };
 
 const GameHistoryItem = ({ game, bets, jackpot, win }) => (
-    <TableRow key={game.id}>
-        <Table.Cell>
+    <Table.Row key={game.id}>
+        <Table.Cell width="30%">
             <CenteredContent>
                 <StyledAvatar
                     hash={game.bet.gambler}
+                    size={21}
                     options={{
                         foreground: [255, 255, 255, 255],
                         background: [0, 0, 0, 0],
@@ -50,15 +46,18 @@ const GameHistoryItem = ({ game, bets, jackpot, win }) => (
                 {truncate(game.bet.gambler, { length: 8, omission: '' })}
             </CenteredContent>
         </Table.Cell>
-        <Table.Cell>
+        <Table.Cell width="30%">
             <CenteredContent>
                 {formatAmount(game.bet.amount)}
                 <DiceOption options={bets} />
             </CenteredContent>
         </Table.Cell>
-        <Table.Cell>
+        <Table.Cell width="20%">
             <CenteredContent>
-                <DiceOption options={[win]} />
+                <DiceOption
+                    options={[win]}
+                    highlight={indexOf(bets, win) !== -1}
+                />
                 <WinAmount>
                     {game.payment === '0' ? (
                         <span>&mdash;</span>
@@ -68,7 +67,7 @@ const GameHistoryItem = ({ game, bets, jackpot, win }) => (
                 </WinAmount>
             </CenteredContent>
         </Table.Cell>
-        <Table.Cell>
+        <Table.Cell width="20%">
             <WinAmount>
                 {eligebleForJackpot(game.bet.amount) ? (
                     jackpot
@@ -77,7 +76,7 @@ const GameHistoryItem = ({ game, bets, jackpot, win }) => (
                 )}
             </WinAmount>
         </Table.Cell>
-    </TableRow>
+    </Table.Row>
 );
 
 // Props with current game outcome values

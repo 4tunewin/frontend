@@ -4,7 +4,8 @@
  */
 import React from 'react';
 import styled from 'styled-components';
-import Statistic from './Statistic';
+
+import StatsHelper from './StatsHelper';
 
 import {
     HOUSE_EDGE_PERCENT,
@@ -12,9 +13,16 @@ import {
     JACKPOT_FEE,
 } from '../../../../config/const';
 
+const Wrapper = styled.div`
+    display: inline-block;
+    text-align: left;
+    min-width: 176px;
+`;
+
 const Note = styled.div`
     margin-top: 5px;
     color: rgba(255, 255, 255, 0.6);
+    font-family: 'Proxima Nova Regular';
 
     & p {
         margin-bottom: 2px;
@@ -26,16 +34,16 @@ const WinAmount = styled.span`
 `;
 
 const BetReturns = ({ amount, winPays, winAmount }) => (
-    <div>
-        <Statistic>
-            <Statistic.Left>
-                <Statistic.Image src="images/returns/bet-win.png" />
-            </Statistic.Left>
-            <Statistic.Right>
-                <Statistic.Label>Bet wins</Statistic.Label>
-                <Statistic.Value>x {winPays.toFixed(2)}</Statistic.Value>
-            </Statistic.Right>
-        </Statistic>
+    <Wrapper>
+        <StatsHelper>
+            <StatsHelper.Left>
+                <StatsHelper.Image src="images/returns/bet-win.png" />
+            </StatsHelper.Left>
+            <StatsHelper.Right>
+                <StatsHelper.Label>Bet wins</StatsHelper.Label>
+                <StatsHelper.Value>x {winPays.toFixed(2)}</StatsHelper.Value>
+            </StatsHelper.Right>
+        </StatsHelper>
         <Note>
             <p>
                 You can win: <WinAmount>{winAmount.toFixed(3)} ETH</WinAmount>
@@ -47,7 +55,7 @@ const BetReturns = ({ amount, winPays, winAmount }) => (
                 )}
             </p>
         </Note>
-    </div>
+    </Wrapper>
 );
 
 export default BetReturns;

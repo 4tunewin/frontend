@@ -1,4 +1,6 @@
-import { withHandlers } from 'recompose';
+import { connect } from 'react-redux';
+import { getFormValues } from 'redux-form';
+import { compose, withHandlers } from 'recompose';
 
 import { DiceContract } from '../../../../contracts';
 import JackpotAmount from '../../components/returns/JackpotAmount';
@@ -13,10 +15,20 @@ const fetchJackpotAsync = ownProps => () => {
         })
         .then(jackpotSize => {
             return window.web3.fromWei(jackpotSize, 'ether');
-        })
-        .then(jackpotSize => {
-            return jackpotSize.toFixed(3);
         });
 };
 
-export default withHandlers({ fetchJackpotAsync })(JackpotAmount);
+/**
+ * Provide amount value specified in form
+ */
+const mapStateToProps = state => {
+    const values = getFormValues('dice')(state);
+    return {
+        amount: values.amount,
+    };
+};
+
+export default compose(
+    withHandlers({ fetchJackpotAsync }),
+    connect(mapStateToProps),
+)(JackpotAmount);

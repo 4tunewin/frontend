@@ -1,21 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
-import { map, isString } from 'lodash';
-import { Grid } from 'semantic-ui-react';
+import { map } from 'lodash';
 
 import BetAmountButton from './BetAmountButton';
 import BetAmountInput from './BetAmountInput';
 
 // List of possible bet options
-const options = [0.05, 0.1, 0.15, 'MAX'];
+const options = [0.05, 0.1, 0.2, 0.5];
 
-const formatOption = value => {
-    if (isString(value)) {
-        return value;
-    }
-
-    return parseFloat(value).toFixed(2);
-};
+const AmountOptions = styled.div`
+    display: flex;
+    flex-direction: row;
+    margin: 15px -5px 0px -5px;
+`;
 
 const BetAmountOption = ({ option, active, onClick }) => (
     <BetAmountButton
@@ -24,33 +21,30 @@ const BetAmountOption = ({ option, active, onClick }) => (
             onClick(option);
         }}
     >
-        {option}
+        {parseFloat(option).toFixed(2)}
     </BetAmountButton>
 );
 
 const BetAmount = ({ input: { value, onChange } }) => (
-    <Grid>
-        <Grid.Row>
-            <Grid.Column>
-                <BetAmountInput
-                    size="large"
-                    value={value}
-                    onChange={onChange}
-                />
-            </Grid.Column>
-        </Grid.Row>
-        <Grid.Row columns={4}>
+    <div>
+        <BetAmountInput
+            size="large"
+            value={value}
+            onChange={onChange}
+            min={0.05}
+            max={0.5}
+        />
+        <AmountOptions>
             {map(options, (option, idx) => (
-                <Grid.Column key={idx}>
-                    <BetAmountOption
-                        option={formatOption(option)}
-                        active={option == value}
-                        onClick={onChange}
-                    />
-                </Grid.Column>
+                <BetAmountOption
+                    key={idx}
+                    option={option}
+                    active={option === value}
+                    onClick={onChange}
+                />
             ))}
-        </Grid.Row>
-    </Grid>
+        </AmountOptions>
+    </div>
 );
 
 export default BetAmount;

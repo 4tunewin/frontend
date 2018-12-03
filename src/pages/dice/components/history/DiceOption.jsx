@@ -4,19 +4,29 @@ import styled from 'styled-components';
 import { Dice } from '../../../../common';
 
 const Wrapper = styled.div`
-    line-height: 12px;
+    line-height: 11px;
     margin-left: 5px;
     margin-right: 5px;
 `;
 
 const StyledDice = styled(Dice)`
-    margin: 2px;
+    margin: 1px;
 `;
 
-const DiceOption = ({ options }) => (
+const DiceOption = ({ options, highlight }) => (
     <Wrapper>
         {options.map(option => (
-            <StyledDice option={option} size={12} radius="2px" />
+            <StyledDice
+                option={option}
+                highlight={highlight}
+                size={11}
+                radius="2px"
+                color={
+                    highlight
+                        ? 'linear-gradient(45deg, #62fd9e, #168aa3)'
+                        : '#FFFFFF'
+                }
+            />
         ))}
     </Wrapper>
 );

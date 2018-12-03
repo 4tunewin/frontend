@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import { Button } from 'semantic-ui-react';
 
 const StyledButton = styled(Button)`
-    background: transparent;
+    font-family: 'Proxima Nova Semibold';
+    background: transparent !important;
     background-image: linear-gradient(
         125deg,
         rgb(213, 61, 205) 0%,

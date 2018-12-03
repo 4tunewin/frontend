@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 
 const Tab = styled.div`
@@ -6,6 +5,7 @@ const Tab = styled.div`
 `;
 
 Tab.Item = styled.a`
+    font-family: 'Proxima Nova Semibold';
     font-size: 14px;
     color: rgba(255, 255, 255, ${({ active }) => (active ? 1 : 0.5)});
     font-weight: 700;

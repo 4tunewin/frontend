@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { compose, withHandlers } from 'recompose';
 import { range, map, indexOf, without, slice } from 'lodash';
-import { Grid, Button } from 'semantic-ui-react';
 
 import Dice from './Dice';
 
@@ -14,11 +13,12 @@ const MAX_SELECTED_OPTIONS = 5;
 const options = range(1, 7);
 
 const Wrapper = styled.div`
-    width: 300px;
+    width: 280px;
+    margin: -10px;
 `;
 
 const StyledDice = styled(Dice)`
-    margin: 0px 10px 10px 10px;
+    margin: 10px;
 `;
 
 const DiceOption = ({ value, active, onClick }) => (

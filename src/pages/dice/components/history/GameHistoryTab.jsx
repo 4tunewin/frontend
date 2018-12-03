@@ -1,10 +1,14 @@
 import React from 'react';
 import { Tab } from '../../../../common';
 
-const GameHistoryTab = () => (
+const GameHistoryTab = ({ filtered, onFilter, onReset }) => (
     <Tab>
-        <Tab.Item active>ALL HISTORY</Tab.Item>
-        <Tab.Item>MY BETS</Tab.Item>
+        <Tab.Item active={!filtered} onClick={onReset}>
+            ALL HISTORY
+        </Tab.Item>
+        <Tab.Item active={filtered} onClick={onFilter}>
+            MY BETS
+        </Tab.Item>
     </Tab>
 );
 

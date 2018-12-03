@@ -1,90 +1,75 @@
 import React from 'react';
 import styled from 'styled-components';
 import { isEmpty } from 'lodash';
-import { Table, Message, Segment, Header } from 'semantic-ui-react';
+import { Segment } from 'semantic-ui-react';
 import { FormattedMessage } from 'react-intl';
 
-import GameHistoryTab from './GameHistoryTab';
+import Table from './HistoryTable';
+import GameHistoryTab from '../../containers/history/GameHistoryTab';
 import GameHistoryItem from './GameHistoryItem';
 
 const Container = styled(Segment)`
+    flex: 1 1 auto;
     background: #27304d !important;
-    border-radius: 12px !important;
-`;
+    border-radius: 10px !important;
+    border-width: 0px !important;
+    padding: 0px !important;
 
-const StyledTable = styled(Table)`
-    background: transparent !important;
-`;
-
-const TableHeader = styled(Table.Header)`
-    background: #323b56 !important;
-    font-size: 14px !important;
-    border-radius: 0px !important;
-
-    & tr:first-child th:first-child {
-        padding-left: 15px !important;
-    }
-    & tr:first-child th:last-child {
-        padding-right: 15px !important;
+    &:before {
+        background: rgba(50, 59, 86, 0.8) !important;
     }
 `;
 
-const TableHeaderCell = styled(Table.HeaderCell)`
-    text-transform: uppercase !important;
-    color: rgba(255, 255, 255, 0.6) !important;
-    padding-top: 10px !important;
-    padding-bottom: 10px !important;
-    border-radius: 0px !important;
-    border-top: 1px solid #3d455f !important;
-    border-bottom: 1px solid #3d455f !important;
-`;
-
-const StyledMessage = styled.div`
-    clear: both;
+const EmptyMessageWrapper = styled.div`
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    margin-top: -20px;
     text-align: center;
     line-height: 40px;
     font-size: 14px;
-    font-weight: 700;
+    font-family: 'Proxima Nova Semibold';
     color: rgba(255, 255, 255, 0.5);
 `;
 
 /**
  * Message to show if list of games is empty
  */
-const EmptyMessage = () => <StyledMessage info>No games yet</StyledMessage>;
+const EmptyMessage = () => (
+    <EmptyMessageWrapper>No games yet</EmptyMessageWrapper>
+);
 
 const GameHistoryTable = ({ history }) => (
-    <StyledTable basic="very" celled striped>
-        <TableHeader>
+    <Table basic="very" singleLine>
+        <Table.Header>
             <Table.Row>
-                <TableHeaderCell>
+                <Table.HeaderCell width="30%">
                     <FormattedMessage
                         id="pages.dice.DiceHistory.header.player"
                         defaultMessage="Player"
                     />
-                </TableHeaderCell>
-                <TableHeaderCell>Bet</TableHeaderCell>
-                <TableHeaderCell>Result</TableHeaderCell>
-                <TableHeaderCell>Jackpot</TableHeaderCell>
+                </Table.HeaderCell>
+                <Table.HeaderCell width="30%">Bet</Table.HeaderCell>
+                <Table.HeaderCell width="20%">Result</Table.HeaderCell>
+                <Table.HeaderCell width="20%">Jackpot</Table.HeaderCell>
             </Table.Row>
-        </TableHeader>
+        </Table.Header>
 
         <Table.Body>
             {history.map(game => (
                 <GameHistoryItem key={game.id} game={game} />
             ))}
         </Table.Body>
-    </StyledTable>
+    </Table>
 );
-
-const TabItem = styled.a``;
 
 const GameHistory = ({ loading, history }) => (
     <Container loading={loading}>
         <GameHistoryTab />
 
         {isEmpty(history) ? (
-            <EmptyMessage />
+            !loading && <EmptyMessage />
         ) : (
             <GameHistoryTable history={history} />
         )}

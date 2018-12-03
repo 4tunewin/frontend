@@ -8,6 +8,11 @@ import SocialButtons from './SocialButtons';
 import Balance from '../containers/Balance';
 import Language from '../containers/Language';
 
+const StyledMenu = styled(Menu)`
+    padding: 25px 40px 25px 40px;
+    margin-bottom: 0px !important;
+`;
+
 const DividedItem = styled(Menu.Item)`
     ${({ last }) =>
         !last &&
@@ -26,8 +31,8 @@ const DividedItem = styled(Menu.Item)`
 `;
 
 const Header = () => (
-    <Menu secondary>
-        <Menu.Item>
+    <StyledMenu secondary>
+        <Menu.Item fitted>
             <Brand />
         </Menu.Item>
         <Menu.Item>
@@ -40,11 +45,11 @@ const Header = () => (
             <DividedItem>
                 <Language />
             </DividedItem>
-            <DividedItem last>
+            <DividedItem fitted last>
                 <SocialButtons />
             </DividedItem>
         </Menu.Menu>
-    </Menu>
+    </StyledMenu>
 );
 
 export default Header;

@@ -1,37 +1,48 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import { AsyncValue } from '../../../../common';
-import Statistic from './Statistic';
+import StatsHelper from './StatsHelper';
 
 import { MIN_JACKPOT_BET, JACKPOT_CHANCE } from '../../../../config/const';
 
+const Wrapper = styled.div`
+    display: inline-block;
+    text-align: left;
+    min-width: 202px;
+`;
+
 const Note = styled.div`
     margin-top: 5px;
+    margin-left: 60px;
     color: rgb(92, 249, 163);
+    font-family: 'Proxima Nova Regular';
 `;
 
 const Eth = styled.span`
     font-size: 14px;
+    line-height: 14px;
     margin-left: 5px;
-    font-size: bold;
+    font-weight: bold;
+    font-family: 'Proxima Nova Semibold';
 `;
 
 const JackpotAmount = ({ amount, fetchJackpotAsync }) => (
-    <div>
-        <Statistic>
-            <Statistic.Left>
-                <Statistic.Image src="images/returns/jackpot.png" />
-            </Statistic.Left>
-            <Statistic.Right>
-                <Statistic.Label>Jackpot</Statistic.Label>
-                <Statistic.Value>
+    <Wrapper>
+        <StatsHelper>
+            <StatsHelper.Left>
+                <StatsHelper.Image src="images/returns/jackpot.png" />
+            </StatsHelper.Left>
+            <StatsHelper.Right>
+                <StatsHelper.Label>Jackpot</StatsHelper.Label>
+                <StatsHelper.Value>
                     <AsyncValue fetch={fetchJackpotAsync} placeholder={0}>
-                        {({ value }) => value.toFixed(3)}
+                        {({ value }) => parseFloat(value).toFixed(3)}
                     </AsyncValue>
                     <Eth>ETH</Eth>
-                </Statistic.Value>
-            </Statistic.Right>
-        </Statistic>
+                </StatsHelper.Value>
+            </StatsHelper.Right>
+        </StatsHelper>
         <Note>
             {amount < MIN_JACKPOT_BET ? (
                 <span>Bet {MIN_JACKPOT_BET.toFixed(2)} ETH to qualify</span>
@@ -39,7 +50,7 @@ const JackpotAmount = ({ amount, fetchJackpotAsync }) => (
                 <span>{JACKPOT_CHANCE}% jackpot chance!</span>
             )}
         </Note>
-    </div>
+    </Wrapper>
 );
 
 export default JackpotAmount;
