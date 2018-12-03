@@ -1,9 +1,19 @@
 import React from 'react';
+import styled from 'styled-components';
 import { Header } from 'semantic-ui-react';
 
+const Container = styled.div`
+    color: #ffffff !important;
+`;
+
+const PageHeader = styled(Header)`
+    color: #ffffff;
+    opacity: 0.5;
+`;
+
 const TermsPage = () => (
-    <div>
-        <Header as="h2">Terms of service</Header>
+    <Container>
+        <PageHeader as="h2">Terms of service</PageHeader>
         <p>
             The web site of 4tune.win ("we") provides interface to the{' '}
             <a
@@ -41,7 +51,7 @@ const TermsPage = () => (
             these terms without any prior notice. We advise to check for updates
             on regular basis.
         </p>
-    </div>
+    </Container>
 );
 
 export default TermsPage;
