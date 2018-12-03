@@ -5,8 +5,6 @@ import { get } from 'lodash';
 
 import TotalAmount from '../../components/stats/TotalAmount';
 
-const { web3 } = window;
-
 // Query for games statistics
 const STATS_QUERY = gql`
     query Stats {
@@ -26,7 +24,7 @@ const withData = graphql(STATS_QUERY, {
 });
 
 const withAmount = withProps(({ stats }) => ({
-    amount: web3.fromWei(get(stats, 'wagers.amount', 0), 'ether'),
+    amount: window.web3.fromWei(get(stats, 'wagers.amount', 0), 'ether'),
 }));
 
 export default compose(
