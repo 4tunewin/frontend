@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
     display: flex;
@@ -35,14 +36,16 @@ const Text = styled.span`
 `;
 
 const Brand = () => (
-    <Container>
-        <Logo src="/images/logo.png" />
-        <Name>
-            <Text>4tune</Text>
-            <Dot />
-            <Text>win</Text>
-        </Name>
-    </Container>
+    <Link to="/">
+        <Container>
+            <Logo src="/images/logo.png" />
+            <Name>
+                <Text>4tune</Text>
+                <Dot />
+                <Text>win</Text>
+            </Name>
+        </Container>
+    </Link>
 );
 
 export default Brand;
