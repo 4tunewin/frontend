@@ -1,21 +1,17 @@
 import React from 'react';
 import { Container, Grid } from 'semantic-ui-react';
 
-import BetForm from '../containers/BetForm';
-import { GameReturns } from './returns';
-import { GameHistory } from '../containers/history';
+import LeftColumn from './LeftColumn';
+import RightColumn from './RightColumn';
 
 const DicePage = () => (
     <Container>
-        <Grid columns={3}>
-            <Grid.Column>
-                <BetForm />
+        <Grid>
+            <Grid.Column width={10}>
+                <LeftColumn />
             </Grid.Column>
-            <Grid.Column>
-                <GameReturns />
-            </Grid.Column>
-            <Grid.Column>
-                <GameHistory />
+            <Grid.Column width={6}>
+                <RightColumn />
             </Grid.Column>
         </Grid>
     </Container>

@@ -4,4 +4,6 @@ export default {
     graphql: {
         uri: 'localhost:8080',
     },
+    // An URL of block explorer
+    explorerUrl: 'https://etherscan.io',
 };

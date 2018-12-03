@@ -16,7 +16,7 @@ import type { GetHistory } from '../../../../types/graphql.js.flow';
 type WithDataProps = GetHistory & QueryProps;
 
 // Limit number if results to specified number
-const MAX_HISTORY_RESULTS = 20;
+const MAX_HISTORY_RESULTS = 100;
 
 // Game entitiy fragment
 const GAME_FRAGMENT = gql`

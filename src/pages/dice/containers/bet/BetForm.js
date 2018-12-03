@@ -2,8 +2,8 @@ import { reduxForm, SubmissionError } from 'redux-form';
 import { compose, withHandlers } from 'recompose';
 import { connect } from 'react-redux';
 
-import BetForm from '../components/BetForm';
-import { placeBet } from '../../../actions/dice';
+import BetForm from '../../components/bet/BetForm';
+import { placeBet } from '../../../../actions/dice';
 
 // Init form for dice game
 const withForm = reduxForm({

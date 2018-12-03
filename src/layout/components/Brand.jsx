@@ -11,10 +11,14 @@ const Logo = styled.img`
     vertical-align: middle;
     padding-right: 5px;
     margin-bottom: -6px;
+    margin-left: -4px;
+    width: 45px;
+    height: 40px;
 `;
 
 const Name = styled.div`
-    margin-top: 6px;
+    font-family: 'Helvetica Neue LT Std';
+    line-height: 36px;
 `;
 
 const Dot = styled.span`
@@ -36,7 +40,7 @@ const Brand = () => (
         <Name>
             <Text>4tune</Text>
             <Dot />
-            <Text>io</Text>
+            <Text>win</Text>
         </Name>
     </Container>
 );

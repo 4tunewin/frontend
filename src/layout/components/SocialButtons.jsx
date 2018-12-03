@@ -2,33 +2,40 @@ import React from 'react';
 import styled from 'styled-components';
 import { Icon } from 'semantic-ui-react';
 
-const SocialButton = styled(Icon)`
-    color: rgba(255, 255, 255, 0.5);
-    padding: 0px 18px 0px 18px;
-    margin: 0px !important;
-    font-size: 18px !important;
+const SocialButton = styled.a`
+    padding: 0px 0px 0px 18px;
 
-    transition: color 0.6s;
-    &:hover {
-        color: rgba(255, 255, 255, 1);
+    & > i {
+        margin: 0px !important;
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 18px !important;
+
+        transition: color 0.6s;
+        &:hover {
+            color: rgba(255, 255, 255, 1);
+        }
     }
 `;
 
 const Wrapper = styled.div`
-    margin-right: 5px;
-
     & ${SocialButton} {
         :first-child {
-            padding-left: 0px !important;
+            padding-left: 13px !important;
         }
     }
 `;
 
 const SocialButtons = () => (
     <Wrapper>
-        <SocialButton name="telegram plane" />
-        <SocialButton name="facebook f" />
-        <SocialButton name="linkedin" />
+        <SocialButton href="https://t.me/fortunewin" target="_blank">
+            <Icon name="telegram plane" />
+        </SocialButton>
+        <SocialButton href="#" target="_blank">
+            <Icon name="facebook f" />
+        </SocialButton>
+        <SocialButton href="https://twitter.com/4tunewin" target="_blank">
+            <Icon name="twitter" />
+        </SocialButton>
     </Wrapper>
 );
 

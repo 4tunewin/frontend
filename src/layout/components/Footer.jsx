@@ -4,8 +4,9 @@ import { Menu } from 'semantic-ui-react';
 
 const Wrapper = styled.div`
     background: #101830;
-    padding: 10px 25px 10px 25px;
-    box-shadow: 10px 0px 50px 0px rgba(0, 0, 0, 0.44)};
+    padding: 10px 40px 10px 40px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 `;
 
 const MenuItem = styled(Menu.Item)`
@@ -17,10 +18,12 @@ const MenuItem = styled(Menu.Item)`
 const Footer = () => (
     <Wrapper>
         <Menu secondary>
-            <MenuItem>Copyright © 2018 by 4tune.win</MenuItem>
+            <MenuItem fitted>Copyright © 2018 by 4tune.win</MenuItem>
             <Menu.Menu position="right">
                 <MenuItem link="/terms">Terms & Conditions</MenuItem>
-                <MenuItem link="mailto:support@4tune.win">Contact Us</MenuItem>
+                <MenuItem link="mailto:support@4tune.win" fitted>
+                    Contact Us
+                </MenuItem>
             </Menu.Menu>
         </Menu>
     </Wrapper>

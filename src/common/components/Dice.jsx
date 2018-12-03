@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 // Map numbers to dice names
-const options = {
+const OPTIONS = {
     1: 'one',
     2: 'two',
     3: 'three',
@@ -11,11 +11,10 @@ const options = {
 };
 
 const Dice = styled.div`
-    background: ${({ option }) =>
-        `url('images/dice/${options[option] || option}.svg')`};
+    background: ${({ option, color }) =>
+        `url('images/dice/${OPTIONS[option] || option}.svg'), ${color}`};
     width: ${({ size }) => size}px;
     height: ${({ size }) => size}px;
-    background-color: ${({ color }) => color};
     border-radius: ${({ radius }) => radius};
     display: inline-block;
     margin: 3px;

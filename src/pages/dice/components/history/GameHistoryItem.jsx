@@ -1,37 +1,80 @@
 import React from 'react';
+import styled from 'styled-components';
 import { compose, withProps } from 'recompose';
-import { truncate } from 'lodash';
-import { Table } from 'semantic-ui-react';
+import { truncate, indexOf } from 'lodash';
 
 import { computeOutcome, eligebleForJackpot } from '../../../../lib/dice';
 
-import DiceOption from '../DiceOption';
+import Table from './HistoryTable';
+import DiceOption from './DiceOption';
 import { HashAvatar } from '../../../../common';
+
+const StyledAvatar = styled(HashAvatar)`
+    margin-right: 5px;
+`;
+
+const CenteredContent = styled.div`
+    display: flex;
+    align-items: center;
+`;
+
+const WinAmount = styled.span`
+    color: rgba(255, 255, 255, 0.5);
+`;
+
+/**
+ * Returns formated amount in ether
+ *
+ * @param {String} value - Amount in wi
+ */
+const formatAmount = value => {
+    return parseFloat(window.web3.fromWei(value, 'ether')).toFixed(3);
+};
 
 const GameHistoryItem = ({ game, bets, jackpot, win }) => (
     <Table.Row key={game.id}>
-        <Table.Cell>
-            <HashAvatar hash={game.bet.gambler} />
-            {truncate(game.bet.gambler, { length: 8, omission: '' })}
+        <Table.Cell width="30%">
+            <CenteredContent>
+                <StyledAvatar
+                    hash={game.bet.gambler}
+                    size={21}
+                    options={{
+                        foreground: [255, 255, 255, 255],
+                        background: [0, 0, 0, 0],
+                    }}
+                />
+                {truncate(game.bet.gambler, { length: 8, omission: '' })}
+            </CenteredContent>
         </Table.Cell>
-        <Table.Cell>
-            <DiceOption options={bets} />
-            {window.web3.fromWei(game.bet.amount, 'ether')}
+        <Table.Cell width="30%">
+            <CenteredContent>
+                {formatAmount(game.bet.amount)}
+                <DiceOption options={bets} />
+            </CenteredContent>
         </Table.Cell>
-        <Table.Cell>
-            <DiceOption options={[win]} />
-            {game.payment === '0' ? (
-                <span>&mdash;</span>
-            ) : (
-                window.web3.fromWei(game.payment, 'ether')
-            )}
+        <Table.Cell width="20%">
+            <CenteredContent>
+                <DiceOption
+                    options={[win]}
+                    highlight={indexOf(bets, win) !== -1}
+                />
+                <WinAmount>
+                    {game.payment === '0' ? (
+                        <span>&mdash;</span>
+                    ) : (
+                        formatAmount(game.payment)
+                    )}
+                </WinAmount>
+            </CenteredContent>
         </Table.Cell>
-        <Table.Cell>
-            {eligebleForJackpot(game.bet.amount) ? (
-                jackpot
-            ) : (
-                <span>&mdash;</span>
-            )}
+        <Table.Cell width="20%">
+            <WinAmount>
+                {eligebleForJackpot(game.bet.amount) ? (
+                    jackpot
+                ) : (
+                    <span>&mdash;</span>
+                )}
+            </WinAmount>
         </Table.Cell>
     </Table.Row>
 );

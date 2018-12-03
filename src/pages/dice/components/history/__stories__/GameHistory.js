@@ -16,4 +16,6 @@ storiesOf('dice/history/GameHistory', module)
             story={story()}
         />
     ))
-    .add('default', () => <GameHistory history={history} />);
+    .add('default', () => <GameHistory history={history} />)
+    .add('loading', () => <GameHistory history={history} loading />)
+    .add('empty', () => <GameHistory />);
