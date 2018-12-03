@@ -28,7 +28,7 @@ const Layout = () => (
 
         <Header />
         <Content>
-            <Route path="/" component={DicePage} />
+            <Route path="/" component={DicePage} exact />
             <Route path="/terms" component={TermsPage} />
         </Content>
         <Footer />
