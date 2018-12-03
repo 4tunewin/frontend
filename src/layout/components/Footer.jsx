@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
 
 const Wrapper = styled.div`
@@ -20,8 +21,10 @@ const Footer = () => (
         <Menu secondary>
             <MenuItem fitted>Copyright © 2018 by 4tune.win</MenuItem>
             <Menu.Menu position="right">
-                <MenuItem link="/terms">Terms & Conditions</MenuItem>
-                <MenuItem link="mailto:support@4tune.win" fitted>
+                <MenuItem as={Link} className="item" to="/terms">
+                    Terms & Conditions
+                </MenuItem>
+                <MenuItem href="mailto:support@4tune.win" link fitted>
                     Contact Us
                 </MenuItem>
             </Menu.Menu>
