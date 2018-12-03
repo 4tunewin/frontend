@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { opacify } from 'polished';
 import { Menu } from 'semantic-ui-react';
 
 const Wrapper = styled.div`
@@ -18,11 +17,10 @@ const MenuItem = styled(Menu.Item)`
 const Footer = () => (
     <Wrapper>
         <Menu secondary>
-            <MenuItem>Copyright © 2018 by 4tune.io</MenuItem>
+            <MenuItem>Copyright © 2018 by 4tune.win</MenuItem>
             <Menu.Menu position="right">
-                <MenuItem>Terms & Conditions</MenuItem>
-                <MenuItem>Privacy Policy</MenuItem>
-                <MenuItem>Contact Us</MenuItem>
+                <MenuItem link="/terms">Terms & Conditions</MenuItem>
+                <MenuItem link="mailto:support@4tune.win">Contact Us</MenuItem>
             </Menu.Menu>
         </Menu>
     </Wrapper>

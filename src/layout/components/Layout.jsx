@@ -3,7 +3,7 @@ import styled, { createGlobalStyle } from 'styled-components';
 import { Route } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
 
-import { DicePage } from '../../pages';
+import { DicePage, TermsPage } from '../../pages';
 import Header from './Header';
 import Footer from './Footer';
 
@@ -24,6 +24,7 @@ const Layout = () => (
         <Header />
         <div>
             <Route path="/" component={DicePage} />
+            <Route path="/terms" component={TermsPage} />
         </div>
         <Footer />
     </StyledContainer>
