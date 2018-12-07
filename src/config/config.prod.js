@@ -1,4 +1,6 @@
 // Settigns for production environment
 export default {
-    network: 1,
+    network: {
+        id: 1,
+    },
 };

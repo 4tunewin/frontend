@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { getFormValues } from 'redux-form';
 import { compose, withHandlers } from 'recompose';
+import { toString } from 'lodash';
 
 import { DiceContract } from '../../../../contracts';
 import JackpotAmount from '../../components/returns/JackpotAmount';
@@ -14,7 +15,7 @@ const fetchJackpotAsync = ownProps => () => {
             return instance.jackpotSize();
         })
         .then(jackpotSize => {
-            return window.web3.fromWei(jackpotSize, 'ether');
+            return window.web3.fromWei(toString(jackpotSize), 'ether');
         });
 };
 

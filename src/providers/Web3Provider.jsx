@@ -1,10 +1,42 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import Web3 from 'web3';
-import { Loader } from 'semantic-ui-react';
+import {
+    Loader,
+    Dimmer,
+    Segment,
+    Image,
+    Header,
+    Button,
+} from 'semantic-ui-react';
+
+import config from '../config';
 
 const ACCESS_PENDING = 'PENDING';
 const ACCESS_ALLOWED = 'ALLOWED';
 const ACCESS_DENINED = 'DENINED';
+
+const Dialog = styled(Segment)`
+    border-radius: 10px !important;
+    background: #27304d !important;
+    padding: 30px !important;
+    opacity: 0.8;
+`;
+
+const StyledHeader = styled(Header)`
+    font-family: 'Proxima Nova Semibold';
+    color: #ffffff !important;
+`;
+
+const Text = styled.div`
+    margin: 22px 0px 22px 0px;
+    line-height: 20px;
+`;
+
+const StyledButton = styled(Button)`
+    background: rgb(162, 86, 235) !important;
+    color: #ffffff !important;
+`;
 
 class Web3Provider extends Component {
     state = {
@@ -36,7 +68,7 @@ class Web3Provider extends Component {
             // Otherways connect directly to network
             else {
                 window.web3 = new Web3(
-                    new Web3.providers.HttpProvider('http://127.0.0.1:8545'),
+                    new Web3.providers.HttpProvider(config.network.uri),
                 );
                 this.setState({ noWallet: true });
             }
@@ -48,12 +80,49 @@ class Web3Provider extends Component {
         this.setState({ loading: false });
     }
 
+    renderDialog = () => {
+        return (
+            <Dialog>
+                <StyledHeader>
+                    <Image src="images/metamask.png" />
+                    MetaMask is Required
+                </StyledHeader>
+
+                <Text>
+                    To start using our games, please consider installing
+                    MetaMask wallet. <br />
+                    To do that, click the button below and follow the
+                    instruction.
+                </Text>
+
+                <StyledButton
+                    href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en"
+                    target="_blank"
+                    link
+                >
+                    Get MetaMask
+                </StyledButton>
+            </Dialog>
+        );
+    };
+
     render() {
-        if (this.state.loading) {
+        const { loading, access, error, noWallet } = this.state;
+
+        if (loading) {
             return <Loader size="huge" active />;
         }
 
-        return this.props.children;
+        // const active = access === ACCESS_DENINED || error !== null || noWallet;
+        const active = true;
+
+        return (
+            <Dimmer.Dimmable dimmed={active} blurring page>
+                {active && <Dimmer active>{this.renderDialog()}</Dimmer>}
+
+                {this.props.children}
+            </Dimmer.Dimmable>
+        );
     }
 }
 

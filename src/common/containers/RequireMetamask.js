@@ -30,8 +30,8 @@ const loginMetamask = branch(
 // Verify web3 network and ask user to change it if it's not MAIN NET
 const changeNetwork = branch(({ user }) => {
     return !(
-        config.network === '*' ||
-        parseInt(user.get('network'), 10) === config.network
+        config.network.id === '*' ||
+        parseInt(user.get('network'), 10) === config.network.id
     );
 }, renderComponent(ChangeNetwork));
 
