@@ -6,8 +6,6 @@ import { Container } from 'semantic-ui-react';
 import { DicePage, TermsPage } from '../../pages';
 import Header from './Header';
 import Footer from './Footer';
-import Background from './Background';
-import Fonts from './Fonts';
 
 const StyledContainer = styled(Container)`
     width: 1200px !important;
@@ -23,14 +21,13 @@ const Content = styled.div`
 
 const Layout = () => (
     <StyledContainer>
-        <Background />
-        <Fonts />
-
         <Header />
+
         <Content>
             <Route path="/" component={DicePage} exact />
             <Route path="/terms" component={TermsPage} />
         </Content>
+
         <Footer />
     </StyledContainer>
 );

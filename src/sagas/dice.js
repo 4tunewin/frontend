@@ -10,8 +10,6 @@ import { setBitsForIndexes } from '../lib/dice';
  * Send a new bet to smart contract
  */
 export function* placeBetAsync({ type, payload, resolve, reject }) {
-    const { web3 } = window;
-
     // Get signature for a new bet
     const mutation = gql`
         mutation signBet($input: SignBetInput!) {
@@ -31,7 +29,7 @@ export function* placeBetAsync({ type, payload, resolve, reject }) {
     const { data } = yield call(client.mutate, {
         mutation,
         variables: {
-            input: { address: web3.eth.accounts[0], network: 1 },
+            input: { address: window.web3.eth.accounts[0], network: 1 },
         },
     });
 
@@ -49,8 +47,8 @@ export function* placeBetAsync({ type, payload, resolve, reject }) {
             signature.r,
             signature.s,
             {
-                from: web3.eth.accounts[0],
-                value: web3.toWei(payload.amount, 'ether'),
+                from: window.web3.eth.accounts[0],
+                value: window.web3.toWei(payload.amount, 'ether'),
             },
         );
 

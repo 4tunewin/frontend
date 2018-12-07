@@ -47,8 +47,9 @@ export const getWinAmount = (
 };
 
 export const eligebleForJackpot = (amount: string) => {
-    const { web3 } = window;
-    return new BigNumber(amount).gte(web3.toWei(MIN_JACKPOT_BET, 'ether'));
+    return new BigNumber(amount).gte(
+        window.web3.toWei(MIN_JACKPOT_BET, 'ether'),
+    );
 };
 
 /**

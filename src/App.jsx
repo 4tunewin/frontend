@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import {
     ReduxProvider,
@@ -7,6 +7,7 @@ import {
     IntlProvider,
 } from './providers';
 
+import { Background, Fonts } from './common';
 import Layout from './layout';
 
 import 'semantic-ui-css/semantic.min.css';
@@ -14,11 +15,16 @@ import 'semantic-ui-css/semantic.min.css';
 const Providers = ({ children }) => (
     <ApolloProvider>
         <ReduxProvider>
-            <Web3Provider>
-                <IntlProvider>
-                    <Router>{children}</Router>
-                </IntlProvider>
-            </Web3Provider>
+            <Fragment>
+                <Background />
+                <Fonts />
+
+                <Web3Provider>
+                    <IntlProvider>
+                        <Router>{children}</Router>
+                    </IntlProvider>
+                </Web3Provider>
+            </Fragment>
         </ReduxProvider>
     </ApolloProvider>
 );

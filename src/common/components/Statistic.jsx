@@ -12,7 +12,6 @@ Statistic.Image = styled(Image)`
 
 Statistic.Label = styled.div`
     color: rgba(255, 255, 255, 0.6);
-    font-family: 'Proxima Nova Semibold';
     font-size: 14px;
 `;
 

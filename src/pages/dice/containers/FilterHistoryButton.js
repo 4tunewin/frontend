@@ -16,8 +16,7 @@ const handlers = {
         if (active) {
             filterHistory(null);
         } else {
-            const { web3 } = window;
-            filterHistory({ gambler: web3.eth.accounts[0] });
+            filterHistory({ gambler: window.web3.eth.accounts[0] });
         }
     },
 };

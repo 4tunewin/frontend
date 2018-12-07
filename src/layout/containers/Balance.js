@@ -9,19 +9,19 @@ const UPDATE_BALANCE_INTERVAL = 1000;
 // State stores balance amount
 const withAmount = withState('amount', 'setAmount', 0);
 
-const { web3 } = window;
-
 /**
  * Handler performs balance update
  */
 const updateHandler = withHandlers({
     updateAmount: ({ setAmount }) => {
-        const getBalance = promisify(web3.eth.getBalance, { context: web3 });
+        const getBalance = promisify(window.web3.eth.getBalance, {
+            context: window.web3,
+        });
 
         return async () => {
             try {
-                const balance = await getBalance(web3.eth.accounts[0]);
-                setAmount(web3.fromWei(balance.toNumber(), 'ether'));
+                const balance = await getBalance(window.web3.eth.accounts[0]);
+                setAmount(window.web3.fromWei(balance.toNumber(), 'ether'));
             } catch (e) {
                 console.error(e);
             }
