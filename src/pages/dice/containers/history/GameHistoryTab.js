@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { compose, withHandlers, mapProps } from 'recompose';
+import { injectIntl } from 'react-intl';
 import { omit } from 'lodash';
 
 import { filterHistory } from '../../../../actions/dice';
@@ -23,6 +24,7 @@ const handlers = {
 const withOmitProps = props => omit(props, ['filterHistory']);
 
 export default compose(
+    injectIntl,
     connect(
         mapStateToProps,
         { filterHistory },

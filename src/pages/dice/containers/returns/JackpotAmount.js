@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { getFormValues } from 'redux-form';
 import { compose, withHandlers } from 'recompose';
+import { injectIntl } from 'react-intl';
 import { toString } from 'lodash';
 
 import { DiceContract } from '../../../../contracts';
@@ -31,5 +32,6 @@ const mapStateToProps = state => {
 
 export default compose(
     withHandlers({ fetchJackpotAsync }),
+    injectIntl,
     connect(mapStateToProps),
 )(JackpotAmount);

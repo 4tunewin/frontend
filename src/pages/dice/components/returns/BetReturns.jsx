@@ -4,6 +4,7 @@
  */
 import React from 'react';
 import styled from 'styled-components';
+import { FormattedMessage } from 'react-intl';
 
 import StatsHelper from './StatsHelper';
 
@@ -40,18 +41,47 @@ const BetReturns = ({ amount, winPays, winAmount }) => (
                 <StatsHelper.Image src="images/returns/bet-win.png" />
             </StatsHelper.Left>
             <StatsHelper.Right>
-                <StatsHelper.Label>Bet wins</StatsHelper.Label>
+                <StatsHelper.Label>
+                    <FormattedMessage
+                        id="pages.dice.returns.BetReturns.label"
+                        defaultMessage="Bet wins"
+                    />
+                </StatsHelper.Label>
                 <StatsHelper.Value>x {winPays.toFixed(2)}</StatsHelper.Value>
             </StatsHelper.Right>
         </StatsHelper>
         <Note>
             <p>
-                You can win: <WinAmount>{winAmount.toFixed(3)} ETH</WinAmount>
+                <FormattedMessage
+                    id="pages.dice.returns.BetReturns.note"
+                    defaultMessage="You can win: {amount}"
+                    values={{
+                        amount: (
+                            <WinAmount>{winAmount.toFixed(3)} ETH</WinAmount>
+                        ),
+                    }}
+                />
             </p>
             <p>
-                <span>{HOUSE_EDGE_PERCENT}% fee</span>
+                <FormattedMessage
+                    id="pages.dice.returns.BetReturns.fee"
+                    defaultMessage="{fee}% fee"
+                    values={{
+                        fee: HOUSE_EDGE_PERCENT,
+                    }}
+                />
+
                 {amount >= MIN_JACKPOT_BET && (
-                    <span>, {JACKPOT_FEE} ETH to jackpot</span>
+                    <span>
+                        ,&nbsp;
+                        <FormattedMessage
+                            id="pages.dice.returns.BetReturns.jackpot"
+                            defaultMessage="{fee} ETH to jackpot"
+                            values={{
+                                fee: JACKPOT_FEE,
+                            }}
+                        />
+                    </span>
                 )}
             </p>
         </Note>

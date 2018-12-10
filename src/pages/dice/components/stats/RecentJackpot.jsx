@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { FormattedMessage } from 'react-intl';
 
 import { ExplorerLink, AsyncValue } from '../../../../common';
 import StatsHelper from './StatsHelper';
@@ -21,8 +22,18 @@ const RecentJackpot = ({ fetchRecentJackpot }) => (
                 </StatsHelper.Left>
                 <StatsHelper.Right>
                     <StatsHelper.Label>
-                        Most recent jackpot won by{' '}
-                        <ExplorerLink address={address} length={8} />
+                        <FormattedMessage
+                            id="pages.dice.stats.RecentJackpot.label"
+                            defaultMessage="Most recent jackpot won by {address}"
+                            values={{
+                                address: (
+                                    <ExplorerLink
+                                        address={address}
+                                        length={8}
+                                    />
+                                ),
+                            }}
+                        />
                     </StatsHelper.Label>
                     <StatsHelper.Value>
                         {parseFloat(amount || 0).toFixed(3)}

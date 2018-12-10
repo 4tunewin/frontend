@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
 
@@ -19,13 +20,27 @@ const MenuItem = styled(Menu.Item)`
 const Footer = () => (
     <Wrapper>
         <Menu secondary>
-            <MenuItem fitted>Copyright © 2018 by 4tune.win</MenuItem>
+            <MenuItem fitted>
+                <FormattedMessage
+                    id="layout.Footer.copyright"
+                    defaultMessage="Copyright © {year} by 4tune.win"
+                    values={{
+                        year: 2018,
+                    }}
+                />
+            </MenuItem>
             <Menu.Menu position="right">
                 <MenuItem as={Link} className="item" to="/terms">
-                    Terms & Conditions
+                    <FormattedMessage
+                        id="layout.Footer.terms"
+                        defaultMessage="Terms & Conditions"
+                    />
                 </MenuItem>
                 <MenuItem href="mailto:support@4tune.win" link fitted>
-                    Contact Us
+                    <FormattedMessage
+                        id="layout.Footer.contact"
+                        defaultMessage="Contact Us"
+                    />
                 </MenuItem>
             </Menu.Menu>
         </Menu>

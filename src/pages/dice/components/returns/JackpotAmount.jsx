@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { FormattedMessage } from 'react-intl';
 
 import { AsyncValue } from '../../../../common';
 import StatsHelper from './StatsHelper';
@@ -34,7 +35,12 @@ const JackpotAmount = ({ amount, fetchJackpotAsync }) => (
                 <StatsHelper.Image src="images/returns/jackpot.png" />
             </StatsHelper.Left>
             <StatsHelper.Right>
-                <StatsHelper.Label>Jackpot</StatsHelper.Label>
+                <StatsHelper.Label>
+                    <FormattedMessage
+                        id="pages.dice.returns.JackpotAmount.label"
+                        defaultMessage="Jackpot"
+                    />
+                </StatsHelper.Label>
                 <StatsHelper.Value>
                     <AsyncValue fetch={fetchJackpotAsync} placeholder={0}>
                         {({ value }) => parseFloat(value).toFixed(3)}
@@ -45,9 +51,21 @@ const JackpotAmount = ({ amount, fetchJackpotAsync }) => (
         </StatsHelper>
         <Note>
             {amount < MIN_JACKPOT_BET ? (
-                <span>Bet {MIN_JACKPOT_BET.toFixed(2)} ETH to qualify</span>
+                <FormattedMessage
+                    id="pages.dice.returns.JackpotAmount.minToQualify"
+                    defaultMessage="Bet {bet} ETH to qualify"
+                    values={{
+                        bet: MIN_JACKPOT_BET.toFixed(2),
+                    }}
+                />
             ) : (
-                <span>{JACKPOT_CHANCE}% jackpot chance!</span>
+                <FormattedMessage
+                    id="pages.dice.returns.JackpotAmount.jackpotChance"
+                    defaultMessage="{chance}% jackpot chance!"
+                    values={{
+                        chance: JACKPOT_CHANCE,
+                    }}
+                />
             )}
         </Note>
     </Wrapper>

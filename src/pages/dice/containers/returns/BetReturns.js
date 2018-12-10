@@ -1,5 +1,7 @@
 import { connect } from 'react-redux';
+import { compose } from 'recompose';
 import { getFormValues } from 'redux-form';
+import { injectIntl } from 'react-intl';
 import { ceil } from 'lodash';
 
 import { getWinAmount } from '../../../../lib/dice';
@@ -18,4 +20,7 @@ const mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps)(BetReturns);
+export default compose(
+    injectIntl,
+    connect(mapStateToProps),
+)(BetReturns);

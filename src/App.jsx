@@ -15,16 +15,16 @@ import 'semantic-ui-css/semantic.min.css';
 const Providers = ({ children }) => (
     <ApolloProvider>
         <ReduxProvider>
-            <Fragment>
-                <Background />
-                <Fonts />
+            <IntlProvider>
+                <Fragment>
+                    <Background />
+                    <Fonts />
 
-                <Web3Provider>
-                    <IntlProvider>
+                    <Web3Provider>
                         <Router>{children}</Router>
-                    </IntlProvider>
-                </Web3Provider>
-            </Fragment>
+                    </Web3Provider>
+                </Fragment>
+            </IntlProvider>
         </ReduxProvider>
     </ApolloProvider>
 );

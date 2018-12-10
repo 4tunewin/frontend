@@ -7,6 +7,20 @@ import React from 'react';
 import styled from 'styled-components';
 import { Dropdown, Icon } from 'semantic-ui-react';
 
+const StyledDropdown = styled(Dropdown)`
+    .ui.menu &.ui.dropdown .menu {
+        background: #313a58 !important;
+
+        & > div.item {
+            color: #ffffff !important;
+
+            &.active {
+                background: rgb(70, 79, 106) !important;
+            }
+        }
+    }
+`;
+
 const Trigger = styled.span`
     color: #ffffff;
     font-size: 14px;
@@ -28,7 +42,7 @@ const Caret = styled(Icon)`
 `;
 
 const Language = ({ active, options, onChange }) => (
-    <Dropdown
+    <StyledDropdown
         trigger={
             <Trigger>
                 <Globe name="world" size="large" />

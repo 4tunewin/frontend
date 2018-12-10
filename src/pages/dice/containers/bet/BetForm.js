@@ -1,6 +1,7 @@
 import { reduxForm, SubmissionError } from 'redux-form';
 import { compose, withHandlers } from 'recompose';
 import { connect } from 'react-redux';
+import { injectIntl } from 'react-intl';
 
 import BetForm from '../../components/bet/BetForm';
 import { placeBet } from '../../../../actions/dice';
@@ -26,6 +27,7 @@ const withSubmit = withHandlers({
 });
 
 export default compose(
+    injectIntl,
     connect(
         null,
         { placeBet },

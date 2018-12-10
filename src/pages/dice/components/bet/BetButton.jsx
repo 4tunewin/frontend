@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { FormattedMessage } from 'react-intl';
 import { Button } from 'semantic-ui-react';
 
 const StyledButton = styled(Button)`
@@ -19,7 +20,10 @@ const StyledButton = styled(Button)`
 
 const BetButton = ({ onClick }) => (
     <StyledButton onClick={onClick} size="huge" fluid>
-        Make a bet
+        <FormattedMessage
+            id="pages.dice.bet.BetButton"
+            defaultMessage="Make a bet"
+        />
     </StyledButton>
 );
 

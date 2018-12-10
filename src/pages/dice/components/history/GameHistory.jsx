@@ -37,7 +37,12 @@ const EmptyMessageWrapper = styled.div`
  * Message to show if list of games is empty
  */
 const EmptyMessage = () => (
-    <EmptyMessageWrapper>No games yet</EmptyMessageWrapper>
+    <EmptyMessageWrapper>
+        <FormattedMessage
+            id="pages.dice.history.EmptyMessage"
+            defaultMessage="No games yet"
+        />
+    </EmptyMessageWrapper>
 );
 
 const GameHistoryTable = ({ history }) => (
@@ -46,13 +51,28 @@ const GameHistoryTable = ({ history }) => (
             <Table.Row>
                 <Table.HeaderCell width="30%">
                     <FormattedMessage
-                        id="pages.dice.DiceHistory.header.player"
+                        id="pages.dice.history.GameHistory.header.player"
                         defaultMessage="Player"
                     />
                 </Table.HeaderCell>
-                <Table.HeaderCell width="30%">Bet</Table.HeaderCell>
-                <Table.HeaderCell width="20%">Result</Table.HeaderCell>
-                <Table.HeaderCell width="20%">Jackpot</Table.HeaderCell>
+                <Table.HeaderCell width="30%">
+                    <FormattedMessage
+                        id="pages.dice.history.GameHistory.header.bet"
+                        defaultMessage="Bet"
+                    />
+                </Table.HeaderCell>
+                <Table.HeaderCell width="20%">
+                    <FormattedMessage
+                        id="pages.dice.history.GameHistory.header.result"
+                        defaultMessage="Result"
+                    />
+                </Table.HeaderCell>
+                <Table.HeaderCell width="20%">
+                    <FormattedMessage
+                        id="pages.dice.history.GameHistory.header.jackpot"
+                        defaultMessage="Jackpot"
+                    />
+                </Table.HeaderCell>
             </Table.Row>
         </Table.Header>
 

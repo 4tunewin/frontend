@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { FormattedMessage } from 'react-intl';
 import { Menu } from 'semantic-ui-react';
 
 import Brand from './Brand';
@@ -36,7 +37,12 @@ const Header = () => (
             <Brand />
         </Menu.Item>
         <Menu.Item>
-            <Slogan>Multiply your ether™</Slogan>
+            <FormattedMessage
+                id="layout.Header.slogan"
+                defaultMessage="Multiply your ether™"
+            >
+                {txt => <Slogan>{txt}</Slogan>}
+            </FormattedMessage>
         </Menu.Item>
         <Menu.Menu position="right">
             <DividedItem>

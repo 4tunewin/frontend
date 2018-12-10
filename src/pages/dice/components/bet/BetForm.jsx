@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
 import { Grid, Form } from 'semantic-ui-react';
 
@@ -23,11 +24,21 @@ const BetForm = ({ handleSubmit, error }) => (
         <Grid>
             <Grid.Row columns={2}>
                 <Grid.Column>
-                    <Title>Choice the dice number(s) to bet on</Title>
+                    <Title>
+                        <FormattedMessage
+                            id="pages.dice.bet.BetForm.dices"
+                            defaultMessage="Choice the dice number(s) to bet on"
+                        />
+                    </Title>
                     <Field name="dices" component={DiceSelect} />
                 </Grid.Column>
                 <Grid.Column>
-                    <Title>Your bet in eth</Title>
+                    <Title>
+                        <FormattedMessage
+                            id="pages.dice.bet.BetForm.amount"
+                            defaultMessage="Your bet in ETH"
+                        />
+                    </Title>
                     <Field name="amount" component={BetAmount} />
                 </Grid.Column>
             </Grid.Row>

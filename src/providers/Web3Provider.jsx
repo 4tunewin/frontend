@@ -1,42 +1,17 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Web3 from 'web3';
-import {
-    Loader,
-    Dimmer,
-    Segment,
-    Image,
-    Header,
-    Button,
-} from 'semantic-ui-react';
+import { Loader, Dimmer } from 'semantic-ui-react';
 
+import { InstallMetamask, ChangeNetwork } from '../common/components/metamask';
 import config from '../config';
 
 const ACCESS_PENDING = 'PENDING';
 const ACCESS_ALLOWED = 'ALLOWED';
 const ACCESS_DENINED = 'DENINED';
 
-const Dialog = styled(Segment)`
-    border-radius: 10px !important;
-    background: #27304d !important;
-    padding: 30px !important;
-    opacity: 0.8;
-`;
-
-const StyledHeader = styled(Header)`
-    font-family: 'Proxima Nova Semibold';
-    color: #ffffff !important;
-`;
-
-const Text = styled.div`
-    margin: 22px 0px 22px 0px;
-    line-height: 20px;
-`;
-
-const StyledButton = styled(Button)`
-    background: rgb(162, 86, 235) !important;
-    color: #ffffff !important;
-`;
+// Update network once a second
+const UPDATE_NETWORK_INTERVAL = 1000;
 
 class Web3Provider extends Component {
     state = {
@@ -77,33 +52,29 @@ class Web3Provider extends Component {
             this.setState({ error: e.message });
         }
 
+        // Update network
+        const network = await window.web3.version.getNetwork();
+        this.setState({ network });
+
         this.setState({ loading: false });
     }
 
     renderDialog = () => {
-        return (
-            <Dialog>
-                <StyledHeader>
-                    <Image src="images/metamask.png" />
-                    MetaMask is Required
-                </StyledHeader>
+        // return <ChangeNetwork />;
+        // return <InstallMetamask />;
+        if (this.state.noWallet) {
+            return <InstallMetamask />;
+        }
 
-                <Text>
-                    To start using our games, please consider installing
-                    MetaMask wallet. <br />
-                    To do that, click the button below and follow the
-                    instruction.
-                </Text>
+        // const matchNetwork =
+        //     config.network.id === '*' ||
+        //     parseInt(this.state.network, 10) === config.network.id;
 
-                <StyledButton
-                    href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en"
-                    target="_blank"
-                    link
-                >
-                    Get MetaMask
-                </StyledButton>
-            </Dialog>
-        );
+        // if (!matchNetwork) {
+        //     return <ChangeNetwork />;
+        // }
+
+        return null;
     };
 
     render() {
@@ -113,12 +84,18 @@ class Web3Provider extends Component {
             return <Loader size="huge" active />;
         }
 
-        // const active = access === ACCESS_DENINED || error !== null || noWallet;
-        const active = true;
+        const component = this.renderDialog();
+        const active = component !== null;
+
+        console.log({ component, active });
 
         return (
             <Dimmer.Dimmable dimmed={active} blurring page>
-                {active && <Dimmer active>{this.renderDialog()}</Dimmer>}
+                {active && (
+                    <Dimmer page active>
+                        {component}
+                    </Dimmer>
+                )}
 
                 {this.props.children}
             </Dimmer.Dimmable>

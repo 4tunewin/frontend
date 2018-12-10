@@ -3,7 +3,9 @@
  * selected dices.
  */
 import { connect } from 'react-redux';
+import { compose } from 'recompose';
 import { getFormValues } from 'redux-form';
+import { injectIntl } from 'react-intl';
 import { round } from 'lodash';
 
 import WinningChance from '../../components/returns/WinningChance';
@@ -15,4 +17,7 @@ const mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps)(WinningChance);
+export default compose(
+    injectIntl,
+    connect(mapStateToProps),
+)(WinningChance);

@@ -14,8 +14,12 @@ Dialog.Header = styled(Header)`
 `;
 
 Dialog.Body = styled.div`
-    margin: 22px 0px 22px 0px;
+    margin-top: 22px;
     line-height: 20px;
+`;
+
+Dialog.Footer = styled.div`
+    margin-top: 22px;
 `;
 
 export default Dialog;

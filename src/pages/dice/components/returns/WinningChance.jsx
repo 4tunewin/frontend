@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import styled from 'styled-components';
+import { FormattedMessage } from 'react-intl';
 
 import StatsHelper from './StatsHelper';
 
@@ -18,7 +19,12 @@ const WinningChance = ({ chance }) => (
                 <StatsHelper.Image src="images/returns/chance-to-win.png" />
             </StatsHelper.Left>
             <StatsHelper.Right>
-                <StatsHelper.Label>Chance to win</StatsHelper.Label>
+                <StatsHelper.Label>
+                    <FormattedMessage
+                        id="pages.dice.returns.WinningChance.label"
+                        defaultMessage="Chance to win"
+                    />
+                </StatsHelper.Label>
                 <StatsHelper.Value>{chance.toFixed(2)}%</StatsHelper.Value>
             </StatsHelper.Right>
         </StatsHelper>

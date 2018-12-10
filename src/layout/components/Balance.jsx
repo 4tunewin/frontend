@@ -5,6 +5,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { round } from 'lodash';
+import { FormattedMessage } from 'react-intl';
 import { Icon, Popup } from 'semantic-ui-react';
 
 const ROUND_AMOUNT_DECIMALS = 3;
@@ -38,12 +39,12 @@ const Trigger = ({ amount, ...props }) => (
 );
 
 const Balance = ({ amount }) => (
-    <Popup
-        trigger={<Trigger amount={amount} />}
-        content="Your balance"
-        small
-        inverted
-    />
+    <Popup trigger={<Trigger amount={amount} />} small inverted>
+        <FormattedMessage
+            id="layout.Balance.popup.content"
+            defaultMessage="Your balance"
+        />
+    </Popup>
 );
 
 export default Balance;
