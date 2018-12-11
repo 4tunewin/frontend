@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import { compose, withHandlers, mapProps } from 'recompose';
 import { omit } from 'lodash';
 
+import { withWeb3 } from '../../../lib/web3';
 import { filterHistory } from '../../../actions/dice';
 import FilterHistoryButton from '../components/FilterHistoryButton';
 
@@ -12,11 +13,11 @@ const mapStateToProps = ({ dice }) => ({
 
 // Handle button click and toggle state of it and filters.
 const handlers = {
-    onClick: ({ active, filterHistory }) => () => {
+    onClick: ({ web3, active, filterHistory }) => () => {
         if (active) {
             filterHistory(null);
         } else {
-            filterHistory({ gambler: window.web3.eth.accounts[0] });
+            filterHistory({ gambler: web3.client.eth.accounts[0] });
         }
     },
 };
@@ -25,6 +26,7 @@ const handlers = {
 const withOmitProps = props => omit(props, ['filterHistory']);
 
 export default compose(
+    withWeb3,
     connect(
         mapStateToProps,
         { filterHistory },

@@ -4,9 +4,10 @@
  * @flow
  */
 
-import { floor, reduce } from 'lodash';
+import { floor, reduce, toString } from 'lodash';
 import { keccak256 } from 'js-sha3';
 import BigNumber from 'bignumber.js';
+import { toWei } from 'web3-utils';
 
 import {
     HOUSE_EDGE_MINIMUM_AMOUNT,
@@ -47,9 +48,7 @@ export const getWinAmount = (
 };
 
 export const eligebleForJackpot = (amount: string) => {
-    return new BigNumber(amount).gte(
-        window.web3.toWei(MIN_JACKPOT_BET, 'ether'),
-    );
+    return new BigNumber(amount).gte(toWei(toString(MIN_JACKPOT_BET), 'ether'));
 };
 
 /**

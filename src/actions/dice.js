@@ -10,11 +10,13 @@ import type { DiceBet } from '../types';
  * @param {Object} payload - A payload with bet details to provide to the resolver
  */
 export const placeBet = (
+    web3: Object,
     resolve: Function,
     reject: Function,
     payload: DiceBet,
 ) => ({
     type: 'DICE.PLACE_BET_ASYNC',
+    web3,
     resolve,
     reject,
     payload,

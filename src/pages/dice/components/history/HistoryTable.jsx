@@ -32,7 +32,7 @@ Table.Body = styled.div`
     display: flex;
     flex-direction: column;
     overflow: auto;
-    max-height: 460px;
+    max-height: 380px;
     margin-right: -17px;
 
     ${Table.Row} {

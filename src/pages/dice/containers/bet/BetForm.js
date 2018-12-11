@@ -3,6 +3,7 @@ import { compose, withHandlers } from 'recompose';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 
+import { withWeb3 } from '../../../../lib/web3';
 import BetForm from '../../components/bet/BetForm';
 import { placeBet } from '../../../../actions/dice';
 
@@ -17,9 +18,9 @@ const withForm = reduxForm({
 
 // Handle form submission
 const withSubmit = withHandlers({
-    onSubmit: ({ placeBet }) => form => {
+    onSubmit: ({ web3, placeBet }) => form => {
         return new Promise((resolve, reject) => {
-            placeBet(resolve, reject, { modulo: 6, ...form });
+            placeBet(web3.client, resolve, reject, { modulo: 6, ...form });
         }).catch(error => {
             throw new SubmissionError(error);
         });
@@ -27,6 +28,7 @@ const withSubmit = withHandlers({
 });
 
 export default compose(
+    withWeb3,
     injectIntl,
     connect(
         null,

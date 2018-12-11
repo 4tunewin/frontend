@@ -4,19 +4,24 @@ import { compose, withHandlers } from 'recompose';
 import { injectIntl } from 'react-intl';
 import { toString } from 'lodash';
 
+import { withWeb3 } from '../../../../lib/web3';
 import { DiceContract } from '../../../../contracts';
 import JackpotAmount from '../../components/returns/JackpotAmount';
 
 /**
  * Fetch jackpot value from contract
  */
-const fetchJackpotAsync = ownProps => () => {
+const fetchJackpotAsync = ({ web3 }) => () => {
+    if (!web3.client) {
+        return Promise.reject();
+    }
+
     return DiceContract.deployed()
         .then(instance => {
             return instance.jackpotSize();
         })
         .then(jackpotSize => {
-            return window.web3.fromWei(toString(jackpotSize), 'ether');
+            return web3.client.fromWei(toString(jackpotSize), 'ether');
         });
 };
 
@@ -31,6 +36,7 @@ const mapStateToProps = state => {
 };
 
 export default compose(
+    withWeb3,
     withHandlers({ fetchJackpotAsync }),
     injectIntl,
     connect(mapStateToProps),

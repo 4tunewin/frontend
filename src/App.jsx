@@ -16,14 +16,14 @@ const Providers = ({ children }) => (
     <ApolloProvider>
         <ReduxProvider>
             <IntlProvider>
-                <Fragment>
-                    <Background />
-                    <Fonts />
+                <Web3Provider>
+                    <Fragment>
+                        <Background />
+                        <Fonts />
 
-                    <Web3Provider>
                         <Router>{children}</Router>
-                    </Web3Provider>
-                </Fragment>
+                    </Fragment>
+                </Web3Provider>
             </IntlProvider>
         </ReduxProvider>
     </ApolloProvider>

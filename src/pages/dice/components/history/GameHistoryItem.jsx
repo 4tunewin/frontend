@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { compose, withProps } from 'recompose';
 import { truncate, indexOf } from 'lodash';
 
+import { fromWei } from 'web3-utils';
 import { computeOutcome, eligebleForJackpot } from '../../../../lib/dice';
 
 import Table from './HistoryTable';
@@ -28,7 +29,7 @@ const WinAmount = styled.span`
  * @param {String} value - Amount in wi
  */
 const formatAmount = value => {
-    return parseFloat(window.web3.fromWei(value, 'ether')).toFixed(3);
+    return parseFloat(fromWei(value, 'ether')).toFixed(3);
 };
 
 const GameHistoryItem = ({ game, bets, jackpot, win }) => (

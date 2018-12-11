@@ -3,6 +3,7 @@ import { graphql } from 'react-apollo';
 import { compose, withProps } from 'recompose';
 import { get, toString } from 'lodash';
 
+import { fromWei } from 'web3-utils';
 import TotalAmount from '../../components/stats/TotalAmount';
 
 // Query for games statistics
@@ -24,10 +25,7 @@ const withData = graphql(STATS_QUERY, {
 });
 
 const withAmount = withProps(({ stats }) => ({
-    amount: window.web3.fromWei(
-        toString(get(stats, 'wagers.amount', 0)),
-        'ether',
-    ),
+    amount: fromWei(toString(get(stats, 'wagers.amount', 0)), 'ether'),
 }));
 
 export default compose(

@@ -1,106 +1,76 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import { each } from 'lodash';
 import Web3 from 'web3';
-import { Loader, Dimmer } from 'semantic-ui-react';
 
-import { InstallMetamask, ChangeNetwork } from '../common/components/metamask';
-import config from '../config';
+import * as contracts from '../contracts';
+// import DiceContract from '../contracts/Dice';
 
-const ACCESS_PENDING = 'PENDING';
-const ACCESS_ALLOWED = 'ALLOWED';
-const ACCESS_DENINED = 'DENINED';
+export const ACCESS_PENDING = 'PENDING';
+export const ACCESS_ALLOWED = 'ALLOWED';
+export const ACCESS_DENINED = 'DENINED';
 
-// Update network once a second
-const UPDATE_NETWORK_INTERVAL = 1000;
+const { Provider, Consumer } = React.createContext();
 
 class Web3Provider extends Component {
     state = {
+        client: null,
         loading: true,
         access: ACCESS_PENDING,
+        account: null,
         error: null,
-        noWallet: false,
     };
 
     // Fetch all required data and start polling
     async componentWillMount() {
+        let client = null;
+        let access = null;
+
         try {
             // Use ETH provider if it's defined
             if (window.ethereum) {
-                window.web3 = new Web3(window.ethereum);
+                client = new Web3(window.ethereum);
                 try {
                     // Require account access if needed
                     await window.ethereum.enable();
-                    this.setState({ access: ACCESS_ALLOWED });
+                    access = ACCESS_ALLOWED;
                 } catch (error) {
                     // User denined account access
-                    this.setState({ access: ACCESS_DENINED });
+                    access = ACCESS_DENINED;
                 }
             }
             // For old versin of wallet, get provider from injected web3 instance
             else if (window.web3) {
-                window.web3 = new Web3(window.web3.currentProvider);
-            }
-            // Otherways connect directly to network
-            else {
-                window.web3 = new Web3(
-                    new Web3.providers.HttpProvider(config.network.uri),
-                );
-                this.setState({ noWallet: true });
+                client = new Web3(window.web3.currentProvider);
             }
         } catch (e) {
             console.error(`Error: Failed to init web3; ${e.message}`);
             this.setState({ error: e.message });
         }
 
-        // Update network
-        const network = await window.web3.version.getNetwork();
-        this.setState({ network });
+        // Fetch current network
+        if (client) {
+            each(contracts, contract => {
+                contract.setProvider(client.currentProvider);
+            });
 
-        this.setState({ loading: false });
+            const network = await client.version.getNetwork();
+            const account = client.eth.accounts[0];
+
+            this.setState({
+                client,
+                network,
+                access,
+                account,
+                loading: false,
+            });
+        } else {
+            this.setState({ loading: false });
+        }
     }
 
-    renderDialog = () => {
-        // return <ChangeNetwork />;
-        // return <InstallMetamask />;
-        if (this.state.noWallet) {
-            return <InstallMetamask />;
-        }
-
-        // const matchNetwork =
-        //     config.network.id === '*' ||
-        //     parseInt(this.state.network, 10) === config.network.id;
-
-        // if (!matchNetwork) {
-        //     return <ChangeNetwork />;
-        // }
-
-        return null;
-    };
-
     render() {
-        const { loading, access, error, noWallet } = this.state;
-
-        if (loading) {
-            return <Loader size="huge" active />;
-        }
-
-        const component = this.renderDialog();
-        const active = component !== null;
-
-        console.log({ component, active });
-
-        return (
-            <Dimmer.Dimmable dimmed={active} blurring page>
-                {active && (
-                    <Dimmer page active>
-                        {component}
-                    </Dimmer>
-                )}
-
-                {this.props.children}
-            </Dimmer.Dimmable>
-        );
+        return <Provider value={this.state}>{this.props.children}</Provider>;
     }
 }
 
-export default Web3Provider;
+export { Web3Provider, Consumer as Web3Consumer };

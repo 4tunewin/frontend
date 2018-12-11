@@ -10,16 +10,16 @@ const Container = styled.div`
 const Logo = styled.img`
     text-align: right;
     vertical-align: middle;
-    padding-right: 5px;
-    margin-bottom: -6px;
-    margin-left: -4px;
-    width: 45px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
+    border-radius: 3px;
+    box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.22) !important;
 `;
 
 const Name = styled.div`
     font-family: 'Helvetica Neue LT Std';
     line-height: 36px;
+    margin-left: 10px;
 `;
 
 const Dot = styled.span`

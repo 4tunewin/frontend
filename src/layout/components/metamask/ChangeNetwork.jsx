@@ -1,20 +1,19 @@
 import React from 'react';
-import styled from 'styled-components';
-import { Button, Image } from 'semantic-ui-react';
+import { Image } from 'semantic-ui-react';
 
-import Dialog from './Dialog';
+import { SimpleDialog } from '../../../common';
 
 const ChangeNetwork = () => (
-    <Dialog>
-        <Dialog.Header>
+    <SimpleDialog>
+        <SimpleDialog.Header>
             <Image src="images/metamask.png" />
             Switch to Mainnet
-        </Dialog.Header>
+        </SimpleDialog.Header>
 
-        <Dialog.Body>
+        <SimpleDialog.Body>
             Our games are available on mainnet only – please switch via Metamask
-        </Dialog.Body>
-    </Dialog>
+        </SimpleDialog.Body>
+    </SimpleDialog>
 );
 
 export default ChangeNetwork;

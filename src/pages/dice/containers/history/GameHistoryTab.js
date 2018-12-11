@@ -3,6 +3,7 @@ import { compose, withHandlers, mapProps } from 'recompose';
 import { injectIntl } from 'react-intl';
 import { omit } from 'lodash';
 
+import { withWeb3 } from '../../../../lib/web3';
 import { filterHistory } from '../../../../actions/dice';
 import GameHistoryTab from '../../components/history/GameHistoryTab';
 
@@ -12,8 +13,8 @@ const mapStateToProps = ({ dice }) => ({
 });
 
 const handlers = {
-    onFilter: ({ filterHistory }) => () => {
-        filterHistory({ gambler: window.web3.eth.accounts[0] });
+    onFilter: ({ web3, filterHistory }) => () => {
+        filterHistory({ gambler: web3.client.eth.accounts[0] });
     },
     onReset: ({ filterHistory }) => () => {
         filterHistory(null);
@@ -24,6 +25,7 @@ const handlers = {
 const withOmitProps = props => omit(props, ['filterHistory']);
 
 export default compose(
+    withWeb3,
     injectIntl,
     connect(
         mapStateToProps,

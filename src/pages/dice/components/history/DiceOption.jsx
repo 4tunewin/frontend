@@ -17,6 +17,7 @@ const DiceOption = ({ options, highlight }) => (
     <Wrapper>
         {options.map(option => (
             <StyledDice
+                key={option}
                 option={option}
                 highlight={highlight}
                 size={11}

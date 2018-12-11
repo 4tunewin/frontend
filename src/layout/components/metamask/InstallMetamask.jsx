@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Button, Image } from 'semantic-ui-react';
 
-import Dialog from './Dialog';
+import { SimpleDialog } from '../../../common';
 
 const StyledButton = styled(Button)`
     background: rgb(162, 86, 235) !important;
@@ -10,19 +10,19 @@ const StyledButton = styled(Button)`
 `;
 
 const InstallMetamask = () => (
-    <Dialog>
-        <Dialog.Header>
+    <SimpleDialog>
+        <SimpleDialog.Header>
             <Image src="images/metamask.png" />
             MetaMask is Required
-        </Dialog.Header>
+        </SimpleDialog.Header>
 
-        <Dialog.Body>
+        <SimpleDialog.Body>
             To start using our games, please consider installing MetaMask
             wallet. <br />
             To do that, click the button below and follow the instruction.
-        </Dialog.Body>
+        </SimpleDialog.Body>
 
-        <Dialog.Footer>
+        <SimpleDialog.Footer>
             <StyledButton
                 href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en"
                 target="_blank"
@@ -30,8 +30,8 @@ const InstallMetamask = () => (
             >
                 Get MetaMask
             </StyledButton>
-        </Dialog.Footer>
-    </Dialog>
+        </SimpleDialog.Footer>
+    </SimpleDialog>
 );
 
 export default InstallMetamask;

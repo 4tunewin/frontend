@@ -4,6 +4,7 @@ import { Route } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
 
 import { DicePage, TermsPage } from '../../pages';
+import { Metamask } from './metamask';
 import Header from './Header';
 import Footer from './Footer';
 
@@ -20,16 +21,18 @@ const Content = styled.div`
 `;
 
 const Layout = () => (
-    <StyledContainer>
-        <Header />
+    <Metamask>
+        <StyledContainer>
+            <Header />
 
-        <Content>
-            <Route path="/" component={DicePage} exact />
-            <Route path="/terms" component={TermsPage} />
-        </Content>
+            <Content>
+                <Route path="/" component={DicePage} exact />
+                <Route path="/terms" component={TermsPage} />
+            </Content>
 
-        <Footer />
-    </StyledContainer>
+            <Footer />
+        </StyledContainer>
+    </Metamask>
 );
 
 export default Layout;
