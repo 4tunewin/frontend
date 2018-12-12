@@ -6,6 +6,7 @@ import {
     withStateHandlers,
     renderNothing,
 } from 'recompose';
+import { promisify } from 'bluebird';
 import { after } from 'lodash';
 
 import { withWeb3 } from '../../../../lib/web3';
@@ -26,40 +27,47 @@ const withResult = withStateHandlers(
 /**
  * When component is mounted, subscribe to Payment events
  */
-const componentDidMount = function() {
+const componentDidMount = async function() {
     const { client } = this.props.web3;
     if (!client) {
         return;
     }
 
-    DiceContract.deployed().then(instance => {
-        const event = instance.Payment('latest');
+    // Get latest block number
+    const getBlockNumber = promisify(client.eth.getBlockNumber, {
+        context: client.eth,
+    });
+    const latestBlock = await getBlockNumber();
 
-        event.watch(
-            after(2, (error, result) => {
-                if (error) {
-                    console.error(error);
+    // Start watching events starting from the next block
+    const contract = await DiceContract.deployed();
+    const event = await contract.Payment(
+        {},
+        {
+            fromBlock: latestBlock + 1,
+            toBlock: 'latest',
+        },
+    );
+
+    event.watch((error, result) => {
+        if (error) {
+            console.error(error);
+        } else {
+            // Compare bet beneficiary address with ours address
+            if (result.args.beneficiary === client.eth.accounts[0]) {
+                const amount = client.fromWei(result.args.amount, 'ether');
+                if (amount.gt(0)) {
+                    this.props.setResult({
+                        status: 'WIN',
+                        amount: amount,
+                    });
                 } else {
-                    // Compare bet beneficiary address with ours address
-                    if (result.args.beneficiary === client.eth.accounts[0]) {
-                        const amount = client.fromWei(
-                            result.args.amount,
-                            'ether',
-                        );
-                        if (amount.gt(0)) {
-                            this.props.setResult({
-                                status: 'WIN',
-                                amount: amount,
-                            });
-                        } else {
-                            this.props.setResult({
-                                status: 'LOOSE',
-                            });
-                        }
-                    }
+                    this.props.setResult({
+                        status: 'LOOSE',
+                    });
                 }
-            }),
-        );
+            }
+        }
     });
 };
 
