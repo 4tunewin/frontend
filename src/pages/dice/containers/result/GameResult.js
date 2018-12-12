@@ -7,7 +7,6 @@ import {
     renderNothing,
 } from 'recompose';
 import { promisify } from 'bluebird';
-import { after } from 'lodash';
 
 import { withWeb3 } from '../../../../lib/web3';
 import { DiceContract } from '../../../../contracts';
