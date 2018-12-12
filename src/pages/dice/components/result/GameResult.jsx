@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Button, Image, Header, Dimmer } from 'semantic-ui-react';
 
-import { SimpleDialog, Dice } from '../../../../common';
+import { SimpleDialog } from '../../../../common';
 
 const Dialog = styled(SimpleDialog)`
     text-align: center;
