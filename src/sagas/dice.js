@@ -55,6 +55,7 @@ export function* placeBetAsync({ web3, type, payload, resolve, reject }) {
         yield put(placeBetSucceeded());
         yield call(resolve);
     } catch (e) {
+        console.log(e);
         yield call(reject, { _error: "Can't place the bet" });
     }
 }
