@@ -3,6 +3,3 @@ truffle-debugger/.tmp
 node_modules
 yarn-error.log
 .DS_Store
-
-# Ignore build files of contracts
-src/contracts/*.json
