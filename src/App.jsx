@@ -7,26 +7,25 @@ import {
     IntlProvider,
 } from './providers';
 
-import { Background, Fonts } from './common';
+import { Background } from './common';
 import Layout from './layout';
 
 import 'semantic-ui-css/semantic.min.css';
 
 const Providers = ({ children }) => (
-    <ApolloProvider>
-        <ReduxProvider>
-            <IntlProvider>
-                <Web3Provider>
-                    <Fragment>
-                        <Background />
-                        <Fonts />
+    <Fragment>
+        <Background />
 
+        <ApolloProvider>
+            <ReduxProvider>
+                <IntlProvider>
+                    <Web3Provider>
                         <Router>{children}</Router>
-                    </Fragment>
-                </Web3Provider>
-            </IntlProvider>
-        </ReduxProvider>
-    </ApolloProvider>
+                    </Web3Provider>
+                </IntlProvider>
+            </ReduxProvider>
+        </ApolloProvider>
+    </Fragment>
 );
 
 const App = () => (

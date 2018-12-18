@@ -6,6 +6,8 @@ const Background = createGlobalStyle`
         background-image: url('images/bkg-pattern.png'), radial-gradient(circle at center, #606a8f, #303b60) !important;
         background-repeat: no-repeat;
         height: auto;
+
+        font-family: "Proxima Nova Light" !important;
     }
 `;
 

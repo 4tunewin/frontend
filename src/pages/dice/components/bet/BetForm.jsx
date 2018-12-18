@@ -8,6 +8,7 @@ import { ErrorMessage } from '../../../../common';
 import DiceSelect from './DiceSelect';
 import BetAmount from './BetAmount';
 import BetButton from './BetButton';
+import BetStatus from '../../containers/bet/BetStatus';
 
 const Title = styled.div`
     font-family: 'Proxima Nova Semibold';
@@ -21,6 +22,7 @@ const Title = styled.div`
 
 const BetForm = ({ handleSubmit, error }) => (
     <Form onSubmit={handleSubmit}>
+        <BetStatus />
         <Grid>
             <Grid.Row columns={2}>
                 <Grid.Column>

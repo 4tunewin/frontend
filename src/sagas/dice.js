@@ -3,13 +3,15 @@ import gql from 'graphql-tag';
 
 import { client } from '../providers/ApolloProvider';
 import { DiceContract } from '../contracts';
-import { placeBetSucceeded } from '../actions/dice';
+import { placeBetStart, placeBetSuccess, placeBetFail } from '../actions/dice';
 import { setBitsForIndexes } from '../lib/dice';
 
 /**
  * Send a new bet to smart contract
  */
-export function* placeBetAsync({ web3, type, payload, resolve, reject }) {
+export function* placeBetAsync({ web3, type, payload }) {
+    yield put(placeBetStart(payload));
+
     // Get signature for a new bet
     const mutation = gql`
         mutation signBet($input: SignBetInput!) {
@@ -38,7 +40,7 @@ export function* placeBetAsync({ web3, type, payload, resolve, reject }) {
     const diceInstance = yield call(DiceContract.deployed);
 
     try {
-        yield diceInstance.placeBet(
+        const result = yield diceInstance.placeBet(
             setBitsForIndexes(payload.dices),
             payload.modulo,
             commitLastBlock,
@@ -52,11 +54,12 @@ export function* placeBetAsync({ web3, type, payload, resolve, reject }) {
             },
         );
 
-        yield put(placeBetSucceeded());
-        yield call(resolve);
+        console.log(result);
+
+        yield put(placeBetSuccess());
     } catch (e) {
         console.log(e);
-        yield call(reject, { _error: "Can't place the bet" });
+        yield put(placeBetFail(e.message));
     }
 }
 

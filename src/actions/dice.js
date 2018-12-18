@@ -9,31 +9,32 @@ import type { DiceBet } from '../types';
  * @param {Function} resolve - A reject function to be called in negative scenario
  * @param {Object} payload - A payload with bet details to provide to the resolver
  */
-export const placeBet = (
-    web3: Object,
-    resolve: Function,
-    reject: Function,
-    payload: DiceBet,
-) => ({
+export const placeBet = (web3: Object, payload: DiceBet) => ({
     type: 'DICE.PLACE_BET_ASYNC',
     web3,
-    resolve,
-    reject,
+    payload,
+});
+
+/**
+ * Bet placement has started
+ */
+export const placeBetStart = (payload: DiceBet) => ({
+    type: 'DICE.PLACE_BET_START',
     payload,
 });
 
 /**
  * Bet placement has succeeded
  */
-export const placeBetSucceeded = () => ({
-    type: 'DICE.PLACE_BET_SUCCEEDED',
+export const placeBetSuccess = () => ({
+    type: 'DICE.PLACE_BET_SUCCESS',
 });
 
 /**
  * Bet placement has failed because of specified reason
  */
-export const placeBetFailed = (message: string) => ({
-    type: 'DICE.PLACE_BET_FAILED',
+export const placeBetFail = (message: string) => ({
+    type: 'DICE.PLACE_BET_FAIL',
     message,
 });
 

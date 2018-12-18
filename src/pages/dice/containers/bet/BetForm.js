@@ -1,4 +1,4 @@
-import { reduxForm, SubmissionError } from 'redux-form';
+import { reduxForm } from 'redux-form';
 import { compose, withHandlers } from 'recompose';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
@@ -19,11 +19,7 @@ const withForm = reduxForm({
 // Handle form submission
 const withSubmit = withHandlers({
     onSubmit: ({ web3, placeBet }) => form => {
-        return new Promise((resolve, reject) => {
-            placeBet(web3.client, resolve, reject, { modulo: 6, ...form });
-        }).catch(error => {
-            throw new SubmissionError(error);
-        });
+        placeBet(web3.client, { modulo: 6, ...form });
     },
 });
 
