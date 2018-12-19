@@ -11,8 +11,8 @@ const BetStatusSuccess = ({ modulo, dices, amount }) => (
     <SimpleDialog.Body>YOUR BET IS PLACED: {modulo}</SimpleDialog.Body>
 );
 
-const BetStatusFailed = ({ error }) => (
-    <SimpleDialog.Body>{error}</SimpleDialog.Body>
+const BetStatusFailed = ({ message }) => (
+    <SimpleDialog.Body>{message}</SimpleDialog.Body>
 );
 
 const BetStatusContent = ({ status, ...props }) => {
@@ -27,19 +27,19 @@ const BetStatusContent = ({ status, ...props }) => {
         case 'FAIL':
             Component = BetStatusFailed;
             break;
+        default:
+            return null;
     }
 
     return <Component {...props} />;
 };
 
-const BetStatus = ({ status, ...props }) => {
-    return (
-        <Dimmer page active>
-            <SimpleDialog>
-                <BetStatusContent status={status} {...props} />
-            </SimpleDialog>
-        </Dimmer>
-    );
-};
+const BetStatus = ({ status, ...props }) => (
+    <Dimmer page active>
+        <SimpleDialog>
+            <BetStatusContent status={status} {...props} />
+        </SimpleDialog>
+    </Dimmer>
+);
 
 export default BetStatus;

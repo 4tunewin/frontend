@@ -40,6 +40,7 @@ export function* placeBetAsync({ web3, type, payload }) {
     const diceInstance = yield call(DiceContract.deployed);
 
     try {
+        console.log(payload);
         const result = yield diceInstance.placeBet(
             setBitsForIndexes(payload.dices),
             payload.modulo,
@@ -56,7 +57,7 @@ export function* placeBetAsync({ web3, type, payload }) {
 
         console.log(result);
 
-        yield put(placeBetSuccess(result.tx));
+        yield put(placeBetSuccess(result.receipt.transactionHash));
     } catch (e) {
         console.log(e);
         yield put(placeBetFail(e.message));

@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
-import { compose, branch, renderNothing, lifecycle } from 'recompose';
+import { compose, branch, renderNothing } from 'recompose';
 import { connect } from 'react-redux';
 
 import BetStatus from '../../components/bet/BetStatus';
@@ -28,27 +28,17 @@ const GAME_SUBSCRIPTION = gql`
     ${GAME_STATUS}
 `;
 
-const subscribeToGames = (subscribeToMore, ownProps) =>
-    subscribeToMore({
-        document: GAME_SUBSCRIPTION,
-        updateQuery: (prev, { subscriptionData }) => {
-            if (!subscriptionData.data) return;
+const withSubscription = graphql(GAME_SUBSCRIPTION, {
+    props: ({ data: { game, loading }, ownProps }) => {
+        if (loading) return;
 
-            if (
-                subscriptionData.bet.transactionHash ===
-                ownProps.transactionHash
-            ) {
-                console.log({ subscriptionData, ownProps });
-            }
-        },
-    });
+        console.log({ game, ownProps });
 
-/**
- * Subscribe to new games on component mount
- */
-const componentDidMount = function() {
-    subscribeToGames(this.props.subscribeToMore, this.props);
-};
+        if (game.bet.transactionHash === ownProps.transactionHash) {
+            console.log({ game, ownProps });
+        }
+    },
+});
 
 // Hide component if bet is not made yet
 const hideIfNoStatus = branch(
@@ -58,6 +48,6 @@ const hideIfNoStatus = branch(
 
 export default compose(
     connect(({ dice }) => dice.get('bet').toJS()),
+    withSubscription,
     hideIfNoStatus,
-    lifecycle({ componentDidMount }),
 )(BetStatus);
