@@ -27,6 +27,13 @@ export default (state = initialState, action) => {
                 .setIn(['bet', 'status'], 'SUCCESS')
                 .setIn(['bet', 'transactionHash'], action.transactionHash);
         }
+        // Save results for current bet
+        case 'DICE.BET_RESULT': {
+            return state
+                .setIn(['bet', 'status'], action.payment > 0 ? 'WIN' : 'LOOSE')
+                .setIn(['bet', 'payment'], action.payment)
+                .setIn(['bet', 'jackpotPayment'], action.jackpotPayment);
+        }
         // Save filter for game history results
         case 'DICE.FILTER_HISTORY': {
             return state.set('filters', new Map(action.filters));

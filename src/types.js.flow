@@ -10,6 +10,9 @@ export type DiceBet = {
     s: string,
 };
 
-export type GameHistoryProps = {
-    
-}
+export type DiceBetResult = {
+    payment: number,
+    jackpotPayment: number,
+};
+
+export type GameHistoryProps = {};

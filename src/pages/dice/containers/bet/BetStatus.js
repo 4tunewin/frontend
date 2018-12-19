@@ -3,6 +3,7 @@ import { graphql } from 'react-apollo';
 import { compose, branch, renderNothing } from 'recompose';
 import { connect } from 'react-redux';
 
+import { betResult } from '../../../../actions/dice';
 import BetStatus from '../../components/bet/BetStatus';
 
 // Game entitiy fragment
@@ -32,10 +33,16 @@ const withSubscription = graphql(GAME_SUBSCRIPTION, {
     props: ({ data: { game, loading }, ownProps }) => {
         if (loading) return;
 
-        console.log({ game, ownProps });
-
+        // Update result for current bet
         if (game.bet.transactionHash === ownProps.transactionHash) {
-            console.log({ game, ownProps });
+            console.log(game);
+            ownProps.betResult({
+                payment: window.web3.fromWei(game.payment, 'ether'),
+                jackpotPayment: window.web3.fromWei(
+                    game.jackpoPayment,
+                    'ether',
+                ),
+            });
         }
     },
 });
@@ -47,7 +54,10 @@ const hideIfNoStatus = branch(
 );
 
 export default compose(
-    connect(({ dice }) => dice.get('bet').toJS()),
+    connect(
+        ({ dice }) => dice.get('bet').toJS(),
+        { betResult },
+    ),
     withSubscription,
     hideIfNoStatus,
 )(BetStatus);

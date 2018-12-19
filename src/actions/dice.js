@@ -1,6 +1,6 @@
 // @flow
 
-import type { DiceBet } from '../types';
+import type { DiceBet, DiceBetResult } from '../types';
 
 /**
  * Place a bet for dice game
@@ -37,6 +37,14 @@ export const placeBetSuccess = (transactionHash: String) => ({
 export const placeBetFail = (message: string) => ({
     type: 'DICE.PLACE_BET_FAIL',
     message,
+});
+
+/**
+ * Provide result of current bet
+ */
+export const betResult = (payload: DiceBetResult) => ({
+    type: 'DICE.BET_RESULT',
+    payload,
 });
 
 /**

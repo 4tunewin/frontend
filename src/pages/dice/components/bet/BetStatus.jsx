@@ -15,6 +15,10 @@ const BetStatusFailed = ({ message }) => (
     <SimpleDialog.Body>{message}</SimpleDialog.Body>
 );
 
+const BetStatusWin = () => <SimpleDialog.Body>WIN</SimpleDialog.Body>;
+
+const BetStatusLoose = () => <SimpleDialog.Body>LOOSE</SimpleDialog.Body>;
+
 const BetStatusContent = ({ status, ...props }) => {
     let Component = null;
     switch (status) {
@@ -26,6 +30,12 @@ const BetStatusContent = ({ status, ...props }) => {
             break;
         case 'FAIL':
             Component = BetStatusFailed;
+            break;
+        case 'WIN':
+            Component = BetStatusWin;
+            break;
+        case 'LOOSE':
+            Component = BetStatusLoose;
             break;
         default:
             return null;
