@@ -19,8 +19,8 @@ type WithDataProps = GetHistory & QueryProps;
 const MAX_HISTORY_RESULTS = 100;
 
 // Game entitiy fragment
-const GAME_FRAGMENT = gql`
-    fragment Game on Game {
+const GAME_HISTORY_FRAGMENT = gql`
+    fragment GameHistory on Game {
         id
         bet {
             gambler
@@ -41,22 +41,22 @@ const GAME_FRAGMENT = gql`
 const GAME_HISTORY_QUERY = gql`
     query GetHistory {
         history {
-            ...Game
+            ...GameHistory
         }
     }
 
-    ${GAME_FRAGMENT}
+    ${GAME_HISTORY_FRAGMENT}
 `;
 
 // Subscription to a new games
 const GAME_SUBSCRIPTION = gql`
     subscription Game {
         game {
-            ...Game
+            ...GameHistory
         }
     }
 
-    ${GAME_FRAGMENT}
+    ${GAME_HISTORY_FRAGMENT}
 `;
 
 const withData: OperationComponent<GetHistory, {}, WithDataProps> = graphql(
@@ -70,10 +70,9 @@ const withData: OperationComponent<GetHistory, {}, WithDataProps> = graphql(
     },
 );
 
-const subscribeToGames = (subscribeToMore, variables) =>
+const subscribeToGames = subscribeToMore =>
     subscribeToMore({
         document: GAME_SUBSCRIPTION,
-        variables,
         updateQuery: (prev, { subscriptionData }) => {
             if (!subscriptionData.data) return;
 

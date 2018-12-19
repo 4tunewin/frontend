@@ -23,7 +23,9 @@ export default (state = initialState, action) => {
         }
         // Bet was successfully placed
         case 'DICE.PLACE_BET_SUCCESS': {
-            return state.setIn(['bet', 'status'], 'SUCCESS');
+            return state
+                .setIn(['bet', 'status'], 'SUCCESS')
+                .setIn(['bet', 'transactionHash'], action.transactionHash);
         }
         // Save filter for game history results
         case 'DICE.FILTER_HISTORY': {

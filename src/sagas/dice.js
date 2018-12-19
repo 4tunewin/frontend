@@ -56,7 +56,7 @@ export function* placeBetAsync({ web3, type, payload }) {
 
         console.log(result);
 
-        yield put(placeBetSuccess());
+        yield put(placeBetSuccess(result.tx));
     } catch (e) {
         console.log(e);
         yield put(placeBetFail(e.message));

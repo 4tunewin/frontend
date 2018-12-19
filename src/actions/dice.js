@@ -26,8 +26,9 @@ export const placeBetStart = (payload: DiceBet) => ({
 /**
  * Bet placement has succeeded
  */
-export const placeBetSuccess = () => ({
+export const placeBetSuccess = (transactionHash: String) => ({
     type: 'DICE.PLACE_BET_SUCCESS',
+    transactionHash,
 });
 
 /**
