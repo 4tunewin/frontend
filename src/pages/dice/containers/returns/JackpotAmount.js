@@ -16,12 +16,12 @@ const fetchJackpotAsync = ({ web3 }) => () => {
         return Promise.reject();
     }
 
-    return DiceContract.deployed()
+    return DiceContract.instance()
         .then(instance => {
-            return instance.jackpotSize();
+            return instance.methods.jackpotSize().call();
         })
         .then(jackpotSize => {
-            return web3.client.fromWei(toString(jackpotSize), 'ether');
+            return web3.client.utils.fromWei(toString(jackpotSize), 'ether');
         });
 };
 

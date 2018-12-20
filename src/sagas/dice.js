@@ -31,31 +31,29 @@ export function* placeBetAsync({ web3, type, payload }) {
     const { data } = yield call(client.mutate, {
         mutation,
         variables: {
-            input: { address: web3.eth.accounts[0], network: 1 },
+            input: { address: web3.account, network: 1 },
         },
     });
 
     const { commit, commitLastBlock, signature } = data.signBet;
 
-    const diceInstance = yield call(DiceContract.deployed);
+    const diceInstance = yield call(DiceContract.instance);
 
     try {
-        console.log(payload);
-        const result = yield diceInstance.placeBet(
-            setBitsForIndexes(payload.dices),
-            payload.modulo,
-            commitLastBlock,
-            commit,
-            signature.v,
-            signature.r,
-            signature.s,
-            {
-                from: web3.eth.accounts[0],
-                value: web3.toWei(payload.amount, 'ether'),
-            },
-        );
-
-        console.log(result);
+        const result = yield diceInstance.methods
+            .placeBet(
+                setBitsForIndexes(payload.dices),
+                payload.modulo,
+                commitLastBlock,
+                commit,
+                signature.v,
+                signature.r,
+                signature.s,
+            )
+            .send({
+                from: web3.account,
+                value: web3.client.utils.fromWei(payload.amount, 'ether'),
+            });
 
         yield put(placeBetSuccess(result.receipt.transactionHash));
     } catch (e) {

@@ -1,5 +1,4 @@
 import { compose, withState, withHandlers, lifecycle } from 'recompose';
-import { promisify } from 'bluebird';
 
 import { withWeb3 } from '../../lib/web3';
 import Balance from '../components/Balance';
@@ -19,14 +18,10 @@ const updateHandler = withHandlers({
             return () => Promise.resolve();
         }
 
-        const getBalance = promisify(web3.client.eth.getBalance, {
-            context: web3.client,
-        });
-
         return async () => {
             try {
-                const balance = await getBalance(web3.client.eth.accounts[0]);
-                setAmount(web3.client.fromWei(balance.toNumber(), 'ether'));
+                const balance = await web3.client.eth.getBalance(web3.account);
+                setAmount(web3.client.utils.fromWei(balance, 'ether'));
             } catch (e) {
                 console.error(e);
             }

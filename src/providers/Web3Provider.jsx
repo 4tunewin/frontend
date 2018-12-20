@@ -11,6 +11,13 @@ export const ACCESS_DENINED = 'DENINED';
 
 const { Provider, Consumer } = React.createContext();
 
+const getContractInstance = (contract, client) => {
+    return async () => {
+        const instance = await contract.deployed();
+        return new client.eth.Contract(instance.abi, instance.address);
+    };
+};
+
 class Web3Provider extends Component {
     state = {
         client: null,
@@ -51,16 +58,17 @@ class Web3Provider extends Component {
         if (client) {
             each(contracts, contract => {
                 contract.setProvider(client.currentProvider);
+                contract.instance = getContractInstance(contract, client);
             });
 
-            const network = await client.version.getNetwork();
-            const account = client.eth.accounts[0];
+            const network = await client.eth.net.getId();
+            const accounts = await client.eth.getAccounts();
 
             this.setState({
                 client,
                 network,
                 access,
-                account,
+                account: accounts[0],
                 loading: false,
             });
         } else {

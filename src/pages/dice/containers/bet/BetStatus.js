@@ -3,7 +3,8 @@ import { graphql } from 'react-apollo';
 import { compose, branch, renderNothing } from 'recompose';
 import { connect } from 'react-redux';
 
-import { betResult } from '../../../../actions/dice';
+import { betResult, betReset } from '../../../../actions/dice';
+import { computeOutcome } from '../../../../lib/dice';
 import BetStatus from '../../components/bet/BetStatus';
 
 // Game entitiy fragment
@@ -11,7 +12,13 @@ const GAME_STATUS = gql`
     fragment GameStatus on Game {
         id
         bet {
+            modulo
+            mask
+            blockHash
             transactionHash
+        }
+        reveal {
+            reveal
         }
         payment
         jackpotPayment
@@ -35,8 +42,17 @@ const withSubscription = graphql(GAME_SUBSCRIPTION, {
 
         // Update result for current bet
         if (game.bet.transactionHash === ownProps.transactionHash) {
-            console.log(game);
+            // Calculate game outcome
+            const outcome = computeOutcome({
+                modulo: game.bet.modulo,
+                betMask: game.bet.mask,
+                betBlockHash: game.bet.blockHash,
+                reveal: game.reveal.reveal,
+            });
+
             ownProps.betResult({
+                win: outcome.win,
+                jackpot: outcome.jackpot,
                 payment: window.web3.fromWei(game.payment, 'ether'),
                 jackpotPayment: window.web3.fromWei(
                     game.jackpoPayment,
@@ -56,7 +72,7 @@ const hideIfNoStatus = branch(
 export default compose(
     connect(
         ({ dice }) => dice.get('bet').toJS(),
-        { betResult },
+        { betResult, onClose: betReset },
     ),
     withSubscription,
     hideIfNoStatus,

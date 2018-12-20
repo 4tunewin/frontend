@@ -19,7 +19,6 @@ const DiceOption = ({ options, highlight }) => (
             <StyledDice
                 key={option}
                 option={option}
-                highlight={highlight}
                 size={11}
                 radius="2px"
                 color={

@@ -19,7 +19,7 @@ const withForm = reduxForm({
 // Handle form submission
 const withSubmit = withHandlers({
     onSubmit: ({ web3, placeBet }) => form => {
-        placeBet(web3.client, { modulo: 6, ...form });
+        placeBet(web3, { modulo: 6, ...form });
     },
 });
 

@@ -29,10 +29,20 @@ export default (state = initialState, action) => {
         }
         // Save results for current bet
         case 'DICE.BET_RESULT': {
+            const { payload } = action;
+
+            console.log(payload);
+
             return state
-                .setIn(['bet', 'status'], action.payment > 0 ? 'WIN' : 'LOOSE')
-                .setIn(['bet', 'payment'], action.payment)
-                .setIn(['bet', 'jackpotPayment'], action.jackpotPayment);
+                .setIn(['bet', 'status'], payload.payment > 0 ? 'WIN' : 'LOOSE')
+                .setIn(['bet', 'payment'], payload.payment)
+                .setIn(['bet', 'jackpotPayment'], payload.jackpotPayment)
+                .setIn(['bet', 'win'], payload.win)
+                .setIn(['bet', 'jackpot'], payload.jackpot);
+        }
+        // Set bet to initial state
+        case 'DICE.BET_RESET': {
+            return state.set('bet', initialState.get('bet'));
         }
         // Save filter for game history results
         case 'DICE.FILTER_HISTORY': {

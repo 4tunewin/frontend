@@ -38,7 +38,7 @@ const componentDidMount = async function() {
     const latestBlock = await getBlockNumber();
 
     // Start watching events starting from the next block
-    const contract = await DiceContract.deployed();
+    const contract = await DiceContract.instance();
     const event = await contract.Payment(
         {},
         {

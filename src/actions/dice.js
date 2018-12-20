@@ -48,6 +48,13 @@ export const betResult = (payload: DiceBetResult) => ({
 });
 
 /**
+ * Reset bet status
+ */
+export const betReset = () => ({
+    type: 'DICE.BET_RESET',
+});
+
+/**
  * Filter history of games
  *
  * @param {Object} filters - Set of filters

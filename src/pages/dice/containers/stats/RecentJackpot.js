@@ -13,7 +13,7 @@ const fetchRecentJackpot = ({ web3 }) => () => {
         return Promise.reject();
     }
 
-    return DiceContract.deployed()
+    return DiceContract.instance()
         .then(instance => {
             const Event = promisify(instance.JackpotPayment, {
                 context: instance,
@@ -22,7 +22,7 @@ const fetchRecentJackpot = ({ web3 }) => () => {
             return Event({ fromBlock: 'latest', toBlock: 'latest' });
         })
         .then(event => ({
-            amount: web3.client.fromWei(event.args.amount, 'ether'),
+            amount: web3.client.utils.fromWei(event.args.amount, 'ether'),
             address: event.args.beneficiary,
         }));
 };
