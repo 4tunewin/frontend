@@ -31,8 +31,6 @@ export default (state = initialState, action) => {
         case 'DICE.BET_RESULT': {
             const { payload } = action;
 
-            console.log(payload);
-
             return state
                 .setIn(['bet', 'status'], payload.payment > 0 ? 'WIN' : 'LOOSE')
                 .setIn(['bet', 'payment'], payload.payment)

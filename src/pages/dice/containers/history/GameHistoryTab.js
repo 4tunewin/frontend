@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { compose, withHandlers, mapProps } from 'recompose';
 import { injectIntl } from 'react-intl';
-import { omit } from 'lodash';
+import { omit, toUpper } from 'lodash';
 
 import { withWeb3 } from '../../../../lib/web3';
 import { filterHistory } from '../../../../actions/dice';
@@ -14,7 +14,7 @@ const mapStateToProps = ({ dice }) => ({
 
 const handlers = {
     onFilter: ({ web3, filterHistory }) => () => {
-        filterHistory({ gambler: web3.client.eth.accounts[0] });
+        filterHistory({ gambler: toUpper(web3.account) });
     },
     onReset: ({ filterHistory }) => () => {
         filterHistory(null);

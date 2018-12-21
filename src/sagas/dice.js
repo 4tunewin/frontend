@@ -1,5 +1,7 @@
-import { takeEvery, call, put } from 'redux-saga/effects';
+import { takeEvery, call, put, take } from 'redux-saga/effects';
+import { eventChannel } from 'redux-saga';
 import gql from 'graphql-tag';
+import { toString } from 'lodash';
 
 import { client } from '../providers/ApolloProvider';
 import { DiceContract } from '../contracts';
@@ -40,24 +42,35 @@ export function* placeBetAsync({ web3, type, payload }) {
     const diceInstance = yield call(DiceContract.instance);
 
     try {
-        const result = yield diceInstance.methods
-            .placeBet(
-                setBitsForIndexes(payload.dices),
-                payload.modulo,
-                commitLastBlock,
-                commit,
-                signature.v,
-                signature.r,
-                signature.s,
-            )
-            .send({
-                from: web3.account,
-                value: web3.client.utils.fromWei(payload.amount, 'ether'),
-            });
+        const event = yield call(
+            diceInstance.methods.placeBet,
+            setBitsForIndexes(payload.dices),
+            payload.modulo,
+            commitLastBlock,
+            commit,
+            signature.v,
+            signature.r,
+            signature.s,
+        );
 
-        yield put(placeBetSuccess(result.receipt.transactionHash));
+        const channel = eventChannel(emitter => {
+            event
+                .send({
+                    from: web3.account,
+                    value: web3.client.utils.toWei(
+                        toString(payload.amount),
+                        'ether',
+                    ),
+                })
+                .on('transactionHash', hash => emitter(hash))
+                .on('error', error => emitter(new Error(error)));
+
+            return () => {};
+        });
+
+        const transactionHash = yield take(channel);
+        yield put(placeBetSuccess(transactionHash));
     } catch (e) {
-        console.log(e);
         yield put(placeBetFail(e.message));
     }
 }

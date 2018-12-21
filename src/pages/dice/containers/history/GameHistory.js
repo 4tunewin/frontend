@@ -6,7 +6,7 @@ import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { connect } from 'react-redux';
 import { compose, lifecycle, withProps } from 'recompose';
-import { filter, matches, slice } from 'lodash';
+import { filter, matches, slice, toUpper } from 'lodash';
 
 import GameHistory from '../../components/history/GameHistory';
 
@@ -104,7 +104,9 @@ const withFilters = withProps(({ loading, history, filters }) => {
     if (loading || !filters) return { history };
 
     const filteredHistory = filter(history, item => {
-        return matches(filters)(item.bet);
+        return matches(filters)({
+            gambler: toUpper(item.bet.gambler),
+        });
     });
 
     return { history: filteredHistory };

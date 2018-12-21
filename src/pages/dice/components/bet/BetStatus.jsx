@@ -46,9 +46,13 @@ const BetStatusSuccess = ({ dices, amount }) => (
     </SimpleDialog.Body>
 );
 
-const BetStatusFailed = ({ message }) => (
+const BetStatusFailed = ({ error, onClose }) => (
     <SimpleDialog.Body>
-        <Title>{message}</Title>
+        <Title>{error}</Title>
+
+        <StyledButton onClick={onClose} size="large" fluid>
+            Play again
+        </StyledButton>
     </SimpleDialog.Body>
 );
 
