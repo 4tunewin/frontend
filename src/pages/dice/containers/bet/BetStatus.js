@@ -18,7 +18,7 @@ const GAME_STATUS = gql`
             transactionHash
         }
         reveal {
-            reveal
+            secret
         }
         payment
         jackpotPayment
@@ -38,7 +38,7 @@ const GAME_SUBSCRIPTION = gql`
 
 const withSubscription = graphql(GAME_SUBSCRIPTION, {
     props: ({ data: { game, loading }, ownProps }) => {
-        if (loading) return;
+        if (loading || !game) return;
 
         // Update result for current bet
         if (game.bet.transactionHash === ownProps.transactionHash) {
@@ -47,7 +47,7 @@ const withSubscription = graphql(GAME_SUBSCRIPTION, {
                 modulo: game.bet.modulo,
                 betMask: game.bet.mask,
                 betBlockHash: game.bet.blockHash,
-                reveal: game.reveal.reveal,
+                secret: game.reveal.secret,
             });
 
             ownProps.betResult({

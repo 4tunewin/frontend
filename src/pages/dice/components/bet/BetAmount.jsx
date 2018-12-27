@@ -31,8 +31,9 @@ const BetAmount = ({ input: { value, onChange } }) => (
             size="large"
             value={value}
             onChange={onChange}
-            min={0.05}
+            min={0.01}
             max={0.5}
+            step={0.01}
         />
         <AmountOptions>
             {map(options, (option, idx) => (

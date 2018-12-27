@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import GameHistory from '../containers/history/GameHistory';
-import Statistic from './stats/Statistic';
+import Statistic from '../containers/stats/Statistic';
 
 const Wrapper = styled.div`
     height: 100%;

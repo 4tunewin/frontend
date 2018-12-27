@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
+import { fromWei } from 'web3-utils';
+import { toString } from 'lodash';
 
 import StatsHelper from './StatsHelper';
 
@@ -12,7 +14,7 @@ const Eth = styled.span`
     font-family: 'Proxima Nova Semibold';
 `;
 
-const TotalAmount = ({ amount }) => (
+const TotalAmount = ({ amount } = { amount: 0 }) => (
     <StatsHelper>
         <StatsHelper.Left>
             <StatsHelper.Image src="images/stats/total-amount.png" />
@@ -25,7 +27,7 @@ const TotalAmount = ({ amount }) => (
                 />
             </StatsHelper.Label>
             <StatsHelper.Value>
-                {parseFloat(amount || 0).toFixed(3)}
+                {parseFloat(fromWei(toString(amount || 0), 'ether')).toFixed(3)}
                 <Eth>ETH</Eth>
             </StatsHelper.Value>
         </StatsHelper.Right>

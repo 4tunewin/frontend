@@ -8,6 +8,7 @@ export { default as Statistic } from './components/Statistic';
 export { default as Background } from './components/Background';
 export { default as ErrorMessage } from './components/ErrorMessage';
 export { default as SimpleDialog } from './components/SimpleDialog';
+export { default as HoldButton } from './components/HoldButton';
 
 // Containers
 export { default as RequireMetamask } from './containers/RequireMetamask';

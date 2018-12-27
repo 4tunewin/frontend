@@ -5,7 +5,7 @@ import { Dice } from '../../../../common';
 
 const Wrapper = styled.div`
     line-height: 11px;
-    margin-left: 5px;
+    margin-left: ${({ left }) => (left ? 0 : 5)}px;
     margin-right: 5px;
 `;
 
@@ -13,8 +13,8 @@ const StyledDice = styled(Dice)`
     margin: 1px;
 `;
 
-const DiceOption = ({ options, highlight }) => (
-    <Wrapper>
+const DiceOption = ({ options, highlight, left }) => (
+    <Wrapper left={left}>
         {options.map(option => (
             <StyledDice
                 key={option}

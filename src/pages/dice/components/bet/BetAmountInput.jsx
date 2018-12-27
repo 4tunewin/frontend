@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import { compose, withHandlers } from 'recompose';
 import { round, min, max } from 'lodash';
 import { Icon } from 'semantic-ui-react';
+
+import { HoldButton } from '../../../../common';
 
 const Input = styled.div`
     position: relative;
@@ -18,7 +20,7 @@ const Input = styled.div`
     user-select: none;
 `;
 
-const ActionButton = styled.div`
+const ActionButton = styled(HoldButton)`
     border-radius: 50%;
     cursor: ${({ disabled }) => (disabled ? 'cursor' : 'pointer')};
     opacity: ${({ disabled }) => (disabled ? 0.3 : 1)};
@@ -79,9 +81,9 @@ const Caret = styled(Icon)`
 
 const BetAmountInput = ({ value, min, max, onInc, onDec }) => (
     <Input>
-        <DecButton onClick={onDec} disabled={value === min} />
+        <DecButton onPress={onDec} disabled={value === min} />
         <span>{parseFloat(value || 0).toFixed(2)}</span>
-        <IncButton onClick={onInc} disabled={value === max} />
+        <IncButton onPress={onInc} disabled={value === max} />
         <CaretWrapper>
             <Caret name="caret up" offset={round((value * 100) / max, 3)} />
         </CaretWrapper>
@@ -89,12 +91,12 @@ const BetAmountInput = ({ value, min, max, onInc, onDec }) => (
 );
 
 const actionHandlers = withHandlers({
-    onDec: ({ onChange, value, min: minValue }) => () => {
-        const _value = round(parseFloat(value) - 0.05, 3);
+    onDec: ({ onChange, value, min: minValue, step }) => () => {
+        const _value = round(parseFloat(value) - step, 3);
         onChange(max([minValue, _value]));
     },
-    onInc: ({ onChange, value, max: maxValue }) => () => {
-        const _value = round(parseFloat(value) + 0.05, 3);
+    onInc: ({ onChange, value, max: maxValue, step }) => () => {
+        const _value = round(parseFloat(value) + step, 3);
         onChange(min([maxValue, _value]));
     },
 });

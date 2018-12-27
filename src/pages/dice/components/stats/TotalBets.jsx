@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 
 import StatsHelper from './StatsHelper';
 
-const TotalBets = ({ bets }) => (
+const TotalBets = ({ bets } = { bets: 0 }) => (
     <StatsHelper>
         <StatsHelper.Left>
             <StatsHelper.Image src="images/stats/total-bets.png" />
@@ -19,9 +19,5 @@ const TotalBets = ({ bets }) => (
         </StatsHelper.Right>
     </StatsHelper>
 );
-
-TotalBets.defaultProps = {
-    bets: 0,
-};
 
 export default TotalBets;

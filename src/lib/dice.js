@@ -56,12 +56,12 @@ export const eligebleForJackpot = (amount: string) => {
  *
  * @param {String} betMask      - A binary mask of placed bet
  * @param {String} betBlockHash - A hash of block when bet was placed
- * @param {String} reveal       - A secret number revelaed by croupier
+ * @param {String} secret       - A secret number revelaed by croupier
  */
-const computeDiceOutcome = ({ betMask, betBlockHash, reveal }) => {
+const computeDiceOutcome = ({ betMask, betBlockHash, secret }) => {
     const options = ['1', '2', '3', '4', '5', '6'];
     const bets = indexesOfSetBits(betMask).map(index => options[index]);
-    const entropy = encodePacked([reveal, betBlockHash]);
+    const entropy = encodePacked([secret, betBlockHash]);
     const win = options[new BigNumber(entropy, 16).mod(6)];
     const jackpot =
         ((new BigNumber(entropy, 16)
@@ -86,24 +86,24 @@ const computeDiceOutcome = ({ betMask, betBlockHash, reveal }) => {
  * @param {Number} modulo       - A game modulo (e.g. 2, 6, 12)
  * @param {String} betMask      - A binary mask of placed bet
  * @param {String} betBlockHash - A hash of block when bet was placed
- * @param {String} reveal       - A secret number revelaed by croupier
+ * @param {String} secret       - A secret number revelaed by croupier
  */
 export const computeOutcome = ({
     modulo,
     betMask,
     betBlockHash,
-    reveal,
+    secret,
 }: {
     modulo: number,
     betMask: string,
     betBlockHash: string,
-    reveal: string,
+    secret: string,
 }) => {
     const games = {
         '6': computeDiceOutcome,
     };
 
-    return games[modulo]({ betMask, betBlockHash, reveal });
+    return games[modulo]({ betMask, betBlockHash, secret });
 };
 
 /**
@@ -145,7 +145,7 @@ export const indexesOfSetBits = (number: number) => {
  * @param {Array} arr - An array of hashes to pack and encode
  */
 export const encodePacked = (arr: Array<string>) => {
-    const packed = arr.map(item => item.replace('0x', '')).join('');
+    const packed = arr.map(item => toString(item).replace('0x', '')).join('');
 
     const blocks = [];
     for (let i = packed.length, j = 0; j < i; j += 2) {

@@ -31,13 +31,19 @@ Table.Row = styled.div`
 Table.Body = styled.div`
     display: flex;
     flex-direction: column;
-    overflow: auto;
+    overflow-y: scroll;
     max-height: 380px;
     margin-right: -17px;
 
     ${Table.Row} {
         &:nth-child(2n) {
             background-color: #2e3653 !important;
+        }
+    }
+
+    ${Table.Row} {
+        &:hover {
+            background-color: #3d455f !important;
         }
     }
 `;

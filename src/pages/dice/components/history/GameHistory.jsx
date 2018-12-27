@@ -49,13 +49,13 @@ const GameHistoryTable = ({ history }) => (
     <Table basic="very" singleLine>
         <Table.Header>
             <Table.Row>
-                <Table.HeaderCell width="30%">
+                <Table.HeaderCell width="27%">
                     <FormattedMessage
                         id="pages.dice.history.GameHistory.header.player"
                         defaultMessage="Player"
                     />
                 </Table.HeaderCell>
-                <Table.HeaderCell width="30%">
+                <Table.HeaderCell width="33%">
                     <FormattedMessage
                         id="pages.dice.history.GameHistory.header.bet"
                         defaultMessage="Bet"

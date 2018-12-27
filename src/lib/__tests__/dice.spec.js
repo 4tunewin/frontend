@@ -66,7 +66,7 @@ describe('math', () => {
             const betMask = 21;
             const betBlockHash =
                 '0x43f440fe1e28bc30eea8f10d65d4b5e2f774e8d4e1682c898f8ceda68c4274a3';
-            const reveal =
+            const secret =
                 '0x1be8be1546ca11aa79df6770b63594b8d4c6ee02d77bfb4a65c2de962ee8b5c2';
 
             const expectedResult = {
@@ -82,7 +82,7 @@ describe('math', () => {
                     modulo: 6,
                     betMask,
                     betBlockHash,
-                    reveal,
+                    secret,
                 }),
             ).toEqual(expectedResult);
         });

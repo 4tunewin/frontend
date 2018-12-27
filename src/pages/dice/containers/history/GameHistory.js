@@ -27,10 +27,13 @@ const GAME_HISTORY_FRAGMENT = gql`
             amount
             mask
             modulo
+            commit
+            blockNumber
             blockHash
+            transactionHash
         }
         reveal {
-            reveal
+            secret
         }
         payment
         jackpotPayment

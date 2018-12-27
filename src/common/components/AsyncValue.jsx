@@ -5,7 +5,7 @@ import { Component } from 'react';
 
 class AsyncValue extends Component {
     state = {
-        fetchDataResult: null,
+        data: null,
         timeout: false,
     };
 
@@ -19,15 +19,28 @@ class AsyncValue extends Component {
 
         // Call fetch request
         this.props.fetch().then(result => {
-            this.setState({ fetchDataResult: result });
+            this.setState({ data: result });
         });
+
+        // Call subscription method if it's provided
+        if (this.props.subscribe) {
+            this.props.subscribe(data => {
+                this.setState({ data });
+            });
+        }
+    }
+
+    componentWillUnmount() {
+        if (this.props.unsubscribe) {
+            this.props.unsubscribe();
+        }
     }
 
     render() {
-        const { timeout, fetchDataResult } = this.state;
+        const { timeout, data } = this.state;
         const { children, fallback, placeholder } = this.props;
 
-        const value = timeout ? fallback : fetchDataResult || placeholder;
+        const value = timeout ? fallback : data || placeholder;
 
         if (children) {
             return children({ value });

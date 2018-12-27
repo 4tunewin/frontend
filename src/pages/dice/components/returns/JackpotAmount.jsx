@@ -28,7 +28,7 @@ const Eth = styled.span`
     font-family: 'Proxima Nova Semibold';
 `;
 
-const JackpotAmount = ({ amount, fetchJackpotAsync }) => (
+const JackpotAmount = ({ amount, fetchJackpotAsync, onSubscribeJackpot }) => (
     <Wrapper>
         <StatsHelper>
             <StatsHelper.Left>
@@ -42,7 +42,11 @@ const JackpotAmount = ({ amount, fetchJackpotAsync }) => (
                     />
                 </StatsHelper.Label>
                 <StatsHelper.Value>
-                    <AsyncValue fetch={fetchJackpotAsync} placeholder={0}>
+                    <AsyncValue
+                        fetch={fetchJackpotAsync}
+                        subscribe={onSubscribeJackpot}
+                        placeholder={0}
+                    >
                         {({ value }) => parseFloat(value).toFixed(3)}
                     </AsyncValue>
                     <Eth>ETH</Eth>
