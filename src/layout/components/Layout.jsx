@@ -13,25 +13,30 @@ const StyledContainer = styled(Container)`
     border-radius: 10px;
     background: #182038 !important;
     box-shadow: 10px 25px 60px -10px rgba(0, 0, 0, 0.54);
-    margin: 40px 0px 40px 0px !important;
 `;
 
 const Content = styled.div`
     padding: 0px 40px 35px 40px;
 `;
 
+const Padding = styled.div`
+    padding: 40px 0px 30px 0px;
+`;
+
 const Layout = () => (
     <Metamask>
-        <StyledContainer>
-            <Header />
+        <Padding>
+            <StyledContainer>
+                <Header />
 
-            <Content>
-                <Route path="/" component={DicePage} exact />
-                <Route path="/terms" component={TermsPage} />
-            </Content>
+                <Content>
+                    <Route path="/" component={DicePage} exact />
+                    <Route path="/terms" component={TermsPage} />
+                </Content>
 
-            <Footer />
-        </StyledContainer>
+                <Footer />
+            </StyledContainer>
+        </Padding>
     </Metamask>
 );
 

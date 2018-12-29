@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { withProps, compose } from 'recompose';
 import { FormattedMessage } from 'react-intl';
 import { fromWei } from 'web3-utils';
-import { toString, isNil } from 'lodash';
+import { toString } from 'lodash';
 
-import { ExplorerLink, AsyncValue } from '../../../../common';
+import { ExplorerLink } from '../../../../common';
 import StatsHelper from './StatsHelper';
 
 const Eth = styled.span`

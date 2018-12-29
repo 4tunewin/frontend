@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Dimmer, Loader, Button } from 'semantic-ui-react';
 
 import { SimpleDialog, Dice } from '../../../../common';
+import { FormattedMessage } from 'react-intl';
 
 const Title = styled.div`
     font-size: 18px;
@@ -28,37 +29,64 @@ const Dices = styled.div`
 
 const BetStatusStart = ({ dices, amount }) => (
     <SimpleDialog.Body>
-        <Title>Please confirm bet transaction</Title>
+        <Title>
+            <FormattedMessage
+                id="page.dice.bet.BetStatusStart.title"
+                defaultMessage="Please confirm bet transaction"
+            />
+        </Title>
     </SimpleDialog.Body>
 );
 
 const BetStatusSuccess = ({ dices, amount }) => (
     <SimpleDialog.Body>
-        <Title>You bet {amount} ETH on</Title>
+        <Title>
+            <FormattedMessage
+                id="page.dice.bet.BetStatusSuccess.title"
+                defaultMessage="You bet {amount} ETH on"
+                values={{ amount }}
+            />
+        </Title>
 
         {dices.map(option => (
             <Dice key={option} option={option} size={36} />
         ))}
 
         <StyledLoader inline centered>
-            Waiting for Ethereum network
+            <FormattedMessage
+                id="page.dice.bet.BetStatusSuccess.loader"
+                defaultMessage="Waiting for Ethereum network"
+            />
         </StyledLoader>
     </SimpleDialog.Body>
+);
+
+const PlayAgainButton = ({ onClick }) => (
+    <StyledButton onClick={onClick} size="large" fluid>
+        <FormattedMessage
+            id="page.dice.bet.PlayAgainButton"
+            defaultMessage="Play again"
+        />
+    </StyledButton>
 );
 
 const BetStatusFailed = ({ error, onClose }) => (
     <SimpleDialog.Body>
         <Title>{error}</Title>
 
-        <StyledButton onClick={onClose} size="large" fluid>
-            Play again
-        </StyledButton>
+        <PlayAgainButton onClick={onClose} />
     </SimpleDialog.Body>
 );
 
 const BetStatusWin = ({ dices, win, payment, onClose }) => (
     <SimpleDialog.Body>
-        <Title>You won {payment} ETH!</Title>
+        <Title>
+            <FormattedMessage
+                id="page.dice.bet.BetStatusWin.title"
+                defaultMessage="You won {amount} ETH!"
+                values={{ amount: payment }}
+            />
+        </Title>
 
         <Dice
             option={win}
@@ -72,15 +100,19 @@ const BetStatusWin = ({ dices, win, payment, onClose }) => (
             ))}
         </Dices>
 
-        <StyledButton onClick={onClose} size="large" fluid>
-            Play again
-        </StyledButton>
+        <PlayAgainButton onClick={onClose} />
     </SimpleDialog.Body>
 );
 
 const BetStatusLoose = ({ dices, win, amount, onClose }) => (
     <SimpleDialog.Body>
-        <Title>You loose {amount} ETH :(</Title>
+        <Title>
+            <FormattedMessage
+                id="page.dice.bet.BetStatusLoose.title"
+                defaultMessage="You loose {amount} ETH :("
+                values={{ amount }}
+            />
+        </Title>
 
         <Dice
             option={win}
@@ -94,9 +126,7 @@ const BetStatusLoose = ({ dices, win, amount, onClose }) => (
             ))}
         </Dices>
 
-        <StyledButton onClick={onClose} size="large" fluid>
-            Play again
-        </StyledButton>
+        <PlayAgainButton onClick={onClose} />
     </SimpleDialog.Body>
 );
 

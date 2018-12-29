@@ -11,8 +11,8 @@ const Wrapper = styled.div`
     flex-direction: column;
 
     & > div:first-child {
+        height: 100%;
         flex: 1 1 auto;
-        display: flex;
         padding-bottom: 28px;
     }
 

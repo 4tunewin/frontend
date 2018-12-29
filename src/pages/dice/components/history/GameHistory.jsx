@@ -9,6 +9,7 @@ import GameHistoryTab from '../../containers/history/GameHistoryTab';
 import GameHistoryItem from './GameHistoryItem';
 
 const Container = styled(Segment)`
+    height: 100%;
     flex: 1 1 auto;
     background: #27304d !important;
     border-radius: 10px !important;
@@ -55,13 +56,13 @@ const GameHistoryTable = ({ history }) => (
                         defaultMessage="Player"
                     />
                 </Table.HeaderCell>
-                <Table.HeaderCell width="33%">
+                <Table.HeaderCell width="30%">
                     <FormattedMessage
                         id="pages.dice.history.GameHistory.header.bet"
                         defaultMessage="Bet"
                     />
                 </Table.HeaderCell>
-                <Table.HeaderCell width="20%">
+                <Table.HeaderCell width="23%">
                     <FormattedMessage
                         id="pages.dice.history.GameHistory.header.result"
                         defaultMessage="Result"

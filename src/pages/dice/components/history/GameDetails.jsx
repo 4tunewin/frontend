@@ -1,116 +1,228 @@
 import React from 'react';
-import styled from 'styled-components';
-import { Table, Grid } from 'semantic-ui-react';
+import styled, { keyframes } from 'styled-components';
+import { Popup } from 'semantic-ui-react';
 
 import BigNumber from 'bignumber.js';
 import { fromWei } from 'web3-utils';
-import { encodePacked } from '../../../../lib/dice';
+import { encodePacked, eligebleForJackpot } from '../../../../lib/dice';
 import { ExplorerLink } from '../../../../common';
+import { FormattedMessage } from 'react-intl';
 
-const Row = styled.div`
-    display: inline;
+const FadeIn = keyframes`
+    0% { 
+        opacity: 0;
+    }   
+    100% {
+        opacity: 1;
+    }
+`;
+
+const RowWrapper = styled.div`
+    display: flex;
     flex-direction: row;
     padding: 3px 0px 3px;
     border-bottom: 1px solid #2e3653;
 `;
 
 const TitleCell = styled.div`
-    width: 25%;
+    flex: 0 0 25%;
 `;
 
 const ValueCell = styled.div`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 75%;
+    flex: 1 1 auto;
 `;
 
 const Wrapper = styled.div`
-    display: ${({ show }) => (show ? 'flex' : 'none')};
     flex-direction: column;
     margin-left: -20px;
     margin-right: -20px;
     padding: 0px 20px 0px 20px;
     background: #182038;
 
-    ${Row} {
+    display: ${({ show }) => (show ? 'flex' : 'none')};
+    animation: ${FadeIn} 0.6s ease-out;
+
+    ${RowWrapper} {
         &:last-child {
             border-bottom: 0px !important;
         }
     }
 `;
 
+const Row = ({ title, value, hint }) => (
+    <Popup
+        trigger={
+            <RowWrapper>
+                <TitleCell>{title}</TitleCell>
+                <ValueCell>{value}</ValueCell>
+            </RowWrapper>
+        }
+        content={hint}
+        inverted
+        size="small"
+    />
+);
+
 const GameDetails = ({ show, game, outcome }) => (
     <Wrapper show={show}>
-        <Row>
-            <TitleCell>address</TitleCell>
-            <ValueCell>
-                <ExplorerLink address={game.bet.gambler} />
-            </ValueCell>
-        </Row>
-        <Row>
-            <TitleCell>bet</TitleCell>
-            <ValueCell>{fromWei(game.bet.amount, 'ether')} ETH</ValueCell>
-        </Row>
-        <Row>
-            <TitleCell>bet on</TitleCell>
-            <ValueCell>{outcome.bets.join(', ')}</ValueCell>
-        </Row>
-        <Row>
-            <TitleCell>bet trx</TitleCell>
-            <ValueCell>
-                <ExplorerLink address={game.bet.transactionHash} />
-            </ValueCell>
-        </Row>
-        <Row>
-            <TitleCell>sha3(secret)</TitleCell>
-            <ValueCell>{game.bet.commit}</ValueCell>
-        </Row>
-        <Row>
-            <TitleCell>secret</TitleCell>
-            <ValueCell>{game.reveal.secret}</ValueCell>
-        </Row>
-        <Row>
-            <TitleCell>sha3(bet block)</TitleCell>
-            <ValueCell>0x{encodePacked([game.bet.blockNumber])}</ValueCell>
-        </Row>
-        <Row>
-            <TitleCell>sha3(blk + secret)</TitleCell>
-            <ValueCell>
-                0x
-                {encodePacked([game.reveal.secret, game.bet.blockNumber])}
-            </ValueCell>
-        </Row>
-        <Row>
-            <TitleCell>sha3 mod 6</TitleCell>
-            <ValueCell>
-                {new BigNumber(
-                    '0x' +
-                        encodePacked([
-                            game.reveal.secret,
-                            game.bet.blockNumber,
-                        ]),
-                )
-                    .modulo(6)
-                    .toString()}
-            </ValueCell>
-        </Row>
-        <Row>
-            <TitleCell>jackpot</TitleCell>
-            <ValueCell>{outcome.jackpot}</ValueCell>
-        </Row>
-        <Row>
-            <TitleCell>wins</TitleCell>
-            <ValueCell>
-                {fromWei(
-                    new BigNumber(game.payment, 10)
-                        .plus(game.jackpotPayment || 0, 10)
-                        .toString(),
-                    'ether',
-                )}{' '}
-                ETH
-            </ValueCell>
-        </Row>
+        <Row
+            title={
+                <FormattedMessage
+                    id="page.dice.history.GameDetails.address.title"
+                    defaultMessage="address"
+                />
+            }
+            value={<ExplorerLink address={game.bet.gambler} />}
+            hint={
+                <FormattedMessage
+                    id="page.dice.history.GameDetails.address.hint"
+                    defaultMessage="An Ethereum address which issued bet transaction"
+                />
+            }
+        />
+        <Row
+            title={
+                <FormattedMessage
+                    id="page.dice.history.GameDetails.bet.title"
+                    defaultMessage="bet"
+                />
+            }
+            value={`${fromWei(game.bet.amount, 'ether')} ETH`}
+            hint={
+                <FormattedMessage
+                    id="page.dice.history.GameDetails.bet.hint"
+                    defaultMessage="The amount of Ethereum that was sent as a bet"
+                />
+            }
+        />
+        <Row
+            title={
+                <FormattedMessage
+                    id="page.dice.history.GameDetails.betOn.title"
+                    defaultMessage="bet on"
+                />
+            }
+            value={outcome.bets.join(', ')}
+            hint={
+                <FormattedMessage
+                    id="page.dice.history.GameDetails.betOn.hint"
+                    defaultMessage="The numbers the bet was made on"
+                />
+            }
+        />
+        <Row
+            title={
+                <FormattedMessage
+                    id="page.dice.history.GameDetails.betTrx.title"
+                    defaultMessage="bet trx"
+                />
+            }
+            value={<ExplorerLink address={game.bet.transactionHash} />}
+            hint={
+                <FormattedMessage
+                    id="page.dice.history.GameDetails.betTrx.hint"
+                    defaultMessage="Transaction hash of the bet transaction"
+                />
+            }
+        />
+        <Row
+            title="sha3(secret)"
+            value={game.bet.commit}
+            hint={
+                <FormattedMessage
+                    id="page.dice.history.GameDetails.sha3Secret.hint"
+                    defaultMessage="Hash of the secret number from the house"
+                />
+            }
+        />
+        <Row
+            title="secret"
+            value={game.reveal.secret}
+            hint={
+                <FormattedMessage
+                    id="page.dice.history.GameDetails.secret.hint"
+                    defaultMessage="Actual secret number from the house"
+                />
+            }
+        />
+        <Row
+            title="sha3(bet block)"
+            value={`0x${encodePacked([game.bet.blockNumber])}`}
+            hint={
+                <FormattedMessage
+                    id="page.dice.history.GameDetails.sha3BetBlock.hint"
+                    defaultMessage="Block hash of the block with transaction"
+                />
+            }
+        />
+        <Row
+            title="sha3(blk + secret)"
+            value={`0x${encodePacked([
+                game.reveal.secret,
+                game.bet.blockNumber,
+            ])}`}
+            hint={
+                <FormattedMessage
+                    id="page.dice.history.GameDetails.sha3BlkSecret.hint"
+                    defaultMessage="Hash of the bet block hash and secret number"
+                />
+            }
+        />
+        <Row
+            title="sha3 mod 6"
+            value={new BigNumber(
+                '0x' + encodePacked([game.reveal.secret, game.bet.blockNumber]),
+            )
+                .modulo(6)
+                .toString()}
+            hint={
+                <FormattedMessage
+                    id="page.dice.history.GameDetails.sha3Modulo.hint"
+                    defaultMessage="The same as above, but with modulo over available options"
+                />
+            }
+        />
+        {eligebleForJackpot(game.bet.amount) && (
+            <Row
+                title={
+                    <FormattedMessage
+                        id="page.dice.history.GameDetails.jackpot.title"
+                        defaultMessage="jackpot"
+                    />
+                }
+                value={outcome.jackpot}
+                hint={
+                    <FormattedMessage
+                        id="page.dice.history.GameDetails.jackpot.hint"
+                        defaultMessage="Jackpot number"
+                    />
+                }
+            />
+        )}
+        <Row
+            title={
+                <FormattedMessage
+                    id="page.dice.history.GameDetails.wins.title"
+                    defaultMessage="wins"
+                />
+            }
+            value={`${fromWei(
+                new BigNumber(game.payment, 10)
+                    .plus(game.jackpotPayment || 0, 10)
+                    .toString(),
+                'ether',
+            )}
+                ETH`}
+            hint={
+                <FormattedMessage
+                    id="page.dice.history.GameDetails.wins.hint"
+                    defaultMessage="The total winning of the bet"
+                />
+            }
+        />
     </Wrapper>
 );
 

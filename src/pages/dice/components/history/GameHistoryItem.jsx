@@ -38,7 +38,7 @@ const Title = styled.div`
 
     &::after {
         font-family: Icons;
-        content: "${({ active }) => (active ? '\f0d7' : '\f0da')}";
+        content: "${({ active }) => (active ? '\f107' : '\f105')}";
         position: absolute;
         right: 0px;
         line-height: 31px;
@@ -70,13 +70,13 @@ const GameHistoryItem = ({ game, bets, jackpot, win, show, onToggle }) => (
                     {truncate(game.bet.gambler, { length: 8, omission: '' })}
                 </CenteredContent>
             </Table.Cell>
-            <Table.Cell width="33%">
+            <Table.Cell width="30%">
                 <CenteredContent>
                     {formatAmount(game.bet.amount)}
                     <DiceOption options={bets} />
                 </CenteredContent>
             </Table.Cell>
-            <Table.Cell width="20%">
+            <Table.Cell width="23%">
                 <CenteredContent>
                     <DiceOption
                         options={[win]}

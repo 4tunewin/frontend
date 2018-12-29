@@ -1,7 +1,6 @@
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
-import { compose, withProps, lifecycle } from 'recompose';
-import { get } from 'lodash';
+import { compose, lifecycle } from 'recompose';
 
 import Statistic from '../../components/stats/Statistic';
 
