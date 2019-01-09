@@ -1,7 +1,7 @@
 version: '2'
 services:
     graphql:
-        container_name: croupier
+        container_name: frontend
         image: 121364511741.dkr.ecr.us-east-1.amazonaws.com/frontent:latest
         restart: always
         environment:
