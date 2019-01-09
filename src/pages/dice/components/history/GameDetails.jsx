@@ -120,7 +120,9 @@ const GameDetails = ({ show, game, outcome }) => (
                     defaultMessage="bet trx"
                 />
             }
-            value={<ExplorerLink address={game.bet.transactionHash} />}
+            value={
+                <ExplorerLink type="tx" address={game.bet.transactionHash} />
+            }
             hint={
                 <FormattedMessage
                     id="page.dice.history.GameDetails.betTrx.hint"

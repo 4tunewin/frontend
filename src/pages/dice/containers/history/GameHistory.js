@@ -37,6 +37,7 @@ const GAME_HISTORY_FRAGMENT = gql`
         }
         payment
         jackpotPayment
+        status
     }
 `;
 
@@ -107,7 +108,7 @@ const withFilters = withProps(({ loading, history, filters }) => {
     if (loading || !filters) return { history };
 
     const filteredHistory = filter(history, item => {
-        return matches(filters)({
+        return matches({ ...filters, status: 'SUCCESS' })({
             gambler: toUpper(item.bet.gambler),
         });
     });

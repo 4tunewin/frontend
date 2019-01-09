@@ -22,6 +22,8 @@ const GAME_STATUS = gql`
         }
         payment
         jackpotPayment
+        refunded
+        status
     }
 `;
 
@@ -42,23 +44,31 @@ const withSubscription = graphql(GAME_SUBSCRIPTION, {
 
         // Update result for current bet
         if (game.bet.transactionHash === ownProps.transactionHash) {
-            // Calculate game outcome
-            const outcome = computeOutcome({
-                modulo: game.bet.modulo,
-                betMask: game.bet.mask,
-                betBlockHash: game.bet.blockHash,
-                secret: game.reveal.secret,
-            });
+            if (game.status === 'FAIL') {
+                ownProps.betResult({
+                    status: 'FAILED',
+                    refunded: game.refunded,
+                });
+            } else {
+                // Calculate game outcome
+                const outcome = computeOutcome({
+                    modulo: game.bet.modulo,
+                    betMask: game.bet.mask,
+                    betBlockHash: game.bet.blockHash,
+                    secret: game.reveal.secret,
+                });
 
-            ownProps.betResult({
-                win: outcome.win,
-                jackpot: outcome.jackpot,
-                payment: window.web3.fromWei(game.payment, 'ether'),
-                jackpotPayment: window.web3.fromWei(
-                    game.jackpoPayment,
-                    'ether',
-                ),
-            });
+                ownProps.betResult({
+                    status: 'SUCCESS',
+                    win: outcome.win,
+                    jackpot: outcome.jackpot,
+                    payment: window.web3.fromWei(game.payment, 'ether'),
+                    jackpotPayment: window.web3.fromWei(
+                        game.jackpoPayment,
+                        'ether',
+                    ),
+                });
+            }
         }
     },
 });

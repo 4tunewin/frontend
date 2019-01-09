@@ -31,12 +31,23 @@ export default (state = initialState, action) => {
         case 'DICE.BET_RESULT': {
             const { payload } = action;
 
-            return state
-                .setIn(['bet', 'status'], payload.payment > 0 ? 'WIN' : 'LOOSE')
-                .setIn(['bet', 'payment'], payload.payment)
-                .setIn(['bet', 'jackpotPayment'], payload.jackpotPayment)
-                .setIn(['bet', 'win'], payload.win)
-                .setIn(['bet', 'jackpot'], payload.jackpot);
+            if (payload.status === 'FAIL') {
+                return state
+                    .setIn(['bet', 'status'], 'RESULT')
+                    .setIn(['bet', 'result'], 'FAIL')
+                    .setIn(['bet', 'refunded'], payload.refunded);
+            } else {
+                return state
+                    .setIn(['bet', 'status'], 'RESULT')
+                    .setIn(
+                        ['bet', 'result'],
+                        payload.payment > 0 ? 'WIN' : 'LOOSE',
+                    )
+                    .setIn(['bet', 'payment'], payload.payment)
+                    .setIn(['bet', 'jackpotPayment'], payload.jackpotPayment)
+                    .setIn(['bet', 'win'], payload.win)
+                    .setIn(['bet', 'jackpot'], payload.jackpot);
+            }
         }
         // Set bet to initial state
         case 'DICE.BET_RESET': {

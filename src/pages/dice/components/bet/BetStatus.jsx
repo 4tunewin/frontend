@@ -78,7 +78,47 @@ const BetStatusFailed = ({ error, onClose }) => (
     </SimpleDialog.Body>
 );
 
-const BetStatusWin = ({ dices, win, payment, onClose }) => (
+const BetResultRefund = ({ amount, onClose }) => (
+    <SimpleDialog.Body>
+        <Title>
+            <FormattedMessage
+                id="page.dice.bet.BetStatusRefund.title"
+                defaultMessage="We refunded {amount} ETH"
+                values={{ amount }}
+            />
+        </Title>
+
+        <FormattedMessage
+            id="page.dice.bet.BetStatusRefund.body"
+            defaultMessage="We were not able to process your bet request, so we refunded {amount}{' '}
+        ETH back to your account. We sincerely apologize for any
+        inconvenience."
+            values={{ amount }}
+        />
+
+        <PlayAgainButton onClick={onClose} />
+    </SimpleDialog.Body>
+);
+
+const BetResultFailWithoutRefund = () => (
+    <SimpleDialog.Body>
+        <Title>
+            <FormattedMessage
+                id="page.dice.bet.BetStatusWin.title"
+                defaultMessage="Bet has failed"
+            />
+        </Title>
+
+        <FormattedMessage
+            id="page.dice.bet.BetResultFailWithoutRefund.body"
+            defaultMessage="We were not able to process your bet, but don't worry, your funds are safe and will be refunded shortly."
+        />
+
+        <PlayAgainButton onClick={onClose} />
+    </SimpleDialog.Body>
+);
+
+const BetResultWin = ({ dices, win, payment, onClose }) => (
     <SimpleDialog.Body>
         <Title>
             <FormattedMessage
@@ -104,7 +144,7 @@ const BetStatusWin = ({ dices, win, payment, onClose }) => (
     </SimpleDialog.Body>
 );
 
-const BetStatusLoose = ({ dices, win, amount, onClose }) => (
+const BetResultLoose = ({ dices, win, amount, onClose }) => (
     <SimpleDialog.Body>
         <Title>
             <FormattedMessage
@@ -142,14 +182,33 @@ const BetStatusContent = ({ status, ...props }) => {
         case 'FAIL':
             Component = BetStatusFailed;
             break;
+        case 'RESULT':
+            Component = BestStatusResult;
+            break;
+        default:
+            return null;
+    }
+
+    return <Component {...props} />;
+};
+
+const BetStatusResult = ({ result, ...props }) => {
+    let Component = null;
+
+    switch (result) {
         case 'WIN':
             Component = BetStatusWin;
             break;
         case 'LOOSE':
             Component = BetStatusLoose;
             break;
-        default:
-            return null;
+        case 'FAIL':
+            if (props.refunded) {
+                Component = BetResultRefund;
+            } else {
+                Component = BetResultFailWithoutRefund;
+            }
+            break;
     }
 
     return <Component {...props} />;

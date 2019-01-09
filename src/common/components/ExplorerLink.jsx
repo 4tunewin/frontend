@@ -6,11 +6,11 @@ import config from '../../config';
 /**
  * Represents link to explorer with specified address
  */
-const ExplorerLink = ({ address, length, omission }) => (
+const ExplorerLink = ({ type, address, length, omission }) => (
     <a
         target="_blank"
         rel="noopener noreferrer"
-        href={`${config.explorerUrl}/address/${address}`}
+        href={`${config.explorerUrl}/${type}/${address}`}
     >
         {length ? truncate(address, { length, omission }) : address}
     </a>
@@ -18,6 +18,7 @@ const ExplorerLink = ({ address, length, omission }) => (
 
 ExplorerLink.defaultProps = {
     omission: '',
+    type: 'address',
 };
 
 export default ExplorerLink;
