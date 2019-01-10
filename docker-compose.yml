@@ -4,6 +4,8 @@ services:
         container_name: frontend
         image: 121364511741.dkr.ecr.us-east-1.amazonaws.com/frontent:latest
         restart: always
+        ports:
+            - 80:80
         environment:
             - READ_NODE_ENV=production
 
