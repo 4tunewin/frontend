@@ -4,11 +4,12 @@ import { Dimmer, Loader, Button } from 'semantic-ui-react';
 
 import { SimpleDialog, Dice } from '../../../../common';
 import { FormattedMessage } from 'react-intl';
+import BetErrorMessage from './BetErrorMessage';
 
 const Title = styled.div`
     font-size: 18px;
     color: rgba(255, 255, 255, 0.5);
-    padding-bottom: 15px;
+    padding-bottom: ${({ padding }) => (padding ? 15 : 0)}px;
 `;
 
 const StyledLoader = styled(Loader)`
@@ -27,6 +28,10 @@ const Dices = styled.div`
     margin-bottom: 10px;
 `;
 
+const StyledSimpleDialog = styled(SimpleDialog)`
+    max-width: 400px;
+`;
+
 const BetStatusStart = ({ dices, amount }) => (
     <SimpleDialog.Body>
         <Title>
@@ -40,7 +45,7 @@ const BetStatusStart = ({ dices, amount }) => (
 
 const BetStatusSuccess = ({ dices, amount }) => (
     <SimpleDialog.Body>
-        <Title>
+        <Title padding>
             <FormattedMessage
                 id="page.dice.bet.BetStatusSuccess.title"
                 defaultMessage="You bet {amount} ETH on"
@@ -72,7 +77,9 @@ const PlayAgainButton = ({ onClick }) => (
 
 const BetStatusFailed = ({ error, onClose }) => (
     <SimpleDialog.Body>
-        <Title>{error}</Title>
+        <Title padding>
+            <BetErrorMessage error={error} />
+        </Title>
 
         <PlayAgainButton onClick={onClose} />
     </SimpleDialog.Body>
@@ -80,7 +87,7 @@ const BetStatusFailed = ({ error, onClose }) => (
 
 const BetResultRefund = ({ amount, onClose }) => (
     <SimpleDialog.Body>
-        <Title>
+        <Title padding>
             <FormattedMessage
                 id="page.dice.bet.BetStatusRefund.title"
                 defaultMessage="We refunded {amount} ETH"
@@ -102,7 +109,7 @@ const BetResultRefund = ({ amount, onClose }) => (
 
 const BetResultFailWithoutRefund = ({ onClose }) => (
     <SimpleDialog.Body>
-        <Title>
+        <Title padding>
             <FormattedMessage
                 id="page.dice.bet.BetStatusWin.title"
                 defaultMessage="Bet has failed"
@@ -120,7 +127,7 @@ const BetResultFailWithoutRefund = ({ onClose }) => (
 
 const BetResultWin = ({ dices, win, payment, onClose }) => (
     <SimpleDialog.Body>
-        <Title>
+        <Title padding>
             <FormattedMessage
                 id="page.dice.bet.BetStatusWin.title"
                 defaultMessage="You won {amount} ETH!"
@@ -146,7 +153,7 @@ const BetResultWin = ({ dices, win, payment, onClose }) => (
 
 const BetResultLoose = ({ dices, win, amount, onClose }) => (
     <SimpleDialog.Body>
-        <Title>
+        <Title padding>
             <FormattedMessage
                 id="page.dice.bet.BetStatusLoose.title"
                 defaultMessage="You loose {amount} ETH :("
@@ -218,9 +225,9 @@ const BetStatusContent = ({ status, ...props }) => {
 
 const BetStatus = ({ status, ...props }) => (
     <Dimmer page active>
-        <SimpleDialog>
+        <StyledSimpleDialog>
             <BetStatusContent status={status} {...props} />
-        </SimpleDialog>
+        </StyledSimpleDialog>
     </Dimmer>
 );
 

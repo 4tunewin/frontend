@@ -46,7 +46,7 @@ const withSubscription = graphql(GAME_SUBSCRIPTION, {
         if (game.bet.transactionHash === ownProps.transactionHash) {
             if (game.status === 'FAIL') {
                 ownProps.betResult({
-                    status: 'FAILED',
+                    status: 'FAIL',
                     refunded: game.refunded,
                 });
             } else {

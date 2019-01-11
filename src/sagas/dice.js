@@ -71,7 +71,7 @@ export function* placeBetAsync({ web3, type, payload }) {
         const transactionHash = yield take(channel);
         yield put(placeBetSuccess(transactionHash));
     } catch (e) {
-        yield put(placeBetFail(e.message));
+        yield put(placeBetFail(e));
     }
 }
 

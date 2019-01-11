@@ -2,11 +2,11 @@
 export default {
     network: {
         id: '*', // match all networks id
-        uri: 'http://52.21.35.78:9545',
+        uri: 'http://kovan.4tune.win',
     },
     graphql: {
         uri: 'localhost:8080',
     },
     // An URL of block explorer
-    explorerUrl: 'https://rinkeby.etherscan.io/',
+    explorerUrl: 'https://kovan.etherscan.io/',
 };

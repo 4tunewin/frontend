@@ -105,11 +105,12 @@ const mapStateToProps = ({ dice }) => {
  * Filter game history on provided filters
  */
 const withFilters = withProps(({ loading, history, filters }) => {
-    if (loading || !filters) return { history };
+    if (loading) return;
 
     const filteredHistory = filter(history, item => {
-        return matches({ ...filters, status: 'SUCCESS' })({
+        return matches({ ...(filters || {}), status: 'SUCCESS' })({
             gambler: toUpper(item.bet.gambler),
+            status: item.status,
         });
     });
 
