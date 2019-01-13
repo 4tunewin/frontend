@@ -2,6 +2,7 @@ import { reduxForm } from 'redux-form';
 import { compose, withHandlers } from 'recompose';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
+import ReactGA from 'react-ga';
 
 import { withWeb3 } from '../../../../lib/web3';
 import BetForm from '../../components/bet/BetForm';
@@ -19,6 +20,7 @@ const withForm = reduxForm({
 // Handle form submission
 const withSubmit = withHandlers({
     onSubmit: ({ web3, placeBet }) => form => {
+        ReactGA.event({ category: 'Dice', action: 'Place bet' });
         placeBet(web3, { modulo: 6, ...form });
     },
 });
