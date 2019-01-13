@@ -16,8 +16,8 @@ export function* placeBetAsync({ web3, type, payload }) {
 
     // Get signature for a new bet
     const mutation = gql`
-        mutation signBet($input: SignBetInput!) {
-            signBet(input: $input) {
+        mutation signBet {
+            signBet {
                 commit
                 commitLastBlock
                 signature {
@@ -30,13 +30,7 @@ export function* placeBetAsync({ web3, type, payload }) {
         }
     `;
 
-    const { data } = yield call(client.mutate, {
-        mutation,
-        variables: {
-            input: { address: web3.account, network: 1 },
-        },
-    });
-
+    const { data } = yield call(client.mutate, { mutation });
     const { commit, commitLastBlock, signature } = data.signBet;
 
     const diceInstance = yield call(DiceContract.instance);
