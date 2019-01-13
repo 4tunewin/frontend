@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import {
+    ReduxProvider,
+    Web3Provider,
+    ApolloProvider,
+    IntlProvider,
+} from '../../providers';
 import { Container } from 'semantic-ui-react';
 
-import { DicePage, TermsPage } from '../../pages';
 import { Metamask } from './metamask';
+import { Background } from '../../common';
 import Header from './Header';
 import Footer from './Footer';
+import { DicePage, TermsPage } from '../../pages';
 
 const StyledContainer = styled(Container)`
     width: 1200px !important;
@@ -23,8 +30,26 @@ const Padding = styled.div`
     padding: 40px 0px 30px 0px;
 `;
 
-const Layout = () => (
-    <Metamask>
+const Providers = ({ children }) => (
+    <Fragment>
+        <Background />
+
+        <ApolloProvider>
+            <ReduxProvider>
+                <IntlProvider>
+                    <Web3Provider>
+                        <Metamask>
+                            <Router>{children}</Router>
+                        </Metamask>
+                    </Web3Provider>
+                </IntlProvider>
+            </ReduxProvider>
+        </ApolloProvider>
+    </Fragment>
+);
+
+const App = () => (
+    <Providers>
         <Padding>
             <StyledContainer>
                 <Header />
@@ -37,7 +62,7 @@ const Layout = () => (
                 <Footer />
             </StyledContainer>
         </Padding>
-    </Metamask>
+    </Providers>
 );
 
-export default Layout;
+export default App;
