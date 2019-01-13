@@ -10,7 +10,7 @@ import {
 import { Container } from 'semantic-ui-react';
 
 import { Metamask } from './metamask';
-import { Background } from '../../common';
+import { Background, GoogleAnalytics } from '../../common';
 import Header from './Header';
 import Footer from './Footer';
 import { DicePage, TermsPage } from '../../pages';
@@ -52,6 +52,8 @@ const App = () => (
     <Providers>
         <Padding>
             <StyledContainer>
+                <GoogleAnalytics />
+
                 <Header />
 
                 <Content>

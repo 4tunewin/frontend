@@ -12,3 +12,4 @@ export { default as HoldButton } from './components/HoldButton';
 
 // Containers
 export { default as RequireMetamask } from './containers/RequireMetamask';
+export { default as GoogleAnalytics } from './containers/GoogleAnalytics';
