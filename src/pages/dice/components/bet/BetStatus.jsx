@@ -85,40 +85,18 @@ const BetStatusFailed = ({ error, onClose }) => (
     </SimpleDialog.Body>
 );
 
-const BetResultRefund = ({ amount, onClose }) => (
+const BetResultFail = ({ onClose }) => (
     <SimpleDialog.Body>
         <Title padding>
             <FormattedMessage
-                id="page.dice.bet.BetStatusRefund.title"
-                defaultMessage="We refunded {amount} ETH"
-                values={{ amount }}
-            />
-        </Title>
-
-        <FormattedMessage
-            id="page.dice.bet.BetStatusRefund.body"
-            defaultMessage="We were not able to process your bet request, so we refunded {amount}{' '}
-        ETH back to your account. We sincerely apologize for any
-        inconvenience."
-            values={{ amount }}
-        />
-
-        <PlayAgainButton onClick={onClose} />
-    </SimpleDialog.Body>
-);
-
-const BetResultFailWithoutRefund = ({ onClose }) => (
-    <SimpleDialog.Body>
-        <Title padding>
-            <FormattedMessage
-                id="page.dice.bet.BetStatusWin.title"
+                id="page.dice.bet.BetResultFail.title"
                 defaultMessage="Bet has failed"
             />
         </Title>
 
         <FormattedMessage
-            id="page.dice.bet.BetResultFailWithoutRefund.body"
-            defaultMessage="We were not able to process your bet, but don't worry, your funds are safe and will be refunded shortly."
+            id="page.dice.bet.BetResultFail.body"
+            defaultMessage="We were not able to process your bet, but don't worry, your funds are safe and will be refunded automatically. That may take up to 1 hour, unfortunatelu we can't speed up this process."
         />
 
         <PlayAgainButton onClick={onClose} />
@@ -188,11 +166,7 @@ const BetStatusResult = ({ result, ...props }) => {
             Component = BetResultLoose;
             break;
         case 'FAIL':
-            if (props.refunded) {
-                Component = BetResultRefund;
-            } else {
-                Component = BetResultFailWithoutRefund;
-            }
+            Component = BetResultFail;
             break;
         default:
             return null;

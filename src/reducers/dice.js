@@ -34,8 +34,7 @@ export default (state = initialState, action) => {
             if (payload.status === 'FAIL') {
                 return state
                     .setIn(['bet', 'status'], 'RESULT')
-                    .setIn(['bet', 'result'], 'FAIL')
-                    .setIn(['bet', 'refunded'], payload.refunded);
+                    .setIn(['bet', 'result'], 'FAIL');
             } else {
                 return state
                     .setIn(['bet', 'status'], 'RESULT')

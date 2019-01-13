@@ -22,7 +22,6 @@ const GAME_STATUS = gql`
         }
         payment
         jackpotPayment
-        refunded
         status
     }
 `;
@@ -45,10 +44,7 @@ const withSubscription = graphql(GAME_SUBSCRIPTION, {
         // Update result for current bet
         if (game.bet.transactionHash === ownProps.transactionHash) {
             if (game.status === 'FAIL') {
-                ownProps.betResult({
-                    status: 'FAIL',
-                    refunded: game.refunded,
-                });
+                ownProps.betResult({ status: 'FAIL' });
             } else {
                 // Calculate game outcome
                 const outcome = computeOutcome({
