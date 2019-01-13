@@ -31,7 +31,7 @@ export function* placeBetAsync({ web3, type, payload }) {
     `;
 
     const { data } = yield call(client.mutate, { mutation });
-    const { commit, commitLastBlock, signature } = data.signBet;
+    const { commit, commitLastBlock, signature, gasPrice } = data.signBet;
 
     const diceInstance = yield call(DiceContract.instance);
 
@@ -55,6 +55,8 @@ export function* placeBetAsync({ web3, type, payload }) {
                         toString(payload.amount),
                         'ether',
                     ),
+                    gas: 200000,
+                    gasPrice,
                 })
                 .on('transactionHash', hash => emitter(hash))
                 .on('error', error => emitter(new Error(error)));
