@@ -107,7 +107,7 @@ const BetResultWin = ({ dices, win, payment, onClose }) => (
     <SimpleDialog.Body>
         <Title padding>
             <FormattedMessage
-                id="page.dice.bet.BetStatusWin.title"
+                id="page.dice.bet.BetResultWin.title"
                 defaultMessage="You won {amount} ETH!"
                 values={{ amount: payment }}
             />
@@ -133,7 +133,7 @@ const BetResultLoose = ({ dices, win, amount, onClose }) => (
     <SimpleDialog.Body>
         <Title padding>
             <FormattedMessage
-                id="page.dice.bet.BetStatusLoose.title"
+                id="page.dice.bet.BetResultLoose.title"
                 defaultMessage="You loose {amount} ETH :("
                 values={{ amount }}
             />
