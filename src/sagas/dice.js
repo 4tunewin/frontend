@@ -36,6 +36,13 @@ export function* placeBetAsync({ web3, type, payload }) {
     const diceInstance = yield call(DiceContract.instance);
 
     try {
+        console.info('Placing bet', {
+            commit,
+            commitLastBlock,
+            signature,
+            gasPrice,
+        });
+
         const event = yield call(
             diceInstance.methods.placeBet,
             setBitsForIndexes(payload.dices),
@@ -46,8 +53,6 @@ export function* placeBetAsync({ web3, type, payload }) {
             signature.r,
             signature.s,
         );
-
-        console.log(commit, signature.v, signature.r, signature.s);
 
         const channel = eventChannel(emitter => {
             event
