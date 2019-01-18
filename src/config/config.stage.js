@@ -7,5 +7,5 @@ export default {
         uri: 'localhost:8080',
     },
     // An URL of block explorer
-    explorerUrl: 'https://kovan.etherscan.io/',
+    explorerUrl: 'https://rinkeby.etherscan.io',
 };

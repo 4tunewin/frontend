@@ -47,6 +47,8 @@ export function* placeBetAsync({ web3, type, payload }) {
             signature.s,
         );
 
+        console.log(commit, signature.v, signature.r, signature.s);
+
         const channel = eventChannel(emitter => {
             event
                 .send({
@@ -55,7 +57,6 @@ export function* placeBetAsync({ web3, type, payload }) {
                         toString(payload.amount),
                         'ether',
                     ),
-                    gas: 200000,
                     gasPrice,
                 })
                 .on('transactionHash', hash => emitter(hash))
