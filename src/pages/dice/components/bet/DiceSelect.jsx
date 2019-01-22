@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { compose, withHandlers } from 'recompose';
 import { range, map, indexOf, without, slice } from 'lodash';
+import { Howl } from 'howler';
 
 import Dice from './Dice';
 
@@ -61,6 +62,12 @@ const withOnChange = withHandlers({
         } else {
             onChange(slice([...value, option], 0, MAX_SELECTED_OPTIONS));
         }
+
+        const sound = new Howl({
+            src: ['/sounds/select.mp3'],
+            volume: 0.5,
+        });
+        sound.play();
     },
 });
 
