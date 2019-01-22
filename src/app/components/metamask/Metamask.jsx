@@ -17,15 +17,15 @@ const renderDialog = ({ client, access, network, account }) => {
     // MetaMask wallet is not installed
     if (!client) {
         component = <InstallMetamask />;
-    }
+    } else {
+        // Match current network with required
+        const matchNetwork =
+            config.network.id === '*' ||
+            parseInt(network, 10) === config.network.id;
 
-    // Match current network with required
-    const matchNetwork =
-        config.network.id === '*' ||
-        parseInt(network, 10) === config.network.id;
-
-    if (!matchNetwork) {
-        component = <ChangeNetwork />;
+        if (!matchNetwork) {
+            component = <ChangeNetwork />;
+        }
     }
 
     if (!component) {

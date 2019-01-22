@@ -4,11 +4,12 @@ import { Dimmer, Loader, Button } from 'semantic-ui-react';
 
 import { SimpleDialog, Dice } from '../../../../common';
 import { FormattedMessage } from 'react-intl';
+import BetErrorMessage from './BetErrorMessage';
 
 const Title = styled.div`
     font-size: 18px;
     color: rgba(255, 255, 255, 0.5);
-    padding-bottom: 15px;
+    padding-bottom: ${({ padding }) => (padding ? 15 : 0)}px;
 `;
 
 const StyledLoader = styled(Loader)`
@@ -27,6 +28,10 @@ const Dices = styled.div`
     margin-bottom: 10px;
 `;
 
+const StyledSimpleDialog = styled(SimpleDialog)`
+    max-width: 400px;
+`;
+
 const BetStatusStart = ({ dices, amount }) => (
     <SimpleDialog.Body>
         <Title>
@@ -40,7 +45,7 @@ const BetStatusStart = ({ dices, amount }) => (
 
 const BetStatusSuccess = ({ dices, amount }) => (
     <SimpleDialog.Body>
-        <Title>
+        <Title padding>
             <FormattedMessage
                 id="page.dice.bet.BetStatusSuccess.title"
                 defaultMessage="You bet {amount} ETH on"
@@ -72,46 +77,26 @@ const PlayAgainButton = ({ onClick }) => (
 
 const BetStatusFailed = ({ error, onClose }) => (
     <SimpleDialog.Body>
-        <Title>{error}</Title>
-
-        <PlayAgainButton onClick={onClose} />
-    </SimpleDialog.Body>
-);
-
-const BetResultRefund = ({ amount, onClose }) => (
-    <SimpleDialog.Body>
-        <Title>
-            <FormattedMessage
-                id="page.dice.bet.BetStatusRefund.title"
-                defaultMessage="We refunded {amount} ETH"
-                values={{ amount }}
-            />
+        <Title padding>
+            <BetErrorMessage error={error} />
         </Title>
 
-        <FormattedMessage
-            id="page.dice.bet.BetStatusRefund.body"
-            defaultMessage="We were not able to process your bet request, so we refunded {amount}{' '}
-        ETH back to your account. We sincerely apologize for any
-        inconvenience."
-            values={{ amount }}
-        />
-
         <PlayAgainButton onClick={onClose} />
     </SimpleDialog.Body>
 );
 
-const BetResultFailWithoutRefund = ({ onClose }) => (
+const BetResultFail = ({ onClose }) => (
     <SimpleDialog.Body>
-        <Title>
+        <Title padding>
             <FormattedMessage
-                id="page.dice.bet.BetStatusWin.title"
+                id="page.dice.bet.BetResultFail.title"
                 defaultMessage="Bet has failed"
             />
         </Title>
 
         <FormattedMessage
-            id="page.dice.bet.BetResultFailWithoutRefund.body"
-            defaultMessage="We were not able to process your bet, but don't worry, your funds are safe and will be refunded shortly."
+            id="page.dice.bet.BetResultFail.body"
+            defaultMessage="We were not able to process your bet, but don't worry, your funds are safe and will be refunded automatically. That may take up to 1 hour, unfortunatelu we can't speed up this process."
         />
 
         <PlayAgainButton onClick={onClose} />
@@ -120,9 +105,9 @@ const BetResultFailWithoutRefund = ({ onClose }) => (
 
 const BetResultWin = ({ dices, win, payment, onClose }) => (
     <SimpleDialog.Body>
-        <Title>
+        <Title padding>
             <FormattedMessage
-                id="page.dice.bet.BetStatusWin.title"
+                id="page.dice.bet.BetResultWin.title"
                 defaultMessage="You won {amount} ETH!"
                 values={{ amount: payment }}
             />
@@ -146,9 +131,9 @@ const BetResultWin = ({ dices, win, payment, onClose }) => (
 
 const BetResultLoose = ({ dices, win, amount, onClose }) => (
     <SimpleDialog.Body>
-        <Title>
+        <Title padding>
             <FormattedMessage
-                id="page.dice.bet.BetStatusLoose.title"
+                id="page.dice.bet.BetResultLoose.title"
                 defaultMessage="You loose {amount} ETH :("
                 values={{ amount }}
             />
@@ -181,11 +166,7 @@ const BetStatusResult = ({ result, ...props }) => {
             Component = BetResultLoose;
             break;
         case 'FAIL':
-            if (props.refunded) {
-                Component = BetResultRefund;
-            } else {
-                Component = BetResultFailWithoutRefund;
-            }
+            Component = BetResultFail;
             break;
         default:
             return null;
@@ -218,9 +199,9 @@ const BetStatusContent = ({ status, ...props }) => {
 
 const BetStatus = ({ status, ...props }) => (
     <Dimmer page active>
-        <SimpleDialog>
+        <StyledSimpleDialog>
             <BetStatusContent status={status} {...props} />
-        </SimpleDialog>
+        </StyledSimpleDialog>
     </Dimmer>
 );
 

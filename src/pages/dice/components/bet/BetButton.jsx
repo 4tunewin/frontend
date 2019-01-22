@@ -18,12 +18,27 @@ const StyledButton = styled(Button)`
     text-transform: uppercase;
 `;
 
-const BetButton = ({ onClick }) => (
-    <StyledButton onClick={onClick} size="huge" fluid>
-        <FormattedMessage
-            id="pages.dice.bet.BetButton"
-            defaultMessage="Make a bet"
-        />
+const BetButton = ({ onClick, hover, mouseOver, mouseOut }) => (
+    <StyledButton
+        onClick={onClick}
+        onMouseOver={mouseOver}
+        onMouseOut={mouseOut}
+        size="huge"
+        fluid
+        animated="vertical"
+    >
+        <Button.Content visible>
+            <FormattedMessage
+                id="pages.dice.bet.BetButton.default"
+                defaultMessage="Make a bet"
+            />
+        </Button.Content>
+        <Button.Content hidden>
+            <FormattedMessage
+                id="pages.dice.bet.BetButton.active"
+                defaultMessage="Good luck!"
+            />
+        </Button.Content>
     </StyledButton>
 );
 

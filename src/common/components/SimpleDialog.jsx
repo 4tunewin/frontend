@@ -11,10 +11,10 @@ const Dialog = styled(Segment)`
 Dialog.Header = styled(Header)`
     font-family: 'Proxima Nova Semibold';
     color: #ffffff !important;
+    margin-bottom: 22px;
 `;
 
 Dialog.Body = styled.div`
-    margin-top: 22px;
     line-height: 20px;
 `;
 

@@ -16,8 +16,9 @@ const Container = styled(Segment)`
     border-width: 0px !important;
     padding: 0px !important;
 
-    &:before {
+    &.loading:before {
         background: rgba(50, 59, 86, 0.8) !important;
+        border-radius: 10px !important;
     }
 `;
 

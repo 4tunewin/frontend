@@ -19,6 +19,9 @@ const withForm = reduxForm({
 // Handle form submission
 const withSubmit = withHandlers({
     onSubmit: ({ web3, placeBet }) => form => {
+        window.gtag('event', 'PlaceBet', {
+            event_category: 'Dice',
+        });
         placeBet(web3, { modulo: 6, ...form });
     },
 });
