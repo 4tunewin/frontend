@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { compose, withProps, withHandlers } from 'recompose';
+import { Howl } from 'howler';
 import { map } from 'lodash';
 
 import BetAmountButton from './BetAmountButton';
@@ -25,7 +27,7 @@ const BetAmountOption = ({ option, active, onClick }) => (
     </BetAmountButton>
 );
 
-const BetAmount = ({ input: { value, onChange } }) => (
+const BetAmount = ({ value, onChange }) => (
     <div>
         <BetAmountInput
             size="large"
@@ -48,4 +50,21 @@ const BetAmount = ({ input: { value, onChange } }) => (
     </div>
 );
 
-export default BetAmount;
+const withNormalizedProps = withProps(({ input }) => input);
+
+const withSound = withHandlers({
+    onChange: ownProps => value => {
+        const sound = new Howl({
+            src: ['/sounds/select.mp3'],
+            volume: 0.5,
+        });
+        sound.play();
+
+        ownProps.onChange(value);
+    },
+});
+
+export default compose(
+    withNormalizedProps,
+    withSound,
+)(BetAmount);

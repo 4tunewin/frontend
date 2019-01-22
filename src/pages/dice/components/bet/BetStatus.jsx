@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { lifecycle } from 'recompose';
 import { Dimmer, Loader, Button } from 'semantic-ui-react';
+import { Howl } from 'howler';
 
 import { SimpleDialog, Dice } from '../../../../common';
 import { FormattedMessage } from 'react-intl';
@@ -9,7 +11,7 @@ import BetErrorMessage from './BetErrorMessage';
 const Title = styled.div`
     font-size: 18px;
     color: rgba(255, 255, 255, 0.5);
-    padding-bottom: ${({ padding }) => (padding ? 15 : 0)}px;
+    padding-bottom: 15px;
 `;
 
 const StyledLoader = styled(Loader)`
@@ -25,7 +27,6 @@ const StyledButton = styled(Button)`
 
 const Dices = styled.div`
     margin-top: 10px;
-    margin-bottom: 10px;
 `;
 
 const StyledSimpleDialog = styled(SimpleDialog)`
@@ -34,12 +35,18 @@ const StyledSimpleDialog = styled(SimpleDialog)`
 
 const BetStatusStart = ({ dices, amount }) => (
     <SimpleDialog.Body>
-        <Title>
+        <Title padding>
             <FormattedMessage
                 id="page.dice.bet.BetStatusStart.title"
                 defaultMessage="Please confirm bet transaction"
             />
         </Title>
+
+        <Dices>
+            {dices.map(option => (
+                <Dice key={option} option={option} size={36} />
+            ))}
+        </Dices>
     </SimpleDialog.Body>
 );
 
@@ -205,4 +212,35 @@ const BetStatus = ({ status, ...props }) => (
     </Dimmer>
 );
 
-export default BetStatus;
+/**
+ * Play sound depending on game result
+ */
+const withSound = lifecycle({
+    componentWillReceiveProps({ result, status }) {
+        if (status === 'RESULT') {
+            let file = null;
+            switch (result) {
+                case 'WIN':
+                    file = '/sounds/win.mp3';
+                    break;
+                case 'LOOSE':
+                    file = '/sounds/loose.mp3';
+                    break;
+                default: {
+                }
+            }
+
+            if (file) {
+                setTimeout(() => {
+                    const sound = new Howl({
+                        src: [file],
+                        volume: 0.5,
+                    });
+                    sound.play();
+                }, 0);
+            }
+        }
+    },
+});
+
+export default withSound(BetStatus);

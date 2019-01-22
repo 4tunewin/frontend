@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { withHandlers } from 'recompose';
 import { FormattedMessage } from 'react-intl';
 import { Button } from 'semantic-ui-react';
+import { Howl } from 'howler';
 
 const StyledButton = styled(Button)`
     font-family: 'Proxima Nova Semibold';
@@ -18,14 +20,13 @@ const StyledButton = styled(Button)`
     text-transform: uppercase;
 `;
 
-const BetButton = ({ onClick, hover, mouseOver, mouseOut }) => (
+const BetButton = ({ onClick }) => (
     <StyledButton
         onClick={onClick}
-        onMouseOver={mouseOver}
-        onMouseOut={mouseOut}
+        type="button"
         size="huge"
-        fluid
         animated="vertical"
+        fluid
     >
         <Button.Content visible>
             <FormattedMessage
@@ -42,4 +43,16 @@ const BetButton = ({ onClick, hover, mouseOver, mouseOut }) => (
     </StyledButton>
 );
 
-export default BetButton;
+const withSound = withHandlers({
+    onClick: ownProps => () => {
+        const sound = new Howl({
+            src: ['/sounds/press.mp3'],
+            volume: 0.5,
+        });
+        sound.play();
+
+        ownProps.onClick();
+    },
+});
+
+export default withSound(BetButton);
