@@ -43,7 +43,6 @@ const withSubscription = graphql(GAME_SUBSCRIPTION, {
 
         // Update result for current bet
         if (game.bet.transactionHash === ownProps.transactionHash) {
-            let soundFile;
             if (game.status === 'FAIL') {
                 ownProps.betResult({ status: 'FAIL' });
             } else {
@@ -66,8 +65,6 @@ const withSubscription = graphql(GAME_SUBSCRIPTION, {
                     ),
                 });
             }
-
-            // sound.once('load', sound.play);
         }
     },
 });

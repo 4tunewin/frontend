@@ -6,6 +6,7 @@ import { Menu } from 'semantic-ui-react';
 import Brand from './Brand';
 import Slogan from './Slogan';
 import SocialButtons from './SocialButtons';
+import Sound from './Sound';
 import Balance from '../containers/Balance';
 import Language from '../containers/Language';
 
@@ -45,6 +46,9 @@ const Header = () => (
             </FormattedMessage>
         </Menu.Item>
         <Menu.Menu position="right">
+            <DividedItem>
+                <Sound />
+            </DividedItem>
             <DividedItem>
                 <Balance />
             </DividedItem>

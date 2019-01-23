@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { compose, withHandlers } from 'recompose';
 import { range, map, indexOf, without, slice } from 'lodash';
-import { Howl } from 'howler';
 
+import { withSound } from '../../../../providers/SoundProvider';
 import Dice from './Dice';
 
 // Limit number of selected options to specified numbers
@@ -53,7 +53,7 @@ const DiceSelect = ({ input: { value }, onChange }) => (
  * Number of selected options should be between MIN_SELECTED_OPTIONS and MAX_SELECTED_OPTIONS
  */
 const withOnChange = withHandlers({
-    onChange: ({ input: { value, onChange } }) => option => {
+    onChange: ({ input: { value, onChange }, playSound }) => option => {
         const inArray = indexOf(value, option) !== -1;
         if (inArray) {
             if (value.length > MIN_SELECTED_OPTIONS) {
@@ -63,12 +63,11 @@ const withOnChange = withHandlers({
             onChange(slice([...value, option], 0, MAX_SELECTED_OPTIONS));
         }
 
-        const sound = new Howl({
-            src: ['/sounds/select.mp3'],
-            volume: 0.5,
-        });
-        sound.play();
+        playSound('/sounds/select.mp3');
     },
 });
 
-export default compose(withOnChange)(DiceSelect);
+export default compose(
+    withSound,
+    withOnChange,
+)(DiceSelect);

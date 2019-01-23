@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { withHandlers } from 'recompose';
+import { compose, withHandlers } from 'recompose';
 import { FormattedMessage } from 'react-intl';
 import { Button } from 'semantic-ui-react';
-import { Howl } from 'howler';
+
+import { withSound } from '../../../../providers/SoundProvider';
 
 const StyledButton = styled(Button)`
     font-family: 'Proxima Nova Semibold';
@@ -43,16 +44,14 @@ const BetButton = ({ onClick }) => (
     </StyledButton>
 );
 
-const withSound = withHandlers({
+const withClickAction = withHandlers({
     onClick: ownProps => () => {
-        const sound = new Howl({
-            src: ['/sounds/press.mp3'],
-            volume: 0.5,
-        });
-        sound.play();
-
+        ownProps.playSound('/sounds/press.mp3');
         ownProps.onClick();
     },
 });
 
-export default withSound(BetButton);
+export default compose(
+    withSound,
+    withClickAction,
+)(BetButton);

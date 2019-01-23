@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { lifecycle } from 'recompose';
+import { lifecycle, compose } from 'recompose';
 import { Dimmer, Loader, Button } from 'semantic-ui-react';
-import { Howl } from 'howler';
 
+import { withSound } from '../../../../providers/SoundProvider';
 import { SimpleDialog, Dice } from '../../../../common';
 import { FormattedMessage } from 'react-intl';
 import BetErrorMessage from './BetErrorMessage';
@@ -215,32 +215,24 @@ const BetStatus = ({ status, ...props }) => (
 /**
  * Play sound depending on game result
  */
-const withSound = lifecycle({
-    componentWillReceiveProps({ result, status }) {
+const withSoundAction = lifecycle({
+    componentWillReceiveProps({ result, status, playSound }) {
         if (status === 'RESULT') {
-            let file = null;
             switch (result) {
                 case 'WIN':
-                    file = '/sounds/win.mp3';
+                    playSound('/sounds/win.mp3');
                     break;
                 case 'LOOSE':
-                    file = '/sounds/loose.mp3';
+                    playSound('/sounds/loose.mp3');
                     break;
                 default: {
                 }
-            }
-
-            if (file) {
-                setTimeout(() => {
-                    const sound = new Howl({
-                        src: [file],
-                        volume: 0.5,
-                    });
-                    sound.play();
-                }, 0);
             }
         }
     },
 });
 
-export default withSound(BetStatus);
+export default compose(
+    withSound,
+    withSoundAction,
+)(BetStatus);

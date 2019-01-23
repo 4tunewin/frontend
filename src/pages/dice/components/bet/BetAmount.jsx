@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { compose, withProps, withHandlers } from 'recompose';
-import { Howl } from 'howler';
 import { map } from 'lodash';
 
+import { withSound } from '../../../../providers/SoundProvider';
 import BetAmountButton from './BetAmountButton';
 import BetAmountInput from './BetAmountInput';
 
@@ -52,14 +52,9 @@ const BetAmount = ({ value, onChange }) => (
 
 const withNormalizedProps = withProps(({ input }) => input);
 
-const withSound = withHandlers({
+const withSoundAction = withHandlers({
     onChange: ownProps => value => {
-        const sound = new Howl({
-            src: ['/sounds/select.mp3'],
-            volume: 0.5,
-        });
-        sound.play();
-
+        ownProps.playSound('/sounds/select.mp3');
         ownProps.onChange(value);
     },
 });
@@ -67,4 +62,5 @@ const withSound = withHandlers({
 export default compose(
     withNormalizedProps,
     withSound,
+    withSoundAction,
 )(BetAmount);

@@ -6,6 +6,7 @@ import {
     Web3Provider,
     ApolloProvider,
     IntlProvider,
+    SoundProvider,
 } from '../../providers';
 import { Container } from 'semantic-ui-react';
 
@@ -39,7 +40,9 @@ const Providers = ({ children }) => (
                 <IntlProvider>
                     <Web3Provider>
                         <Metamask>
-                            <Router>{children}</Router>
+                            <SoundProvider>
+                                <Router>{children}</Router>
+                            </SoundProvider>
                         </Metamask>
                     </Web3Provider>
                 </IntlProvider>
