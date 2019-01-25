@@ -39,7 +39,7 @@ const Trigger = ({ amount, ...props }) => (
 );
 
 const Balance = ({ amount }) => (
-    <Popup trigger={<Trigger amount={amount} />} small inverted>
+    <Popup trigger={<Trigger amount={amount} />} size="small" inverted>
         <FormattedMessage
             id="layout.Balance.popup.content"
             defaultMessage="Your balance"

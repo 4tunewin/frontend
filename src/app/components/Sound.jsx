@@ -9,8 +9,6 @@ import { Icon, Popup } from 'semantic-ui-react';
 
 import { withSound } from '../../providers/SoundProvider';
 
-const ROUND_AMOUNT_DECIMALS = 3;
-
 const Wrapper = styled.div`
     color: #ffffff;
     font-size: 14px;
@@ -38,7 +36,7 @@ const Trigger = ({ mute, ...props }) => (
 const Sound = ({ mute, toggleSound }) => (
     <Popup
         trigger={<Trigger mute={mute} onClick={toggleSound} />}
-        small
+        size="small"
         inverted
     >
         {mute ? (
