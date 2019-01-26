@@ -30,7 +30,7 @@ const SocialButtons = () => (
         <SocialButton href="https://t.me/fortunewin" target="_blank">
             <Icon name="telegram plane" />
         </SocialButton>
-        <SocialButton href="#" target="_blank">
+        <SocialButton href="https://www.facebook.com/4tune.win" target="_blank">
             <Icon name="facebook f" />
         </SocialButton>
         <SocialButton href="https://twitter.com/4tunewin" target="_blank">
