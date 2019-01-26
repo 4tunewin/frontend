@@ -91,11 +91,11 @@ const BetAmountInput = ({ value, min, max, onInc, onDec }) => (
 );
 
 const actionHandlers = withHandlers({
-    onDec: ({ onChange, value, min: minValue, step }) => () => {
+    onDec: ({ onChange, value, min: minValue, step }) => cycle => {
         const _value = round(parseFloat(value) - step, 3);
         onChange(max([minValue, _value]));
     },
-    onInc: ({ onChange, value, max: maxValue, step }) => () => {
+    onInc: ({ onChange, value, max: maxValue, step }) => cycle => {
         const _value = round(parseFloat(value) + step, 3);
         onChange(min([maxValue, _value]));
     },

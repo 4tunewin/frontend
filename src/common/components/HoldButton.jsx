@@ -11,23 +11,37 @@ class HoldButton extends Component {
         isPressed: false,
     };
 
+    _cycle = 1;
+
+    _setTimeout = () => {
+        return setTimeout(() => {
+            this._cycle += 1;
+
+            if (this.props.onPress) {
+                this.props.onPress(this._cycle);
+            }
+
+            if (this.state.isPressed) {
+                this._timeout = this._setTimeout();
+            }
+        }, this.props.delay || ACTION_BUTTON_DELAY);
+    };
+
     _handleMouseDown = () => {
         this.setState({ isPressed: true }, () => {
-            this._interval = setInterval(() => {
-                if (this.state.isPressed && this.props.onPress) {
-                    this.props.onPress();
-                }
-            }, this.props.delay || ACTION_BUTTON_DELAY);
+            this._timeout = this._setTimeout();
         });
     };
 
     _handleMouseUp = () => {
-        clearInterval(this._interval);
+        clearTimeout(this._timeout);
         this.setState({ isPressed: false });
 
         if (this.props.onPress) {
-            this.props.onPress();
+            this.props.onPress(this._cycle);
         }
+
+        this._cycle = 1;
     };
 
     render() {
