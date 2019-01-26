@@ -39,7 +39,7 @@ const Header = () => (
         </Menu.Item>
         <Menu.Item>
             <FormattedMessage
-                id="layout.Header.slogan"
+                id="app.Header.slogan"
                 defaultMessage="Multiply your ether™"
             >
                 {txt => <Slogan>{txt}</Slogan>}

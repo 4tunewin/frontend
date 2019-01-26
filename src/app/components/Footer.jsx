@@ -22,7 +22,7 @@ const Footer = () => (
         <Menu secondary>
             <MenuItem fitted>
                 <FormattedMessage
-                    id="layout.Footer.copyright"
+                    id="app.Footer.copyright"
                     defaultMessage="Copyright © {year} by 4tune.win"
                     values={{
                         year: 2018,
@@ -32,13 +32,13 @@ const Footer = () => (
             <Menu.Menu position="right">
                 <MenuItem as={Link} className="item" to="/terms">
                     <FormattedMessage
-                        id="layout.Footer.terms"
+                        id="app.Footer.terms"
                         defaultMessage="Terms & Conditions"
                     />
                 </MenuItem>
                 <MenuItem href="mailto:support@4tune.win" link fitted>
                     <FormattedMessage
-                        id="layout.Footer.contact"
+                        id="app.Footer.contact"
                         defaultMessage="Contact Us"
                     />
                 </MenuItem>

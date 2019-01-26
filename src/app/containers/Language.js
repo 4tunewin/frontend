@@ -8,11 +8,11 @@ import { setLocale } from '../../actions/user';
 
 const intlMessages = defineMessages({
     en: {
-        id: 'layout.Language.en',
+        id: 'app.Language.en',
         defaultMessage: 'English',
     },
     ru: {
-        id: 'layout.Language.ru',
+        id: 'app.Language.ru',
         defaultMessage: 'Russian',
     },
 });
