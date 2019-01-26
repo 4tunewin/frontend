@@ -9,7 +9,7 @@ export { default as Background } from './components/Background';
 export { default as ErrorMessage } from './components/ErrorMessage';
 export { default as SimpleDialog } from './components/SimpleDialog';
 export { default as HoldButton } from './components/HoldButton';
+export { default as MetamaskHint } from './components/MetamaskHint';
 
 // Containers
-export { default as RequireMetamask } from './containers/RequireMetamask';
 export { default as GoogleAnalytics } from './containers/GoogleAnalytics';

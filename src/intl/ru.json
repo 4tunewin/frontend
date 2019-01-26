@@ -6,6 +6,7 @@
     "layout.Footer.terms": "Правила оказания услуг",
     "layout.Footer.contact": "Связатся с нами",
     "layout.Footer.copyright": "© 4tune.win",
+    "common.MetamaskHint.message": "Пожалуйста, подтвердите транзакцию в вашем Metamask.",
     "pages.dice.history.GameHistoryTab.all": "ВСЕ ИГРЫ",
     "pages.dice.history.GameHistoryTab.my": "МОИ ИГРЫ",
     "pages.dice.history.GameHistory.header.player": "Игрок",
