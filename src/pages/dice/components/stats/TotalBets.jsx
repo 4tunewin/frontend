@@ -15,7 +15,7 @@ const TotalBets = ({ bets } = { bets: 0 }) => (
                     defaultMessage="Total bets in 24h"
                 />
             </StatsHelper.Label>
-            <StatsHelper.Value>{bets}</StatsHelper.Value>
+            <StatsHelper.Value>{bets || 0}</StatsHelper.Value>
         </StatsHelper.Right>
     </StatsHelper>
 );
