@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Grid, Image } from 'semantic-ui-react';
+import { Image } from 'semantic-ui-react';
+import { FormattedMessage } from 'react-intl';
 
 const Wrapper = styled.div`
     text-align: center;
@@ -23,11 +24,17 @@ const StyledImage = styled(Image)`
 
 const Featured = () => (
     <Wrapper>
-        <Title>FEATURED ON</Title>
+        <Title>
+            <FormattedMessage
+                id="app.Featured.title"
+                defaultMessage="FEATURED ON"
+            />
+        </Title>
         <StyledImageGroup>
             <a
                 href="https://www.stateofthedapps.com/dapps/4tune"
                 target="_blank"
+                rel="noopener noreferrer"
             >
                 <StyledImage src="images/featured/stateofdapps.png" />
             </a>
