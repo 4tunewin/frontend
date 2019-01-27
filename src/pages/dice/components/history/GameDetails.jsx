@@ -8,6 +8,8 @@ import { encodePacked, eligebleForJackpot } from '../../../../lib/dice';
 import { ExplorerLink } from '../../../../common';
 import { FormattedMessage } from 'react-intl';
 
+const DICE_OPTIONS = ['1', '2', '3', '4', '5', '6'];
+
 const FadeIn = keyframes`
     0% { 
         opacity: 0;
@@ -175,11 +177,17 @@ const GameDetails = ({ show, game, outcome }) => (
         />
         <Row
             title="sha3 mod 6"
-            value={new BigNumber(
-                '0x' + encodePacked([game.reveal.secret, game.bet.blockNumber]),
-            )
-                .modulo(6)
-                .toString()}
+            value={
+                DICE_OPTIONS[
+                    new BigNumber(
+                        '0x' +
+                            encodePacked([
+                                game.reveal.secret,
+                                game.bet.blockNumber,
+                            ]),
+                    ).mod(6)
+                ]
+            }
             hint={
                 <FormattedMessage
                     id="page.dice.history.GameDetails.sha3Modulo.hint"
