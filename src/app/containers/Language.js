@@ -15,6 +15,10 @@ const intlMessages = defineMessages({
         id: 'app.Language.ru',
         defaultMessage: 'Russian',
     },
+    tr: {
+        id: 'app.Language.tr',
+        defaultMessage: 'Turkish',
+    },
 });
 
 const options = [
@@ -27,6 +31,11 @@ const options = [
         value: 'ru',
         text: 'Russian',
         flag: 'ru',
+    },
+    {
+        value: 'tr',
+        text: 'Turkish',
+        flag: 'tr',
     },
 ];
 

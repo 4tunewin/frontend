@@ -17,6 +17,11 @@ const options = [
         text: 'Russian',
         flag: 'ru',
     },
+    {
+        value: 'tr',
+        text: 'Turkish',
+        flag: 'tr',
+    },
 ];
 
 storiesOf('layout/Language', module)
