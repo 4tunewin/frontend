@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Grid } from 'semantic-ui-react';
 
+import Featured from '../../../app/components/Featured';
 import LeftColumn from './LeftColumn';
 import RightColumn from './RightColumn';
 
@@ -14,6 +15,8 @@ const DicePage = () => (
                 <RightColumn />
             </Grid.Column>
         </Grid>
+
+        <Featured />
     </Container>
 );
 

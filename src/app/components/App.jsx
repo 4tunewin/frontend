@@ -16,7 +16,6 @@ import Title from '../containers/Title';
 import Header from './Header';
 import Footer from './Footer';
 import { DicePage, TermsPage } from '../../pages';
-import Featured from './Featured';
 
 const StyledContainer = styled(Container)`
     width: 1200px !important;
@@ -66,8 +65,6 @@ const App = () => (
                     <Route path="/" component={DicePage} exact />
                     <Route path="/terms" component={TermsPage} />
                 </Content>
-
-                <Featured />
 
                 <Footer />
             </StyledContainer>

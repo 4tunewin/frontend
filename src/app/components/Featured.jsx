@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 
 const Wrapper = styled.div`
     text-align: center;
-    margin: 40px 0px 40px 0px;
+    margin-top: 40px;
 `;
 
 const Title = styled.div`
