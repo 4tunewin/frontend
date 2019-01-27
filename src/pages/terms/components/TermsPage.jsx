@@ -39,7 +39,7 @@ const TermsPage = () => (
         <p>
             <FormattedHTMLMessage
                 id="pages.terms.TermsPage.content2"
-                defaultMessage=" We are not able to verify the legality of the service in each
+                defaultMessage="We are not able to verify the legality of the service in each
                 jurisdiction and provide you with any legal advice. It is your
                 sole responsibility to comply with any relevant laws, policies
                 and regulations of your jurisdiction regarding the use of ETH

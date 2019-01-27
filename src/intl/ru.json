@@ -4,6 +4,8 @@
     "app.Language.ru": "Русский",
     "app.Balance.popup.content": "Ваш баланс",
     "app.Header.slogan": "Приумножь свой эфир™",
+    "app.Sound.popup.content.on": "Вкл. звук",
+    "app.Sound.popup.content.off": "Выкл. звук",
     "app.Footer.terms": "Правила оказания услуг",
     "app.Footer.contact": "Связатся с нами",
     "app.Footer.copyright": "© 4tune.win",
