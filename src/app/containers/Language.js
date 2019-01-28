@@ -6,21 +6,6 @@ import { map, find } from 'lodash';
 import Language from '../components/Language';
 import { setLocale } from '../../actions/user';
 
-const intlMessages = defineMessages({
-    en: {
-        id: 'app.Language.en',
-        defaultMessage: 'English',
-    },
-    ru: {
-        id: 'app.Language.ru',
-        defaultMessage: 'Russian',
-    },
-    tr: {
-        id: 'app.Language.tr',
-        defaultMessage: 'Turkish',
-    },
-});
-
 const options = [
     {
         value: 'en',
@@ -29,29 +14,25 @@ const options = [
     },
     {
         value: 'ru',
-        text: 'Russian',
+        text: 'Русский',
         flag: 'ru',
     },
     {
         value: 'tr',
-        text: 'Turkish',
+        text: 'Türk',
         flag: 'tr',
+    },
+    {
+        value: 'zh',
+        text: '中文',
+        flag: 'cn',
     },
 ];
 
 const props = withProps(({ locale, intl }) => {
     const currentOption = find(options, { value: locale });
 
-    return {
-        active: {
-            ...currentOption,
-            text: intl.formatMessage(intlMessages[currentOption.value]),
-        },
-        options: map(options, option => ({
-            ...option,
-            text: intl.formatMessage(intlMessages[option.value]),
-        })),
-    };
+    return { active: currentOption, options };
 });
 
 const mapStateToProps = ({ user }) => ({

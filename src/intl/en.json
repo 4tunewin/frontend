@@ -1,8 +1,5 @@
 {
     "app.App.title": "4tune.win - fair blockchain based gambling games",
-    "app.Language.en": "English",
-    "app.Language.ru": "Русский",
-    "app.Language.tr": "Türk",
     "app.Balance.popup.content": "Your balance",
     "app.Header.slogan": "Multiply your ether™",
     "app.Sound.popup.content.on": "Unmute sound",

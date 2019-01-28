@@ -22,6 +22,11 @@ const options = [
         text: 'Turkish',
         flag: 'tr',
     },
+    {
+        value: 'zh',
+        text: '中文',
+        flag: 'zh',
+    },
 ];
 
 storiesOf('layout/Language', module)
