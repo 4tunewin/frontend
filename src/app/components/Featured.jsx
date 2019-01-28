@@ -20,6 +20,8 @@ const StyledImageGroup = styled(Image.Group)`
 
 const StyledImage = styled(Image)`
     opacity: 0.5;
+    margin-left: 20px !important;
+    margin-right: 20px !important;
 `;
 
 const Featured = () => (
@@ -37,6 +39,13 @@ const Featured = () => (
                 rel="noopener noreferrer"
             >
                 <StyledImage src="images/featured/stateofdapps.png" />
+            </a>
+            <a
+                href="https://www.dapp.com/dapp/4tune"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <StyledImage src="images/featured/dapp.png" />
             </a>
         </StyledImageGroup>
     </Wrapper>
