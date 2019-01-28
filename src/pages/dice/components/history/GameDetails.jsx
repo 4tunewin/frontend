@@ -183,8 +183,9 @@ const GameDetails = ({ show, game, outcome }) => (
                         '0x' +
                             encodePacked([
                                 game.reveal.secret,
-                                game.bet.blockNumber,
+                                game.bet.blockHash,
                             ]),
+                        16,
                     ).mod(6)
                 ]
             }
