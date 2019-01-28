@@ -8,12 +8,15 @@ const Wrapper = styled.div`
 `;
 
 const Input = styled.input`
-    background: transparent;
+    background: #182038;
     color: rgba(255, 255, 255, 0.5);
     border: 0px;
-    padding: 5px;
+    padding: 10px;
     font-family: 'Proxima Nova Light';
     outline: none;
+    flex: 1 1 auto;
+    margin-right: 10px;
+    border-radius: 5px;
 `;
 
 const Button = styled.div`
@@ -22,9 +25,10 @@ const Button = styled.div`
     font-family: 'Proxima Nova Regular';
     font-size: 14px;
     border-radius: 3px;
-    padding: 5px 10px 5px 10px;
+    padding: 10px 15px 10px 15px;
     text-align: center;
     cursor: pointer;
+    flex: 0 0 auto;
 `;
 
 const UsernameInput = ({ value, onChange, onSubmit }) => (

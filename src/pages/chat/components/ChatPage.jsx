@@ -3,19 +3,21 @@ import styled from 'styled-components';
 
 import Header from './Header';
 import Footer from './Footer';
-import MessagesList from './MessagesList';
+import Content from './Content';
 
 const Container = styled.div`
     display: flex;
     border-radius: 10px;
-    flex-direction: row;
-    background-color: #182038 !important;
+    flex-direction: column;
+    background: #27304d;
+    border-radius: 10px;
+    flex: 1 1 auto;
 `;
 
 const ChatPage = () => (
     <Container>
         <Header />
-        <MessagesList />
+        <Content />
         <Footer />
     </Container>
 );

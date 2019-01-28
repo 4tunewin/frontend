@@ -5,6 +5,7 @@ import { Grid } from 'semantic-ui-react';
 import GameReturns from './returns/GameReturns';
 import BetForm from '../containers/bet/BetForm';
 import Information from './Information';
+import GameHistory from '../containers/history/GameHistory';
 
 const Section = styled.div`
     background: #27304d;
@@ -28,7 +29,7 @@ const LeftColumn = () => (
         </Grid.Column>
         <Grid.Column>
             <Section>
-                <Information />
+                <GameHistory />
             </Section>
         </Grid.Column>
     </Grid>

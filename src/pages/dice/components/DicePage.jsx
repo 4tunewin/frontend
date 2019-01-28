@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import { Container, Grid } from 'semantic-ui-react';
 
 import Featured from '../../../app/components/Featured';

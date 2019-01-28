@@ -14,7 +14,7 @@ const Bubble = styled.div`
     flex: 1 1 auto;
     display-direction: row;
     background-color: ${({ inverted }) =>
-        inverted ? 'rgb(213, 61, 205, 0.3)' : 'rgba(128, 102, 255, 0.3)'};
+        inverted ? 'rgb(213, 61, 205, 0.3)' : '#323b56'};
     padding: 10px;
     border-radius: 5px;
 `;
@@ -51,9 +51,9 @@ const Time = styled.div`
 
 const Message = ({ message: { author, text }, inverted }) => (
     <Wrapper>
-        <Left>
+        {/* <Left>
             <Avatar address={author.address} />
-        </Left>
+        </Left> */}
         <Bubble inverted={inverted}>
             <Center>
                 <Author>{author.username}</Author>
