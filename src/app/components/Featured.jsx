@@ -47,6 +47,13 @@ const Featured = () => (
             >
                 <StyledImage src="images/featured/dapp.png" />
             </a>
+            <a
+                href="https://dappradar.com/app/1411/4tune"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <StyledImage src="images/featured/dappradar.png" />
+            </a>
         </StyledImageGroup>
     </Wrapper>
 );
