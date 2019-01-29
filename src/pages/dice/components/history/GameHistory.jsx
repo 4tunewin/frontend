@@ -15,6 +15,9 @@ const Container = styled(Segment)`
     border-radius: 10px !important;
     border-width: 0px !important;
     padding: 0px !important;
+    min-height: 200px;
+    background: #27304d;
+    padding: 20px;
 
     &.loading:before {
         background: rgba(50, 59, 86, 0.8) !important;
@@ -27,7 +30,6 @@ const EmptyMessageWrapper = styled.div`
     left: 0;
     right: 0;
     top: 50%;
-    margin-top: -20px;
     text-align: center;
     line-height: 40px;
     font-size: 14px;

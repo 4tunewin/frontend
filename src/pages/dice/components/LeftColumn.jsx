@@ -28,9 +28,7 @@ const LeftColumn = () => (
             </Section>
         </Grid.Column>
         <Grid.Column>
-            <Section>
-                <GameHistory />
-            </Section>
+            <GameHistory />
         </Grid.Column>
     </Grid>
 );

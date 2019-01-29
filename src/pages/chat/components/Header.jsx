@@ -11,7 +11,7 @@ const Wrapper = styled.div`
     border-top-right-radius: 10px;
     height: 55px;
     line-height: 55px;
-    padding: 0px 20px 0px 20px;
+    padding: 0px 25px 0px 25px;
 `;
 
 const Title = styled.div`
