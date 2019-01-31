@@ -5,7 +5,7 @@ import { compose } from 'recompose';
 import { withWeb3 } from '../../../lib/web3';
 import Footer from '../components/Footer';
 
-const GET_USER_QUERY = gql`
+export const GET_USER_QUERY = gql`
     query User($address: String!) {
         user(address: $address) {
             id

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Avatar from './Avatar';
+import OnlineUsers from '../containers/OnlineUsers';
 
 const Wrapper = styled.div`
     display: flex;
@@ -22,18 +22,10 @@ const Title = styled.div`
     text-transform: uppercase;
 `;
 
-const Stats = styled.div`
-    flex: 1 1 auto;
-    font-family: 'Proxima Nova Light';
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.5);
-    text-align: right;
-`;
-
 const Header = () => (
     <Wrapper>
         <Title>Chat</Title>
-        <Stats>Online 500 users</Stats>
+        <OnlineUsers />
     </Wrapper>
 );
 

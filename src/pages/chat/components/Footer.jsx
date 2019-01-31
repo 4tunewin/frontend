@@ -2,11 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { Segment } from 'semantic-ui-react';
 
-import UsernameInput from './UsernameInput';
-import MessageInput from './MessageInput';
+import UsernameInput from '../containers/UsernameInput';
+import MessageInput from '../containers/MessageInput';
 
 const Wrapper = styled(Segment)`
     flex: 0 0 auto;
+    margin-top: 0px !important;
     padding: 20px;
     box-shadow: none !important;
     border: 0px !important;
@@ -23,7 +24,7 @@ const Wrapper = styled(Segment)`
 
 const Footer = ({ loading, user }) => (
     <Wrapper loading={loading}>
-        {user ? <MessageInput /> : <UsernameInput />}
+        {user ? <MessageInput user={user} /> : <UsernameInput />}
     </Wrapper>
 );
 

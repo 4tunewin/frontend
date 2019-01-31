@@ -1,5 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { compose, withStateHandlers, withHandlers } from 'recompose';
+import { trim } from 'lodash';
+import { Label } from 'semantic-ui-react';
 
 const Wrapper = styled.div`
     display: flex;
@@ -31,11 +34,69 @@ const Button = styled.div`
     flex: 0 0 auto;
 `;
 
-const MessageInput = ({ onChange }) => (
+const MessageInput = ({ error, value, onChange, onSend }) => (
     <Wrapper>
-        <Input placeholder="Write a message..." onChange={onChange} />
-        <Button>Send</Button>
+        <Input
+            placeholder="Write a message..."
+            value={value}
+            onChange={onChange}
+        />
+        <Button onClick={onSend}>Send</Button>
+        {error && <Label error>{error}</Label>}
     </Wrapper>
 );
 
-export default MessageInput;
+/**
+ * Keep state of current value
+ */
+const withValue = withStateHandlers(
+    { value: null },
+    {
+        onChange: ownProps => e => ({
+            value: e.target.value,
+        }),
+        onReset: ownProps => () => ({
+            value: '',
+        }),
+    },
+);
+
+const withError = withStateHandlers(
+    { error: null },
+    {
+        onError: ownProps => error => ({
+            error,
+        }),
+        onResetError: ownProps => () => ({
+            error: '',
+        }),
+    },
+);
+
+const withOnSend = withHandlers({
+    onSend: ({
+        value,
+        onChange,
+        onSend: _onSend,
+        onReset,
+        onError,
+        onResetError,
+    }) => () => {
+        onResetError();
+
+        const normalizedValue = trim(value);
+        if (normalizedValue.length) {
+            _onSend(value)
+                .then(onReset)
+                .catch(e => {
+                    onError(e.message);
+                });
+        }
+    },
+});
+
+export default compose(
+    withValue,
+    withError,
+    withOnSend,
+)(MessageInput);
