@@ -12,7 +12,7 @@ const StyledAvatar = styled(HashAvatar)`
 const Avatar = ({ address }) => (
     <StyledAvatar
         hash={address}
-        size={48}
+        size={32}
         options={{
             foreground: [255, 255, 255, 255],
             background: [0, 0, 0, 0],

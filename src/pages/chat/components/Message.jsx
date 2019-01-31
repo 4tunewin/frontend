@@ -1,11 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import { format as formatDate } from 'date-fns';
+import { toNumber } from 'lodash';
 
 import Avatar from './Avatar';
 
 const Wrapper = styled.div`
     display: flex;
-    flex: 1 1 auto;
+    flex: 0 0 auto;
     margin: 5px 0px 5px 0px;
 `;
 
@@ -14,7 +16,7 @@ const Bubble = styled.div`
     flex: 1 1 auto;
     display-direction: row;
     background-color: ${({ inverted }) =>
-        inverted ? 'rgb(213, 61, 205, 0.3)' : 'rgba(128, 102, 255, 0.3)'};
+        inverted ? 'rgb(213, 61, 205, 0.3)' : '#323b56'};
     padding: 10px;
     border-radius: 5px;
 `;
@@ -49,18 +51,20 @@ const Time = styled.div`
     font-size: 12px;
 `;
 
-const Message = ({ message: { author, text }, inverted }) => (
+const Message = ({ message, inverted }) => (
     <Wrapper>
-        <Left>
+        {/* <Left>
             <Avatar address={author.address} />
-        </Left>
+        </Left> */}
         <Bubble inverted={inverted}>
             <Center>
-                <Author>{author.username}</Author>
-                <Text>{text}</Text>
+                <Author>{message.author.username}</Author>
+                <Text>{message.text}</Text>
             </Center>
             <Right>
-                <Time>10:01</Time>
+                <Time>
+                    {formatDate(new Date(toNumber(message.createdAt)), 'HH:mm')}
+                </Time>
             </Right>
         </Bubble>
     </Wrapper>

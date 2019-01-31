@@ -3,32 +3,18 @@ import styled from 'styled-components';
 
 import GameHistory from '../containers/history/GameHistory';
 import Statistic from '../containers/stats/Statistic';
+import ChatPage from '../../chat/components/ChatPage';
 
 const Wrapper = styled.div`
     height: 100%;
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
-
-    & > div:first-child {
-        height: 100%;
-        flex: 1 1 auto;
-        padding-bottom: 28px;
-    }
-
-    & > div:last-child {
-        flex: 0 0 auto;
-    }
 `;
 
 const RightColumn = () => (
     <Wrapper columns={1}>
-        <div>
-            <GameHistory />
-        </div>
-        <div>
-            <Statistic />
-        </div>
+        <ChatPage />
     </Wrapper>
 );
 
